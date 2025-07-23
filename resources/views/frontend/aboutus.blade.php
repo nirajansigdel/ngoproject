@@ -2,56 +2,128 @@
 
 @section('content')
 
+    <style>
+        .about-section {
+            background-color: #f9f9f9;
+        }
+
+        .badge-custom {
+            background-color: #e6f0ff;
+            color: #007bff;
+            padding: 6px 14px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-radius: 50px;
+            display: inline-block;
+        }
+
+        .about-heading {
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.4;
+            color: #222;
+        }
+
+        .highlighted {
+            color: #007bff;
+            position: relative;
+        }
+
+        .highlighted::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 4px;
+            background: #cfe5ff;
+            left: 0;
+            bottom: -6px;
+            border-radius: 2px;
+        }
+
+  
+
+        .mission-card {
+            background-color: #fff;
+            border-left: 4px solid #007bff;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            min-height: 30vh;
+        }
+
+        .mission-card:hover {
+            background-color: #f0f8ff;
+            box-shadow: 0 8px 16px rgba(0, 123, 255, 0.1);
+        }
+
+        .image-frame {
+            border: 2px solid #007bff1f;
+            border-radius: 12px;
+        }
+    </style>
+
     <!-- herosection -->
     <section class="container-fluid gapbetweensection indexaboutsection bg-light py-5">
         <div class="container">
-            <div class="row align-items-center">
+            <section class="about-section pb-5 bg-light">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <!-- Left Content -->
+                        <div class="col-lg-6 mb-4 mb-lg-0" data-aos="fade-up">
+                            <h1 class="about-heading mb-4"> Empowering Communities,<br> <span class="highlighted">Changing
+                                    Lives Together</span>.</h1>
+                            <p class="xs-text-des">
+                                We are a dedicated team combining innovation with empathy — leveraging technology to uplift
+                                lives, strengthen communities, and drive meaningful, sustainable progress. At our core, we
+                                believe in people-powered change, grounding every project and solution in compassion and
+                                purpose. From responding to urgent needs to building long-term development programs, we work
+                                closely with communities to create lasting impact. Together, we’re not just solving problems
+                                — we’re building a future where everyone has the opportunity to thrive.
+                            </p>
+                            <!-- Mission Cards -->
 
-                <!-- Left Section: Text Content -->
-                <div class="col-md-6 mx-md-4">
-                    <div class="py-2">
-                        <p class="companytheme">-Trusted Real estate Care</p>
-                        <h1 class="extralarger blackhighlight">Dream living Spaces Setting New Build.</h1>
-                    </div>
-                    <p class="sm-text">
-                        We are a team of dedicated professionals working to deliver the best solutions. Our goal is to
-                        empower businesses with state-of-the-art technology. We are passionate about creating positive
-                        impacts in the industries we serve.
-                    </p>
+                        </div>
 
-                    <!-- Mission Statements -->
-                    <div class="row mt-4">
-                        <div class="col-12 col-md-6 mb-4">
-                            <h3 class="h5 font-weight-bold text-dark">Our Mission</h3>
-                            <p class="sm-text">Our dedication to client satisfaction converges to create an unparalleled
-                                home-buying experience.</p>
+                        <!-- Right Image -->
+                        <div class="col-lg-6 text-center" data-aos="zoom-in">
+                            <div class="image-frame p-2 shadow-lg rounded bg-white d-inline-block">
+                                <img src="{{asset('image/um.jpg')}}" alt="About Image" class="img-fluid rounded"
+                                    style="max-height:400px;">
+                            </div>
                         </div>
-                        <div class="col-12 col-md-6 mb-4">
-                            <h3 class="h5 font-weight-bold text-dark">Our Mission</h3>
-                            <p class="sm-text">Our dedication to client satisfaction converges to create an unparalleled
-                                home-buying experience.</p>
-                        </div>
-                        <div class="col-12 col-md-6 mb-4">
-                            <h3 class="h5 font-weight-bold text-dark">Our Mission</h3>
-                            <p class="sm-text">Our dedication to client satisfaction converges to create an unparalleled
-                                home-buying experience.</p>
-                        </div>
-                        <div class="col-12 col-md-6 mb-4">
-                            <h3 class="h5 font-weight-bold text-dark">Our Mission</h3>
-                            <p class="sm-text">Our dedication to client satisfaction converges to create an unparalleled
-                                home-buying experience.</p>
-                        </div>
+
                     </div>
                 </div>
+            </section>
 
-                <!-- Right Section: Image -->
-                <div class="col-md-5">
-                    <img src="{{ asset('uploads/about/' . $about->image) }}" alt="About Image"
-                        class="img-fluid rounded shadow-lg">
+
+        </div>
+    </section>
+
+
+    <section class="container-fluid bg- py-5 bg-soft-blue ">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-4 mb-4">
+                    <div class="mission-card p-4 shadow-sm rounded">
+                        <h3 class="mb-3">Our Mission</h3>
+                        <p class="xs-text-des">To empower communities through innovative solutions and sustainable practices.</p>
+                    </div>
                 </div>
-
+                <div class="col-md-4 mb-4">
+                    <div class="mission-card p-4 shadow-sm rounded">
+                        <h3 class="mb-3">Our Vision</h3>
+                        <p class="xs-text-des">To be a leading organization in community empowerment and sustainable development.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="mission-card p-4 shadow-sm rounded">
+                        <h3 class="mb-3">Our Values</h3>
+                        <p class="xs-text-des">Integrity, Innovation, Collaboration, and Excellence.</p>
+                    </div>
+                </div>
             </div>
         </div>
+
     </section>
 
 
@@ -62,7 +134,7 @@
             <div class="row align-items-center mx-5">
                 <div class="col-md-6 order-md-2 order-1">
                     <h3 class="pt-4">CEO MEssage</h3>
-                    <p class="lead">
+                    <p class="xs-text-des">
                         {!! app()->getLocale() === 'ne' ? $about->content_ne : $about->content !!}
                     </p>
                 </div>
@@ -78,139 +150,176 @@
 
 
 
-<style>    .teammember {
-    background: var(--white-off);
-    margin-bottom: 50px !important; /* Use important to ensure this is applied */
-}
-
-.meetteam {
-        background:var(--primary);
-        color: var(--white); 
-       
-        font-size: 14px;
-        padding: 4px 10px;
-        border-radius: 4px;
-        width:10%;
-        font-family: var(--font-family);
-    
-    }
-    .meetcontent{
-        width:50%;
-
-    }
-
-</style>
+    <style>
+        .teammember {
+            background: var(--white-off);
+            margin-bottom: 50px !important;
+            /* Use important to ensure this is applied */
+        }
 
 
 
+        .teammember-section {
+            background-color: #f9f9f9;
+            transform: translateY(200px);
+            transition: opacity 1.6s ease-out, transform 1.6s ease-out;
+        }
+
+        .teammember-section.visible {
+            opacity: 1;
+            transform: translateY(-0px);
+        }
+
+
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #333;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: #007BFF;
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            font-size: 1rem;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .team-card {
+            border: 1px solid #eee;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-name {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #222;
+        }
+
+        .team-position {
+            font-size: 0.95rem;
+            color: #777;
+        }
+
+        .team-social i {
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .team-social i:hover {
+            color: #007BFF;
+        }
+
+
+        .team-info {
+            text-align: center;
+        }
+
+        .team-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-details {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .team-details .badge {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-radius: 20px;
+        }
+    </style>
+
+    <!-- AOS JS (place before </body>) -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const teamSection = document.querySelector('.teammember-section');
+
+            function revealSection() {
+                const rect = teamSection.getBoundingClientRect();
+                const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+
+                if (rect.top <= windowHeight * 0.9) {
+                    teamSection.classList.add('visible');
+                    window.removeEventListener('scroll', revealSection);
+                }
+            }
+
+            window.addEventListener('scroll', revealSection);
+            revealSection(); // check on load as well
+        });
+
+
+    </script>
 
 
     <!-- Our Team Member -->
-
-    <section class="container-fluid  teammember mb-4 py-4 ">
+    <section class="container-fluid bg-light teammember-section py-5">
         <div class="container">
-            <div class="row mt-3 fcc ">
-                <div class="fcc flex-column">
-                <h2 class="meetteam text-center"> Meet Our Team</h2>
-                <p class="text-center meetcontent sm-text">Utilizing her exceptional experience and knowledge of the luxury waterfront markets,
-                    Simone serves an
-                    extensive and elite worldwide client base. </p>
-                </div>
-                
+            <div class="text-center mb-5">
+                <h2 class="section-title">🌟 Meet Our Team</h2>
+                <p class="section-subtitle">
+                    Our team brings passion, professionalism, and purpose to every project we touch.
+                </p>
+            </div>
+
+            <div class="row justify-content-center">
                 @if ($teams->isNotEmpty())
                     @foreach ($teams as $team)
-                        <div class="col-md-3">
-                            <div class=" team_card mt-2  py-2">
-                                @if ($team->image)
-                                    <img src="{{ asset('uploads/team/' . $team->image) }}" class="card-img-top image rounded" alt="">
-                                @else
-                                    <img src="{{ asset('images/girl.jpg') }}" class="card-img-top image rounded" alt="Default Image">
-                                @endif
-                                <div class="card-body">
-                                    <span class="team_name md-text-bd">
-                                        {{ $team->name }}
-                                    </span><br>
-                                    <span class="team_position sm-text">
-                                        {{ $team->position }}
-
-                                    </span><br>
-                                    <span class="flex">
-                                        <a href="https://www.facebook.com/login" target="_blank">
-                                            <i class="fa-brands fa-facebook"></i>
-                                        </a>
-                                        <a href="https://www.instagram.com/accounts/login/" target="_blank">
-                                            <i class="fa-brands fa-square-instagram"></i>
-                                        </a>
-                                        <a href="https://accounts.google.com/ServiceLogin?service=youtube" target="_blank">
-                                            <i class="fa-brands fa-youtube"></i>
-                                        </a>
-                                    </span>
+                        <div class="col-lg-3 col-md-6 col-sm-12 mb-4" data-aos="zoom-in" data-aos-delay="{{ $loop->index * 100 }}">
+                            <div class="team-card p-3 shadow rounded bg-white text-center h-100">
+                                <div class="team-image mb-3">
+                                    <img src="{{ $team->image ? asset('uploads/team/' . $team->image) : asset('images/girl.jpg') }}"
+                                        alt="{{ $team->name }}" class="img-fluid rounded-circle"
+                                        style="width: 120px; height: 120px; object-fit: cover;">
                                 </div>
+                                <div class="team-info mt-3">
+                                    <h5 class="team-name">{{ $team->name }}</h5>
+                                    <div class="team-details">
+                                        <span class="badge bg-primary">{{ $team->position }}</span>
+                                        <span class="badge bg-secondary">{{ $team->role }}</span>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
-
                     @endforeach
                 @else
-                    <p class="sm-text-bd">No team members available.</p>
+                    <p class="text-center text-muted">No team members available.</p>
                 @endif
             </div>
         </div>
     </section>
 
-    <section class="container-fluid mt-5">
-        <div class="container d-flex flex-column justify-content-center align-items-center">
-            <div class="col-lg-6 text-center">
-                <h1 class="md-text-bd">Frequently Asked Questions</h1>
-                <p class="extra-small-text">
-                    Utilizing her exceptional experience and knowledge of the luxury waterfront markets, Simone serves an
-                    extensive and elite worldwide client base.
-                </p>
-            </div>
-
-            <!-- FAQ Accordion Section -->
-            <div class="col-lg-8">
-                <div class="accordion" id="faqAccordion">
-
-                    <!-- Accordion Item 1 -->
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                <p class="sm-text">What is your service all about?</p>
-                            </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
-                            data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                Our service provides luxury waterfront properties with exceptional market expertise and
-                                client service. We aim to create unique living experiences for our clients.
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Accordion Item 2 -->
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                <p class="sm-text">How do I get started?</p>
-                            </button>
-                        </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                            data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                Getting started is easy! Simply reach out to our team, and we will guide you through the
-                                process of choosing the perfect property for you.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
 
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 
 

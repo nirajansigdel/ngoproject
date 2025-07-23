@@ -68,6 +68,17 @@ class SingleController extends Controller
         return view('frontend.testimonials', compact('testimonials','demands','clientMessages'));
     }
 
+
+    
+    public function render_whyus()
+    {
+        $clientMessages = ClientMessage::latest()->get();
+        $demands = Demand::latest()->get(); 
+        $testimonials = Testimonial::latest()->take(12)->get();
+        return view('frontend.whyus', compact('testimonials','demands','clientMessages'));
+    }
+
+
     
     public function render_blogpostcategory()
     {

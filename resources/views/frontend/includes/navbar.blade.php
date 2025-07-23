@@ -15,14 +15,14 @@
     }
 
 
-   
-  
+
+
 
     .nav-item .dropdown-menu {
         top: 100%;
         left: 0;
         transform: none;
-        background:;
+        background: ;
     }
 
     .header.sticky {
@@ -148,63 +148,79 @@
 
 <nav class="navbar navbar-expand-md bg-white py-2">
     <div class="container">
-        <a class="navbar-brand toplogo" href="{{ route('index') }}"> 
+        <a class="navbar-brand toplogo" href="{{ route('index') }}">
             <img src="{{ asset('image/OIP.jpeg') }}" alt="Description">
 
-                
-               
+
+
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
-
-
             <ul class="navbar-nav ms-auto">
-               <li class="nav-item dropdown">
-                    <a class="nav-link text-dark fw-medium " href="{{ route('Demand') }}"
-                        id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <li class="nav-item dropdown">
+                    <a class="nav-link text-dark fw-medium " href="{{ route('index') }}"  id="navbarDropdown"
+                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Introduction
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="{{ route('index') }}">umberall organization</a></li>
-                        <li><a class="dropdown-item" href="">About Us</a></li>
-                        <li><a class="dropdown-item" href="">Why Us</a></li>
-                         <li><a class="dropdown-item" href="">Contact us</a></li>
+                        <li><a class="dropdown-item" href="{{ route('About') }}">About Us</a></li>
+                        <li><a class="dropdown-item" href="{{ route('whyus') }}">Why Us</a></li>
+                        <li><a class="dropdown-item" href="{{ route("Contact") }}">Contact us</a></li>
+                        <li><a class="dropdown-item" href="{{ route('Gallery') }}">Gallery</a></li>
+                        <li class="nav-item">
+
+                        </li>
                     </ul>
                 </li>
-                 <li class="nav-item dropdown">
-                    <a class="nav-link text-dark fw-medium " href=""
-                        id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                       Projects
+                <li class="nav-item dropdown">
+                    <a class="nav-link text-dark fw-medium " href="" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Projects
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="">Chautari youth project</a></li>
                         <li><a class="dropdown-item" href="">next steps education program(NSEP)</a></li>
-                         <li><a class="dropdown-item" href="">Family REintegration</a></li>
+                        <li><a class="dropdown-item" href="">Family REintegration</a></li>
                         <li><a class="dropdown-item" href="">community Empowerment</a></li>
-                         <li><a class="dropdown-item" href="">Bamboo Project</a></li>
+                        <li><a class="dropdown-item" href="">Bamboo Project</a></li>
                         <li><a class="dropdown-item" href="">Child CAre Home</a></li>
                     </ul>
                 </li>
-               
+
                 <li class="nav-item">
                     <a class="nav-link text-dark fw-medium" href="{{ route('Service') }}">Our Service</a>
                 </li>
-                 <li class="nav-item dropdown">
-                    <a class="nav-link text-dark fw-medium " href=""
-                        id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                       opportunity
+                <li class="nav-item dropdown">
+                    <a class="nav-link text-dark fw-medium " href="" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        opportunity
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="">career Opprotunity</a></li>
                         <li><a class="dropdown-item" href="">Volunteer</a></li>
-                        
+
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark fw-medium" href="{{ route('Gallery') }}">Gallery</a>
+
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link text-dark fw-medium " href="" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Updates
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{{ route('events') }}">News & events</a></li>
+                        <a class="dropdown-item" href="{{ route('Blogpostcategory') }}">Blogs</a>
+                       <a class="dropdown-item" href="#">Procurement</a>
+
+
+                    </ul>
                 </li>
+
+
             </ul>
             <div class="d-flex align-items-center gap-3">
                 <div class="position-relative border px-3 py-2 rounded-pill d-flex align-items-center">
@@ -213,7 +229,7 @@
                         1
                     </span>
                 </div>
-    
+
             </div>
         </div>
     </div>
@@ -232,16 +248,17 @@
 
 
 <style>
-/* Show dropdown on hover */
-.nav-item.dropdown:hover .dropdown-menu {
-    display: block;
-    margin-top: 0; /* Remove any offset */
-}
+    /* Show dropdown on hover */
+    .nav-item.dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0;
+        /* Remove any offset */
+    }
 
-/* Optional: Keep dropdown open while hovering over it */
-.nav-item.dropdown:hover > .nav-link {
-    color: #000;
-}
+    /* Optional: Keep dropdown open while hovering over it */
+    .nav-item.dropdown:hover>.nav-link {
+        color: #000;
+    }
 </style>
 
 

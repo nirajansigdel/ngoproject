@@ -1869,3 +1869,18 @@ input:focus, textarea:focus {
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
+
+.bg-soft-blue {
+    background-color: #eaf6ff; /* Soft sky blue */
+}
+
+
+    .xs-text-des{
+    font-size: 1.15rem;          /* Slightly larger for better readability */
+    color: #444;                 /* Darker gray for better contrast */
+    line-height: 1.6;            /* More line spacing for comfort */
+    font-weight: 400;            /* Normal weight for smooth reading */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  /* Clean modern font */
+    margin-bottom: 1.5rem;       /* Space below paragraph */
+    letter-spacing: 0.02em;      /* Slight letter spacing for better flow */
+}

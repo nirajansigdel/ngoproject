@@ -19,16 +19,6 @@
 </style>
 
 
-
-
-
-
-
-
-
-
-
-
 <section class="container-fluid contactsection py-4">
   <div class="container">
     <div class="row align-items-center gap-5 fcc">
