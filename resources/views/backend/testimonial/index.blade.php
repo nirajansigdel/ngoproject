@@ -38,8 +38,6 @@
                 <th>S.N.</th>
                 <th>Name</th>
                 <th>Image</th>
-                <th>Company</th>
-                <th>Work Category</th>
                 <th>Description</th>
                 <th>Action</th>
             </tr>
@@ -56,8 +54,6 @@
                     <td> <img id="preview{{ $loop->iteration }}"
                             src="{{ asset('uploads/testimonial/' . $testimonial->image) }}"
                             style="width: 150px; height:150px" /></td>
-                    <td>{{ $testimonial->company->title ?? 'No Company' }}</td>
-                    <td>{{ $testimonial->work_category->title ?? 'No Work Category' }}</td>
                     <td>{{ Str::limit(strip_tags($testimonial->description), 200) }}</td>
                     <td>
                         <div style="display: flex; flex-direction:row;">

@@ -16,10 +16,10 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
 
-            $table->unsignedBigInteger('company_id');
+            $table->unsignedBigInteger('company_id')->nullable();
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
 
-            $table->unsignedBigInteger('work_category_id');
+            $table->unsignedBigInteger('work_category_id')->nullable();
             $table->foreign('work_category_id')->references('id')->on('work_categories')->onDelete('cascade');
             $table->string('image')->nullable();
             $table->text('description');

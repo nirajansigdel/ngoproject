@@ -1,257 +1,154 @@
 <style>
-    .footer-section {
-        background: var(--white-off);
-        position: relative;
-        box-shadow: rgba(33, 37, 109, 0.15);
-        padding: 5px 0;
-        /* Further adjusted padding to decrease footer size */
+    .footer-section {;
+        color:black;
+        padding: 40px 0 10px;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .footer-logo {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .footer-logo img {
+        max-height: 50px;
+        border-radius: 6px;
+    }
+
+    .footer-logo h5 {
+        margin-top: 10px;
+        font-weight: bold;
+        color: #d10000;
+    }
+
+    .footer-social {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .footer-social a {
+        display: inline-block;
+        margin: 0 10px;
+        font-size: 20px;
+        color:black;
+        transition: color 0.3s ease;
+    }
+
+    .footer-social a:hover {
+        color: #f00;
+    }
+
+    .footer-menu {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .footer-menu a {
+        color: black;
+        margin: 0 12px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .footer-menu a:hover {
+        color: #f00;
+    }
+
+    .footer-cta {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+
+    .footer-bottom {
+        text-align: center;
+        padding: 10px 0;
+        font-size: 14px;
+        color: black;
+    }
+
+    .footer-bottom a {
+        color:black;
+        margin: 0 10px;
+    }
+
+    .footer-bottom a:hover {
+        color: #fff;
     }
 </style>
 
+<footer class="footer-section container-fluid bg-light">
 
-
-<footer class="footer-section">
-    <div class="container py-4">
+    <div class=" container">
         <div class="row">
 
+    <!-- Social Icons -->
+    <div class="footer-social col-md-2">
+        @if($sitesetting->facebook_link)
+            <a href="{{ $sitesetting->facebook_link }}"><i class="fab fa-facebook-f"></i></a>
+        @endif
+        @if($sitesetting->instagram_link)
+            <a href="{{ $sitesetting->instagram_link }}"><i class="fab fa-instagram"></i></a>
+        @endif
+        @if($sitesetting->linkedin_link)
+            <a href="{{ $sitesetting->linkedin_link }}"><i class="fab fa-linkedin-in"></i></a>
+        @endif
+        @if($sitesetting->snapchat_link)
+            <a href="{{ $sitesetting->snapchat_link }}"><i class="fab fa-snapchat-ghost"></i></a>
+        @endif
+        @if($sitesetting->x_link)
+            <a href="{{ $sitesetting->x_link }}"><i class="fab fa-x-twitter"></i></a>
+        @endif
+    </div>
 
-            <div class="col-md-3 ">
-                <div class="footer-widget">
-                    <div class="footer-widget-heading">
-                        <h3 class="mb-3">Our Demands</h3>
-                        <ul class="list-unstyled">
-                            @foreach ($demands->take(4) as $demand)
-                                <li class="sm-text-bd greenhighlight">
-                                    <a href="{{ route('SingleDemand', ['id' => $demand->id]) }}"
-                                        class="text-decoration-none sm-text greenhighlight">{{ $demand->vacancy }}</a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- About Us Section -->
-            <div class="col-md-3 ">
-                <div class="footer-widget">
-                    <div class="footer-widget-heading">
-                        <h3 class="mb-3">Quick Links</h3>
-                        <ul class="list-unstyled">
-                            <li class="sm-text"><a href="{{ route('About') }}"
-                                    class="text-decoration-none sm-text greenhighlight">{{ trans('messages.AboutUs') }}</a>
-                            </li>
-                            <li class="sm-text-bd"><a href="{{ route('Service') }}"
-                                    class="text-decoration-none sm-text greenhighlight">Services</a>
-                            </li>
-                            <li class="sm-text-bd"><a href="{{ route('Demand') }}"
-                                    class="text-decoration-none sm-text greenhighlight">{{ trans('messages.Demands') }}</a>
-                            </li>
-                            <li class="sm-text-bd"><a href="{{ route('Blogpostcategory') }}"
-                                    class="text-decoration-none sm-text greenhighlight">Blogs</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- Services Section -->
-            <div class="col-md-3 ">
-                <div class="footer-widget">
-                    <div class="footer-widget-heading">
-                        <h3 class="mb-3">Our Services</h3>
-                        <ul class="list-unstyled">
-                            @foreach ($services->take(4) as $service)
-                                <li class="sm-text-bd"><a href="{{ route('SingleService', ['slug' => $service->slug]) }}"
-                                        class="text-decoration-none sm-text greenhighlight">{{ $service->title }}</a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- Blog Section -->
+    <!-- Menu Links -->
+    <div class="footer-menu col-md-10 d-flex gap-5">
+        <a href="{{ route('Service') }}">Service</a>
+        <a href="{{ route('Demand') }}">Project</a>
+        <a href="{{ route('Blogpostcategory') }}">Blog</a>
+         <a href="{{ route('events') }}">News & Events</a>
+        <a href="{{ route('Gallery') }}">Gallery</a>
+        <a href="{{ route('About') }}">About</a>
+         <a href="{{ route('whyus') }}">why us</a>
+           <a href="{{ route('Blogpostcategory') }}">procuments</a>
 
-            <div class="col-md-3">
-                <div class="footer-widget">
-                    <div class="footer-widget-heading">
-                        <h3 class="mb-3  ">
+    
+    </div>
 
-                            <span class="">{{ trans('messages.FindUs') }}</span>
-                        </h3>
-                    </div>
-                    <div class="single-cta">
-                        <div class="cta-text">
-                            <div class="">
-                                <strong class="d-block xs-text-bd greenhighlight">Address:</strong>
-
-                                <span>
-                                    @if (!empty($sitesetting->office_address))
-                                                                        @php
-                                                                            $officeAddresses = json_decode($sitesetting->office_address, true);
-                                                                        @endphp
-                                                                        @if (is_array($officeAddresses))
-                                                                            @foreach ($officeAddresses as $address)
-                                                                                {{ $address }} <br>
-                                                                            @endforeach
-                                                                        @else
-                                                                            @if (app()->getLocale() == 'ne')
-                                                                                {{ $sitesetting->office_address_ne }}
-                                                                            @else
-                                                                                {{ $sitesetting->office_address }}
-                                                                            @endif <br>
-                                                                        @endif
-                                    @endif
-                                </span>
+    </div>
 
 
+    <style>
+   .forlogoandcontact {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    background:var(--black-off); /* <- fixed: added missing semicolon */
+    border-radius: 80px 80px 0 0;
+    min-height: 28vh;
+}
 
+    </style>
+    <!-- Logo -->
+     <div class="forlogoandcontact row justify-space-between">
+        <div class="footer-logo col-md-3">
+        <img src="{{ asset('image/OIP.jpeg') }}" alt="Logo">
+    </div>
 
-                            </div>
-                            <div class="my-1">
-                                <strong class="d-block xs-text-bd greenhighlight">Email:</strong>
-                                <span>
-                                    @if (!empty($sitesetting->office_email))
-                                                                        @php
-                                                                            $officeEmails = json_decode($sitesetting->office_email, true);
-                                                                        @endphp
-                                                                        @if (is_array($officeEmails))
-                                                                            @foreach ($officeEmails as $email)
-                                                                                <span class="sm-text"> {{ $email }}</span> <br>
-                                                                            @endforeach
-                                                                        @else
-                                                                            <span class="sm-text">{{ $sitesetting->office_email }}</span> <br>
-                                                                        @endif
-                                    @endif
-                                </span>
-                            </div>
-                            <div class="">
-                                <strong class="d-block xs-text-bd greenhighlight">Contact:</strong>
-                                <span>
-                                    @if (!empty($sitesetting->office_contact))
-                                                                        @php
-                                                                            $officeContacts = json_decode($sitesetting->office_contact, true);
-                                                                        @endphp
-                                                                        @if (is_array($officeContacts))
-                                                                            @foreach ($officeContacts as $contact)
-                                                                                <span class="sm-text">{{ $contact }}</span> <br>
-                                                                            @endforeach
-                                                                        @else
-                                                                            <span>
-                                                                                @if (app()->getLocale() == 'ne')
-                                                                                    {{ $sitesetting->office_contact_ne }}
-                                                                                @else
-                                                                                    {{ $sitesetting->office_contact }}
-                                                                                @endif
-                                                                            </span> <br>
-                                                                        @endif
-                                    @endif
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- CTA -->
+    <div class="footer-cta  col-md-3">
+        <a href="{{ route('Contact') }}" class="btn btn-danger px-4 py-2 rounded-pill shadow">Appointment</a>
+    </div>
 
-
-
-
-        <div class="row mt-md-0">
-            <div class="footer-social-icon ">
-                <h6 class="md-text greenhighlight my-1">{{ trans('messages.FollowUs') }}</h6>
-                <div class="social-buttons">
-                    @if($sitesetting && $sitesetting->facebook_link)
-                    <a href="{{ $sitesetting->facebook_link }}"
-                        class="social-buttons__button social-button social-button--facebook" aria-label="Facebook">
-                        <span class="social-button__inner">
-                            <i class="fab fa-facebook-f"></i>
-                        </span>
-                    </a>
-                    @endif
-                    @if($sitesetting && $sitesetting->linkedin_link)
-                    <a href="{{ $sitesetting->linkedin_link }}"
-                        class="social-buttons__button social-button social-button--linkedin" aria-label="LinkedIn">
-                        <span class="social-button__inner">
-                            <i class="fab fa-linkedin-in"></i>
-                        </span>
-                    </a>
-                    @endif
-                    @if($sitesetting && $sitesetting->instagram_link)
-                    <a href="{{ $sitesetting->instagram_link }}" target="_blank"
-                        class="social-buttons__button social-button social-button--instagram" aria-label="Instagram">
-                        <span class="social-button__inner">
-                            <i class="fab fa-instagram"></i>
-                        </span>
-                    </a>
-                    @endif
-                    @if($sitesetting && $sitesetting->snapchat_link)
-                    <a href="{{ $sitesetting->snapchat_link }}" target="_blank"
-                        class="social-buttons__button social-button social-button--snapchat" aria-label="Snapchat">
-                        <span class="social-button__inner">
-                            <i class="fa-brands fa-snapchat"></i>
-                        </span>
-                    </a>
-                    @endif
-                </div>
-            </div>
-        </div>
+     </div>
+    
+<div class="row col-md-12">
+    <!-- Copyright -->
+    <div class="footer-bottom">
+        © Umbrella Organization Nepal {{ now()->year }}. All Rights Reserved
     </div>
     </div>
-    <div class="copyright-area py-2">
-        <div class="container">
-            <div class="row text-center fcc gap-2">
-                <div class="col-12 sm-text whitehighlight">
-                    <ul class="fcc list-inline">
-                        <li class="list-inline-item">
-                            <a href="{{ url('terms-and-conditions') }}" class="text-white">Terms &
-                                Conditions</a>
-                        </li>
-                        <li class="list-inline-item mx-2">
-                            <a href="{{ url('privacy-policy') }}" class="text-white">Privacy Policy</a>
-                        </li>
-                        <li class="list-inline-item yellowhighlight mx-3">
-                            <!-- Copyright &copy; 2024, All Right
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
     </div>
 </footer>
-<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script src="{{ asset('js/main.js') }}"></script>
-<style>
-    .popupfooter {
-        background: white;
-        position: fixed;
-        bottom: -18px;
-        display: none;
-        padding: 16px 0;
-        z-index: 20;
-    }
-
-
-    .footerfb {
-        background: #1877f2 !important;
-    }
-
-
-    .footerld {
-        background: #0E76A8 !important;
-    }
-
-
-    .footerin {
-        background: #E1306C !important;
-    }
-
-
-    .footersn {
-        background: #FFFC00 !important;
-    }
-
-
-    @media (max-width:600px) {
-        .popupfooter {
-            display: block;
-        }
-    }
-</style>

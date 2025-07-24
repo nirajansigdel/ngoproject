@@ -114,6 +114,7 @@ Route::prefix('/')->group(function () {
     Route::get('/singlecategory/{slug}', [SingleController::class, 'render_singleCategory'])->name('singleCategory');
     Route::get('/singlepost/{slug}', [SingleController::class, 'render_singlePost'])->name('singlePost');
     Route::get('/gallerys/{slug}', [SingleController::class, 'render_singleImage'])->name('singleImage');
+    Route::get('/blogcategory/{slug}', [SingleController::class, 'render_singleBlogpostcategory'])->name('SingleBlogCategory');
 
     // Route::get('/ceo-message', [CeomessageController::class, 'showCeoMessage'])->name('ceo.message');
 

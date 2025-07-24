@@ -5,6 +5,7 @@
 @include("frontend.includes.indexgallary")
 @include("frontend.includes.testimonials")
 @include("frontend.includes.contact")
+@include("frontend.includes.ourclient")
 
 {{-- Vacancy Modal --}}
  @if($latestVacancies->count())

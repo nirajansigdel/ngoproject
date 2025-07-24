@@ -1,13 +1,9 @@
 <style>
   .contactsection {
     background: var(--primary);
-    /* Assuming --primary is your brand's primary color */
     padding: 60px 0;
-    /* Increased padding for more space */
     color: #fff;
   }
-
-
 
 
   .content-right img {
@@ -15,6 +11,23 @@
     height: auto;
     object-fit: cover;
     border-radius: 15px;
+  }
+
+
+  .search-form-button {
+    border: 2px solid white;
+    /* You can adjust the border color */
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--primary);
+    color: white;
+  }
+
+  .search-form-button:hover {
+    border-color: #999;
   }
 </style>
 
@@ -24,18 +37,18 @@
     <div class="row align-items-center gap-5 fcc">
 
       <!-- Left Section (col-md-6) -->
-      <div class="col-md-6">
-        <div class="content-left">
-          <h1 class="md-text-bd whitehighlight">Let’s Connect with Us</h1>
-          <p class="sm-text py-2 whitehighlight">Pará is a state in northern Brazil, traversed by the lower Amazon
-            River, filled with stunning nature and culture.</p>
-          <a class="btn btn-primary mt-2" href="{{ route('Contact') }}">Contact Us</a>
+      <div class="col-md-7">
+        <div class="content-left ">
+          <h1 class="md-text-bd whitehighlight">Let’s Connect with us</h1>
+          <p class="sm-text py-2 whitehighlight">Umbreela Nepal is a dedicated NGO based in the heart of Nepal, working
+            to uplift communities through empowerment, education, and sustainable development initiatives.</p>
+          <button class=" search-form-button mt-2" href="{{ route('Contact') }}">Contact Us</button>
 
         </div>
       </div>
 
       <!-- Right Section (col-md-5) -->
-      <div class="mx-3 col-md-5 d-flex align-items-center">
+      <div class="mx-3 col-md-4 d-flex align-items-center">
         <div class="content-right">
           <img src="{{asset('image/contactindex.png')}}" alt="Happy Client">
         </div>

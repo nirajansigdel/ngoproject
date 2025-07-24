@@ -236,18 +236,15 @@
     }
 </style>
 
-<!-- herosection -->
-<section class="herosectionforallpage mb-3">
-    <img src="./image/demandbg.png" alt="">
-    <div class="container">
-        <div class="d-flex flex-column innercontent">
-            <span class="maintitle">Gallery</span>
-            <span class="navigatetitle py-1 mb-1">
-                <a href="" style="color: white !important; text-decoration: none;">Home</a> / <span>Gallery</span>
-            </span>
-        </div>
-    </div>
-</section>
+<!-- ======= Blog Hero Section ======= -->
+<style>
+  
+</style>
+
+<div class="hero">
+    <img src="{{ asset('image/um.jpg') }}" alt="Blog Banner">
+    <div class="hero-title">Gallery</div>
+</div>
 
 <section class="gallery-section">
     <div class="container">
@@ -360,5 +357,18 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @endsection

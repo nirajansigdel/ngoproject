@@ -9,7 +9,9 @@
 
 /* btn-yellow for yellow collor with hover   */
 :root {
-    --primary: #2d307f;
+   
+    /* --primary: #2d307f;  */
+      --primary:#448c4ce4; 
     --primary-off: #5c67a2;
     --primary-off-off: #f8f8ff;
     --secondary: #f9f9ff;
@@ -1875,7 +1877,26 @@ input:focus, textarea:focus {
 }
 
 
-    .xs-text-des{
+
+
+
+  .section-title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #333;
+    }
+
+
+    
+    .section-subtitle {
+        font-size: 1rem;
+        color: #555;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+
+        .xs-text-des{
     font-size: 1.15rem;          /* Slightly larger for better readability */
     color: #444;                 /* Darker gray for better contrast */
     line-height: 1.6;            /* More line spacing for comfort */
@@ -1884,3 +1905,117 @@ input:focus, textarea:focus {
     margin-bottom: 1.5rem;       /* Space below paragraph */
     letter-spacing: 0.02em;      /* Slight letter spacing for better flow */
 }
+
+
+/* design for section */
+
+  .hero {
+        position: relative;
+        overflow: hidden;
+        border-radius: 40px;
+        margin: 40px auto;
+        max-width: 1200px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero img {
+        width: 100%;
+        height: 80vh;
+        object-fit: cover;
+    }
+
+    .hero-title {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: #fff;
+        color: #b40000;
+        font-weight: 800;
+        font-size: 48px;
+        padding: 16px 40px;
+        border-radius: 0 0 0 50px;
+        font-family: 'Segoe UI', sans-serif;
+        box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.15);
+        white-space: nowrap;
+    }
+
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 32px;
+            padding: 10px 20px;
+        }
+    }
+
+
+
+       .blog-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 20px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        transition: transform 0.3s ease;
+    }
+
+    .blog-card:hover {
+        transform: translateY(-8px);
+    }
+
+    .blog-img {
+        width: 100%;
+        height: 320px;
+        object-fit: cover;
+    }
+
+    .blog-info {
+        position: absolute;
+        bottom:0px;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
+        color: white;
+        padding: 20px;
+        transition: all 0.3s ease;
+        transform: translateY(50%);
+    }
+
+    .blog-card:hover .blog-info {
+        transform: translateY(0%);
+    }
+
+    .blog-info .badge {
+        background-color: #fff;
+        color: #b40000;
+        font-weight: 600;
+        font-size: 12px;
+        padding: 5px 10px;
+        border-radius: 12px;
+        margin-bottom: 10px;
+    }
+
+    .blog-info h5 {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .blog-info p {
+        font-size: 14px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .blog-card:hover .blog-info p {
+        opacity: 1;
+    }
+
+    .read-more-btn {
+         border: 2px solid #fff;
+    color: white;
+    }
+
+  .read-more-btn:hover {
+
+        color: black !important;
+         background: white
+
+    }

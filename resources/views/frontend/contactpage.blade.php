@@ -2,127 +2,132 @@
 
 @section('content')
 
+<!-- Custom Styles -->
+<style>
+  .contact-section {
+    background-color: #fff;
+  }
 
+  .contact-section h2 {
+    font-size: 2rem;
+  }
 
+  .contact-section .btn-danger {
+    background-color: #b40000;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
 
-<!-- herosection -->
-<section class="herosectionforallpage">
-<img src="./image/demandbg.png" alt="" >
-    <div class="container">
-    <div class="d-flex flex-column innercontent">
-     <span class="maintitle">Contact</span>
-     <span class="navigatetitle py-1 mb-1">
-      <a href="" style="color: white !important; text-decoration: none;">Home</a> / <span>Contact</span>
-  </span>
-    </div>
-  </div>
-  </section>
+  .contact-section .btn-danger:hover {
+    background-color: #8c0000;
+  }
 
+  .contact-section img {
+    border-radius: 1rem;
+  }
 
+  .cardbackground {
+    background-color: #fff;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 20px;
+    min-height: 130px;
+  }
 
+  .cardbackground:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  }
 
-  <style>
-    /* Custom style for cardbackground */
-    .cardbackground {
-        background-color:var(--primary); /* Light gray background */
-        border-radius: 10px; /* Rounded corners */
-        padding: 20px; /* Add padding */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-        transition: all 0.3s ease-in-out; /* Smooth transition for hover effect */
-        color: var(--white);
-        min-height:130px;
-    }
+  .customiconslarge {
+    color: #b40000;
+  }
 
-    /* Hover effect to slightly lift the card */
-    .cardbackground:hover {
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
-        transform: translateY(-5px); /* Lift card effect */
-    }
+  .sm-text-bd {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-top: 10px;
+  }
 
+  .xs-text,
+  .sm-text {
+    font-size: 0.95rem;
+    color: #555;
+  }
 </style>
 
-<section class="container-fluid contact py-5">
+<!-- Hero Section -->
+<section class="contact-section py-5">
   <div class="container">
-    <div class="row d-flex justify-content-center align-items-center gap-4">
+    <div class="row align-items-center">
+      <!-- Left -->
+      <div class="col-md-6 mb-4 mb-md-0">
+        <p class="text-danger fw-semibold mb-2">Contact Us</p>
+        <h2 class="fw-bold">We Would <span class="text-danger">Love To Connect!</span></h2>
+        <p class="text-muted mb-4">Always here to support, guide, and connect with you. Feel free to reach out. We're happy to assist on your journey.</p>
+        <a href="https://wa.me/yourwhatsapplink" class="btn btn-danger rounded-pill d-inline-flex align-items-center px-4 py-2">
+          <i class="bi bi-whatsapp me-2"></i> Whatsapp
+        </a>
+      </div>
 
-      <!-- Dynamic Content for Office Address -->
-      <div class="col-md-3 cardbackground d-flex justify-content-center align-items-center p-4 shadow-sm rounded">
+      <!-- Right -->
+      <div class="col-md-6 text-center">
+        <img src="{{ asset('image/um.jpg') }}" alt="Support Representative" class="img-fluid rounded-4 shadow" style="max-height: 400px; object-fit: cover;" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Info Cards -->
+<section class="container-fluid contact py-5 bg-light">
+  <div class="container">
+    <div class="row justify-content-center align-items-center gap-4">
+      
+      <!-- Address -->
+      <div class="col-md-3 cardbackground" data-aos="zoom-in" data-aos-delay="100">
         <i class="fa-solid fa-location-dot customiconslarge fa-2x"></i>
-        <div class="information text-center">
+        <div class="information mt-2">
           <h2 class="sm-text-bd">Office Address</h2>
           <p class="xs-text">
             @if (!empty($sitesetting->office_address))
-              @php
-                $officeAddresses = json_decode($sitesetting->office_address, true);
-              @endphp
-              @if (is_array($officeAddresses))
-                @foreach ($officeAddresses as $address)
-                  <div class="d-flex align-items-start py-1">
-                    <span class="px-2 sm-text">{{ $address }}</span>
-                  </div>
-                @endforeach
-              @else
-                <div class="d-flex align-items-start">
-                  <!-- <i class="fa-solid fa-location-dot"></i> -->
-                  <span class="px-2 sm-text">{{ $sitesetting->office_address }}</span>
-                </div>
-              @endif
+              @php $officeAddresses = json_decode($sitesetting->office_address, true); @endphp
+              @foreach ((array)$officeAddresses as $address)
+                <div class="py-1"><span class="sm-text">{{ $address }}</span></div>
+              @endforeach
             @endif
           </p>
         </div>
       </div>
 
-      <!-- Dynamic Content for Office Contact -->
-      <div class="col-md-3 cardbackground d-flex justify-content-center align-items-center p-4 shadow-sm rounded">
-        <i class="fa-solid fa-phone customiconslarge fa-2x mx-2"></i>
-        <div class="information text-center">
+      <!-- Contact -->
+      <div class="col-md-3 cardbackground" data-aos="zoom-in" data-aos-delay="200">
+        <i class="fa-solid fa-phone customiconslarge fa-2x"></i>
+        <div class="information mt-2">
           <h2 class="sm-text-bd">Office Contact</h2>
           <p class="xs-text">
             @if (!empty($sitesetting->office_contact))
-              @php
-                $officeContacts = json_decode($sitesetting->office_contact, true);
-              @endphp
-              @if (is_array($officeContacts))
-                @foreach ($officeContacts as $contact)
-                  <div class="d-flex align-items-center">
-                    <!-- <i class="fa-solid fa-phone"></i> -->
-                    <span class="px-2 sm-text">{{ $contact }}</span>
-                  </div>
-                @endforeach
-              @else
-                <div class="d-flex align-items-center">
-                  <!-- <i class="fa-solid fa-phone"></i> -->
-                  <span class="px-2 sm-text">{{ $sitesetting->office_contact }}</span>
-                </div>
-              @endif
+              @php $officeContacts = json_decode($sitesetting->office_contact, true); @endphp
+              @foreach ((array)$officeContacts as $contact)
+                <div class="py-1"><span class="sm-text">{{ $contact }}</span></div>
+              @endforeach
             @endif
           </p>
         </div>
       </div>
 
-      <!-- Dynamic Content for Office Email -->
-      <div class="col-md-3 cardbackground d-flex justify-content-center align-items-center p-4 shadow-sm rounded">
+      <!-- Email -->
+      <div class="col-md-3 cardbackground" data-aos="zoom-in" data-aos-delay="300">
         <i class="fa-solid fa-envelope customiconslarge fa-2x"></i>
-        <div class="information text-center">
+        <div class="information mt-2">
           <h2 class="sm-text-bd">Office Email</h2>
           <p class="xs-text">
             @if (!empty($sitesetting->office_email))
-              @php
-                $officeEmails = json_decode($sitesetting->office_email, true);
-              @endphp
-              @if (is_array($officeEmails))
-                @foreach ($officeEmails as $email)
-                  <div class="d-flex align-items-center">
-                    <!-- <i class="fa-solid fa-envelope"></i> -->
-                    <span class="px-2 sm-text">{{ $email }}</span>
-                  </div>
-                @endforeach
-              @else
-                <div class="d-flex align-items-center">
-                  <!-- <i class="fa-solid fa-envelope"></i> -->
-                  <span class="px-2 sm-text">{{ $sitesetting->office_email }}</span>
-                </div>
-              @endif
+              @php $officeEmails = json_decode($sitesetting->office_email, true); @endphp
+              @foreach ((array)$officeEmails as $email)
+                <div class="py-1"><span class="sm-text">{{ $email }}</span></div>
+              @endforeach
             @endif
           </p>
         </div>
@@ -132,171 +137,114 @@
   </div>
 </section>
 
-
-
-
-
- <!-- form  -->
+<!-- Appointment Form -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<section class="container-fluid contactstart">
-    <div class="container my-5">
-        <div class="d-flex flex-column justify-content-center row customconnectwithus rounded align-items-center ">
-            <span class="d-flex flex-column justify-content-center align-items-center containertitle">
-                <h2 class="d-flex justify-content-center"></h2>
-                <h2 class="text-center pb-2 section_title">{{ trans('messages.inquiry') }}</h2>
-            </span>
-            <div class="d-flex flex-column justify-content-center align-items-center">
-    
-                <div class="customconnectwithus-innersection fcc gap-md-3 pb-4">
-                    
-                    <div class="customconnectwithus-innersection-right p-3 px-4 col-md-6">
-                        <span class="customconnectwithus-innersection-right-text xs-text whitehighlight">Please don't hesitate to reach out
-                            using the contact information below for any inquiries or to get in touch. We are eager to
-                            assist you and provide support in a friendly and helpful way.</span>
-                        <div class="customconnectwithus-innersection-right-ourdetail my-3 px-4 py-3">
-                        <form id="contactForm" class="form-horizontal" method="POST"
-                            action="{{ route('Contact.store') }}">
-                            @csrf
-                            <div class="customconnectwithus-innersection-left_inputcontainer d-flex flex-column">
-                                <label for="name">Name</label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                                    placeholder="NAME" name="name" value="{{ old('name') }}" required>
-                                @error('name')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="customconnectwithus-innersection-left_inputcontainer d-flex flex-column">
-                                <label for="phone_no">Contact Number</label>
-                                <input type="tel" class="form-control @error('phone_no') is-invalid @enderror"
-                                    id="phone_no" placeholder="Phone No." name="phone_no" value="{{ old('phone_no') }}"
-                                    required>
-                                @error('phone_no')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="customconnectwithus-innersection-left_inputcontainer d-flex flex-column">
-                                <input hidden type="text" class="form-control @error('email') is-invalid @enderror"
-                                    id="email" placeholder="Email" name="email" value="{{ old('email') }}">
-                                @error('email')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="customconnectwithus-innersection-left_inputcontainer d-flex flex-column">
-                                <label for="message">Message</label>
-                                <textarea class="form-control message-box @error('message') is-invalid @enderror"
-                                    rows="3" placeholder="MESSAGE" name="message"
-                                    required>{{ old('message') }}</textarea>
-                                @error('message')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
-                            <div class="customconnectwithus-innersection-left_inputcontainer d-flex flex-column my-1">
-                                <button type="submit sm-text">Submit</button>
-                            </div>
-                        </form>
-                    
-                        </div>
-                    </div>
-                    <div class="customconnectwithus-innersection-left col-md-5">
-                    <img src="https://plus.unsplash.com/premium_photo-1705091309202-5838aeedd653?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8"
-                    class="card-img-top w-100 rounded" alt="Service Image" style="object-fit: cover; height:612px;">
-                       
-                    </div>
-                </div>
-            </div>
-        </div>
+
+<section class=" container-fluid container my-5 py-4 shadow bg-white rounded-4">
+  <div class="row gx-5 align-items-stretch">
+    <!-- Left Column -->
+    <div class="col-md-4 d-flex flex-column justify-content-center bg-danger text-white p-4 rounded-4 shadow-sm">
+      <h4 class="fw-bold mb-4">Book Virtual<br>Appointment</h4>
+      <ul class="list-unstyled fs-6">
+        <li class="mb-3"><i class="fa-solid fa-circle-check me-2"></i> Volunteer Opportunities</li>
+        <li class="mb-3"><i class="fa-solid fa-circle-check me-2"></i> Join Our Mission</li>
+        <li class="mb-3"><i class="fa-solid fa-circle-check me-2"></i> Community Support Services</li>
+        <li class="mb-3"><i class="fa-solid fa-circle-check me-2"></i> Internship & Job Programs</li>
+        <li><i class="fa-solid fa-circle-check me-2"></i> Social Impact Initiatives</li>
+      </ul>
     </div>
+
+    <!-- Right Column - Form -->
+    <div class="col-md-8">
+      <form id="contactForm" method="POST" action="{{ route('Contact.store') }}" class="p-4">
+        @csrf
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <input type="text" name="name" class="form-control" placeholder="Name" value="{{ old('name') }}" required>
+          </div>
+          <div class="col-md-6">
+            <input type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}">
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <input type="tel" name="phone_no" class="form-control" id="phoneInput" placeholder="Phone Number" required>
+          </div>
+          <div class="col-md-6">
+            <input type="text" name="service" class="form-control" placeholder="Which service are you interested in?" value="{{ old('service') }}">
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <textarea name="message" class="form-control" rows="4" placeholder="Message" required>{{ old('message') }}</textarea>
+        </div>
+
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="agree" required>
+          <label class="form-check-label" for="agree">
+            By submitting the form I agree with the <a href="#" class="text-primary">Privacy Policy</a> of this site.
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-danger px-4 py-2 rounded-pill shadow">Book Appointment</button>
+      </form>
+    </div>
+  </div>
 </section>
+
+<!-- Form Submission Script -->
 <script>
-    $(document).ready(function () {
-        // Override the alert function to prevent normal alert popups
-        window.alert = function() {};
+  $(document).ready(function () {
+    $('#contactForm').on('submit', function (event) {
+      event.preventDefault();
 
+      const form = $(this);
+      const formData = new FormData(this);
 
-        $('#contactForm').on('submit', function (event) {
-            event.preventDefault(); // Prevent the default form submission
-            var form = $(this);
-            var formData = new FormData(this);
-            var recaptchaResponse = grecaptcha.getResponse();
-            if (recaptchaResponse.length === 0) {
-
-
-                swal.fire({
-                    icon: "warning",
-                    title: "Hold up",
-                    text: "Please tick the RECAPTCHA box before submitting.",
-                    confirmButtonText: 'Got it!',
-                    confirmButtonColor: '#f39c12'
-                });
-                return;
-            }
-            $.ajax({
-                url: form.attr('action'),
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (response) {
-                    // Assuming the server returns JSON with 'success' and 'message'
-                    if (response.success) {
-                        swal.fire({
-                            icon: "success",
-                            title: "Let happy",
-                            text: "Message sent successfully!",
-                            confirmButtonText: 'Got it!',
-                            confirmButtonColor: '#f39c12'
-                        });
-                        swal.fire({
-                            icon: "success",
-                            title: "Let happy",
-                            text: "Message sent successfully!",
-                            confirmButtonText: 'Got it!',
-                            confirmButtonColor: '#f39c12'
-                        });
-                    } else {
-                        swal.fire({
-                            icon: "warning",
-                            title: "Hold up",
-                            text: "Error in sending message. Please try again.",
-                            confirmButtonText: 'Got it!',
-                            confirmButtonColor: '#f39c12'
-                        });
-                        swal.fire({
-                            icon: "warning",
-                            title: "Hold up",
-                            text: "Error in sending message. Please try again.",
-                            confirmButtonText: 'Got it!',
-                            confirmButtonColor: '#f39c12'
-                        });
-                    }
-                },
-                error: function (xhr, status, error) {
-                    swal.fire({
-                        icon: "error",
-                        title: "Hold up",
-                        text: "An unexpected error occurred. Please try again.",
-                        confirmButtonText: 'Got it!',
-                        confirmButtonColor: '#f39c12'
-                    });
-                    swal.fire({
-                        icon: "error",
-                        title: "Hold up",
-                        text: "An unexpected error occurred. Please try again.",
-                        confirmButtonText: 'Got it!',
-                        confirmButtonColor: '#f39c12'
-                    });
-                }
-            });
+      // If using reCAPTCHA, validate it
+      const recaptchaResponse = grecaptcha.getResponse?.() || '';
+      if (recaptchaResponse.length === 0) {
+        Swal.fire({
+          icon: "warning",
+          title: "Hold up",
+          text: "Please tick the RECAPTCHA box before submitting.",
+          confirmButtonText: 'Got it!',
+          confirmButtonColor: '#f39c12'
         });
+        return;
+      }
+
+      $.ajax({
+        url: form.attr('action'),
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+          Swal.fire({
+            icon: response.success ? "success" : "warning",
+            title: response.success ? "Success" : "Hold up",
+            text: response.message || "Form submitted!",
+            confirmButtonText: 'Got it!',
+            confirmButtonColor: '#f39c12'
+          });
+        },
+        error: function () {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "An unexpected error occurred. Please try again.",
+            confirmButtonText: 'Got it!',
+            confirmButtonColor: '#f39c12'
+          });
+        }
+      });
     });
+  });
 </script>
- 
-
-
-
-
-
-
 
 @endsection

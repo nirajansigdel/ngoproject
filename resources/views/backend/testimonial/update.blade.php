@@ -52,28 +52,6 @@
                     style="max-width: 300px; max-height:300px" />
             </div>
             <div class="form-group">
-                <label for="company_id">Company</label>
-                <select name="company_id" class="form-control" id="company_id" required>
-                    <option value="">Select Company</option>
-                    @foreach ($companies as $company)
-                        <option value="{{ $company->id }}"
-                            {{ $testimonials->company_id == $company->id ? 'selected' : '' }}>
-                            {{ $company->title }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="work_category_id">Work Category</label>
-                <select name="work_category_id" class="form-control" id="work_category_id" required>
-                    <option value="">Select Work Category</option>
-                    @foreach ($work_categories as $work_category)
-                        <option value="{{ $work_category->id }}"
-                            {{ $testimonials->work_category_id == $work_category->id ? 'selected' : '' }}>{{ $work_category->title }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group">
                 <label for="description">Description</label>
                 <textarea class="form-control" name="description" id="description" rows="3" required>{{ $testimonials->description }}</textarea>
             </div>
