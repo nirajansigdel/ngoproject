@@ -306,41 +306,52 @@
   </style>
 
 
-  <section class="container-fluid cardslider1 whyus gapbetweensection py-5">
-    <div class="container">
-    <div class="row col-12">
-      <div class="text-center py-2">
-      <h1 class="extralarger blackhighlight"> Learn With Us</h1>
-      <p class="xs-text">"Explore the path to inner and self-discovery. Learn Yoga Meditation with us."</p>
-      </div>
+<section class="container-fluid py-5" style="background: #f8fafc;">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h1 class="fw-bold" style="color: #222;">List of Our Services</h1>
+      <p class="fs-5 text-muted fst-italic">"Empowering communities through dedicated service and care."</p>
     </div>
-    <div class="row mt-3">
-      @foreach ($services as $service)
-      <div class="item col-md-4">
-      <div class="col-md-10 fcc flex-column">
-      <a href="{{ route('SingleService', ['slug' => $service->slug]) }}" class="">
 
-      <div class="d-flex gap-2 justify-content-center">
-        @if ($service->image)
-      <img src="{{ asset('uploads/service/' . $service->image) }}" class="smimage mb-2" alt="Service Image">
-      @else
-      <img
-      src="https://plus.unsplash.com/premium_photo-1705091309202-5838aeedd653?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8"
-      class="smimage mb-2" alt="Default Image">
-      @endif
-      </div>
-      <div class="col-12 flex-column ">
-        <h3 class="md-text mb-2 text-center">{{ Str::limit(strip_tags($service->description), 20) }}</h3>
-        <p class="extra-small-text1 text-center mx-2">
-        {{ Str::limit(strip_tags($service->description), 50) }}
-        </p>
-      </div>
+    @foreach ($services as $index => $service)
+      <div class="row align-items-center mb-5">
+        <!-- Image column -->
+        <div class="col-md-6 d-flex justify-content-center 
+          {{ $index % 2 == 0 ? 'order-1 order-md-2' : 'order-1 order-md-1' }}">
+          <div class="overflow-hidden rounded" style="max-width: 400px; max-height: 250px;">
+            @if ($service->image)
+              <img src="{{ asset('uploads/service/' . $service->image) }}" 
+                   alt="Service Image" 
+                   class="img-fluid" 
+                   style="object-fit: cover; width: 100%; height: 100%;">
+            @else
+              <img src="https://plus.unsplash.com/premium_photo-1705091309202-5838aeedd653?w=800&auto=format&fit=crop&q=60" 
+                   alt="Default Image" 
+                   class="img-fluid" 
+                   style="object-fit: cover; width: 100%; height: 100%;">
+            @endif
+          </div>
+        </div>
 
-      </a>
-      </div>
+        <!-- Text column -->
+        <div class="col-md-6 d-flex flex-column 
+          {{ $index % 2 == 0 ? 'order-2 order-md-1' : 'order-2 order-md-2' }}">
+          <h3 class="fw-bold text-dark">{{ Str::limit(strip_tags($service->title), 40) }}</h3>
+          <p class="text-secondary mb-4 " style="line-height: 1.5;">
+           {!! Str::limit(str_replace('&nbsp;', ' ', strip_tags($service->description)), 350) !!}
+
+          </p>
+          <a href="{{ route('SingleService', ['slug' => $service->slug]) }}" 
+             class="btn btn-primary px-4 py-2 rounded-pill text-white" style="width: fit-content;">
+            Learn More
+          </a>
+        </div>
       </div>
     @endforeach
-    </div>
-    </div>
-  </section>
+  </div>
+</section>
+
+
+
+
 @endsection

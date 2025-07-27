@@ -20,8 +20,9 @@
     </div>
     <div class="content-body d-md-flex flex-column pt-3">
       <div class="col-md-12">
-        @if(isset($clientMessages) && $clientMessages->count() > 0)
-        @foreach($clientMessages->take(4) as $clientMessage)
+     @if(isset($testimonials) && $testimonials->count() > 0)
+        @foreach($testimonials->take(4) as $testimonial)
+
         <div class="flex-md-row box-shadow py-3 testimonialcard" id="grabcard">
   <div class="row rounded">
     <!-- Image Column (col-md-4, 1/3 of the container) -->
@@ -40,12 +41,12 @@
     proffesional $ personal
       </h3>
 
-      <p class="sm-text test-mess col-md-10 ">{{ \Str::limit(strip_tags($clientMessage->message), 500) }}</p>
+      <p class="sm-text test-mess col-md-10 ">{{ \Str::limit(strip_tags($testimonial->message), 500) }}</p>
 
       <div class="d-flex pt-2">
       </div>
       <h3 class="mb-0 md-text">
-          {{ $clientMessage->name }}
+          {{ $testimonial->name }}
       </h3>
     </div>
   </div>

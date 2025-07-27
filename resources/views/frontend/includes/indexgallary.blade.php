@@ -142,24 +142,29 @@
       <h1 class="extralarger blackhighlight">Photo Gallery</h1>
       <p class="xs-text">Journey through our moments of inspiration, achievement, and community spirit</p>
     </div>
-    
-    <div class="gallery-wrapper">
-      <div class="gallery-masonry">
-        @forelse($demands->take(6) as $project)
-          <div class="gallery-item mt-2">
-            <img src="{{ asset('uploads/demands/' . $project->image) }}" 
-                 class="gallery-img" 
-                 alt="Project Image">
-            <div class="gallery-content">
-              <a href="{{ route('Gallery') }}" class="view-btn">Explore Gallery →</a>
+  <div id="imageContent" class="gallery-wrapper">
+            <div class="gallery-masonry">
+                @foreach($images->sortByDesc('updated_at') as $image)
+                    <div class="gallery-item" data-category="{{ $image->category->slug ?? 'uncategorized' }}">
+                        <div class="gallery-inner">
+                            @if(!empty($image->img) && is_array($image->img))
+                                <img src="{{ asset(last($image->img)) }}" 
+                                     alt="{{ $image->title }}"
+                                     class="gallery-img">
+                            @endif
+                            <div class="gallery-content">
+                                <h5 class="image-title text-white mb-3">{{ $image->title }}</h5>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <a href="{{ route('singleImage', $image->slug) }}" class="view-btn">
+                                        View More Images →
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
-          </div>
-        @empty
-          <div class="col-12">
-            <p class="text-center">No projects available</p>
-          </div>
-        @endforelse
-      </div>
-    </div>
+        </div>
+
   </div>
 </section>

@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use App\Models\DirectorMessage;
 use App\Models\BlogPostsCategory;
 use App\Models\ClientMessage;
+use App\Models\Faq;
 use App\Models\Demand;
 
 
@@ -87,13 +88,20 @@ class SingleController extends Controller
         return view('frontend.blogpostcategories', compact('blogpostcategories','demands'));
 
     }
-    public function render_singleBlogpostcategory($slug)
-    {
-        $demands = Demand::latest()->get(); 
-        $blogpostcategory = BlogPostsCategory::where('slug', $slug)->firstOrFail();
-        $listblogs = BlogPostsCategory::where('slug', '!=', $slug)->latest()->get()->take(5);
-        return view('frontend.blogpostcategory', compact('blogpostcategory', 'listblogs','demands'));
-    }
+
+// app/Http/Controllers/BlogPostsCategoryController.php
+
+public function render_singleBlogpostcategory($slug)
+{
+    $demands = Demand::latest()->get(); 
+    $blogpostcategory = BlogPostsCategory::where('slug', $slug)->firstOrFail();
+    $listblogs = BlogPostsCategory::where('slug', '!=', $slug)->latest()->take(5)->get();
+
+    return view('frontend.blogpostcategory', compact('blogpostcategory', 'listblogs', 'demands'));
+}
+
+
+
     public function render_singleService($slug)
     {
         $service = Service::where('slug', $slug)->firstOrFail();
@@ -186,7 +194,8 @@ class SingleController extends Controller
     $services = Service::latest()->get();
     $sitesetting = SiteSetting::first();
     $about = About::first();
-    return view('frontend.event', compact('images', 'services', 'categories', 'sitesetting', 'about','demands'));
+    $blogpostcategories = BlogPostsCategory::all();
+    return view('frontend.event', compact('images', 'services', 'categories', 'sitesetting', 'about','demands','blogpostcategories'));
 }
 
     public function teams()
@@ -229,5 +238,44 @@ class SingleController extends Controller
         $demands = Demand::latest()->get(); 
         return view('frontend.apply', compact('demand','demands'));
     }
+
+
+    public function render_faqs()
+    {
+        $demand = Demand::latest()->get();
+        $demands = Demand::latest()->get(); 
+        $listdemands = Demand::latest()->get();
+          $faqs = Faq::latest()->get();
+        return view('frontend.Procurement', compact('demand','listdemands','demands','faqs'));
+    }
+
+   public function render_career()
+    {
+        $demand = Demand::latest()->get();
+        $demands = Demand::latest()->get(); 
+        $listdemands = Demand::latest()->get();
+          $faqs = Faq::latest()->get();
+        return view('frontend.career', compact('demand','listdemands','demands','faqs'));
+    }
+
+       public function render_volunteer()
+    {
+        $demand = Demand::latest()->get();
+        $demands = Demand::latest()->get(); 
+        $listdemands = Demand::latest()->get();
+          $faqs = Faq::latest()->get();
+        return view('frontend.volunteer', compact('demand','listdemands','demands','faqs'));
+    }
+
+
+        public function render_applycareer()
+    {
+        $demand = Demand::latest()->get();
+        $demands = Demand::latest()->get(); 
+        $listdemands = Demand::latest()->get();
+          $faqs = Faq::latest()->get();
+        return view('frontend.careerapply', compact('demand','listdemands','demands','faqs'));
+    }
+
 }
 

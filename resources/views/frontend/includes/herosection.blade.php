@@ -16,7 +16,7 @@
 }
 </style>
 
-<section class="container-fluid  ">
+<section class="container-fluid mt-2  ">
     <div class="container bg-dark text-white py-5 min-vh-84 d-flex align-items-center rounded">
         <div class="row align-items-center mx-5 g-5 ">
             <!-- Left Content -->

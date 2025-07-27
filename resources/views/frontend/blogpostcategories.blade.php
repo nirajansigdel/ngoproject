@@ -17,7 +17,6 @@
 
 
 
-
 <section class="container-fluid bg-light">
 <div class="container py-5 ">
     <div class="row">
@@ -29,8 +28,8 @@
                     <div class="blog-info">
                         <span class="badge">BLOG</span>
                         <h5>{{ $blogs->title }}</h5>
-                        <p>Whatever you’re publishing. Whoever your audience is. WordPress.com makes it simple to get started. And easy to expand your site as your audience grows.</p>
-                        <a href="{{ route('SingleBlogCategory', $blogs->slug) }}" class="btn btn-sm btn-outline-light mt-2 read-more-btn">Read More</a>
+                         <p>{{Str::limit(strip_tags($blogs->content), 150) }}</p>
+                       <a href="{{ route('SingleBlogCategory', $blogs->slug) }}" class="btn btn-sm btn-outline-light mt-2 read-more-btn">Read More</a>
                     </div>
                 </div>
             </div>
@@ -174,5 +173,7 @@
     </div>
 </section>
 
-
 @endsection
+
+
+

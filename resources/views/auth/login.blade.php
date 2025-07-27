@@ -115,8 +115,13 @@
                                                 ?>
                                                 <img height="200" width="200" src="{{ $logoUrl }}"> --}}
                                                 {{-- <p class="opacity-75 text-white">With the power of Falcon, you can now focus only on functionaries for your digital products, while leaving the UI design on us!</p> --}}
-
-                                                <img height="200" width="200" src="{{ asset('adminassets/assets/img/logo (2).png') }}" alt="New Image">
+<style>
+    .adminimg{
+        object-fit: contain;
+    }
+    
+</style>
+                                                <img height="300" width="200" src="{{ asset('image/OIP.jpeg') }}" alt="New Image" class="adminimg">
                                             </div>
                                         </div>
                                 

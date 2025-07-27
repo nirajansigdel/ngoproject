@@ -12,18 +12,21 @@
 <section class="container-fluid bg-light">
 <div class="container py-5 ">
     <div class="row">
-  
+        @foreach ($blogpostcategories->take(3) as $blogs)
             <div class="col-md-4 mb-4">
                 <div class="blog-card">
-                    <img src="{{ asset('image/um.jpg') }}" class="blog-img" alt="">
+                    <img src="{{ asset('uploads/blogpostcategory/' . $blogs->image) }}" class="blog-img" alt="{{ $blogs->title }}">
+
                     <div class="blog-info">
-                        <span class="badge">Event & News</span>
-                        <h5>this is the title</h5>
-                        <p>Whatever you’re publishing. Whoever your audience is. WordPress.com makes it simple to get started. And easy to expand your site as your audience grows.</p>
-                        <a href="#" class="btn btn-sm btn-outline-light mt-2 read-more-btn">Read More</a>
+                        <span class="badge">BLOG</span>
+                        <h5>{{ $blogs->title }}</h5>
+                     <p>{{Str::limit(strip_tags($blogs->content), 150) }}</p>
+
+                        <a href="{{ route('SingleBlogCategory', $blogs->slug) }}" class="btn btn-sm btn-outline-light mt-2 read-more-btn">Read More</a>
                     </div>
                 </div>
             </div>
+        @endforeach
     </div>
 </div>
 </section>

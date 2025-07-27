@@ -199,8 +199,8 @@
                         opportunity
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="">career Opprotunity</a></li>
-                        <li><a class="dropdown-item" href="">Volunteer</a></li>
+                        <li><a class="dropdown-item" href="{{ route('career') }}">career Opprotunity</a></li>
+                        <li><a class="dropdown-item" href="{{ route('volunteer') }}">Volunteer</a></li>
 
                     </ul>
                 </li>
@@ -214,7 +214,7 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="{{ route('events') }}">News & events</a></li>
                         <a class="dropdown-item" href="{{ route('Blogpostcategory') }}">Blogs</a>
-                       <a class="dropdown-item" href="#">Procurement</a>
+                       <a class="dropdown-item" href="{{ route('faqs') }}">Procurement</a>
 
 
                     </ul>

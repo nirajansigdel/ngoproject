@@ -43,7 +43,9 @@ class FrontViewController extends Controller
         $clients = Client::latest()->get();
         $clientMessages = ClientMessage::latest()->get();
         $latestVacancies = Demand::where('to_date', '>=', Carbon::today())->get();
-        $gallery = PhotoGallery::latest()->get(); // or paginate if needed
+        $images = PhotoGallery::latest()->get();
+     // Assuming you have an Event model
+        // or paginate if needed
     
         return view('frontend.index', compact(
             'services',
@@ -61,7 +63,9 @@ class FrontViewController extends Controller
             'firstCategory',
             'clientMessages',
             'latestVacancies',
-            'gallery' // ✅ Corrected here (no quotes!)
+            'images' ,
+        
+            // ✅ Corrected here (no quotes!)
         ));
     }
        

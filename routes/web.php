@@ -93,8 +93,13 @@ Route::prefix('/')->group(function () {
     Route::get('/aboutus', [SingleController::class, 'render_about'])->name('About');
     Route::get('/whyus', [SingleController::class, 'render_whyus'])->name('whyus');
     Route::get('/testimonial', [SingleController::class, 'render_testimonial'])->name('Testimonial');
-    Route::get('/blogpostcategories', [SingleController::class, 'render_blogpostcategory'])->name('Blogpostcategory');
-    Route::get('/blogpostcategory/{slug}', [SingleController::class, 'render_singleBlogpostcategory'])->name('SingleBlogpostcategory');
+  // Route to show all blog categories
+Route::get('/blogpostcategories', [SingleController::class, 'render_blogpostcategory'])->name('Blogpostcategory');
+Route::get('/blog-category/{slug}', [SingleController::class, 'render_singleBlogpostcategory'])->name('SingleBlogpostcategory'); // if method is in SingleController
+
+
+
+
     Route::get('/team', [SingleController::class, 'render_team'])->name('Team');
     Route::get('/services', [SingleController::class, 'render_service'])->name('Service');
     Route::get('/singleservice/{slug}', [SingleController::class, 'render_singleService'])->name('SingleService');
@@ -107,6 +112,7 @@ Route::prefix('/')->group(function () {
    
     Route::get('/gallery', [SingleController::class, 'render_gallery'])->name('Gallery');
     Route::get('/events', [SingleController::class, 'render_events'])->name('events');
+    Route::get('/faqs', [SingleController::class, 'render_faqs'])->name('faqs');
     Route::get('/countries', [SingleController::class, 'render_Countries'])->name('Countries');
     Route::get('/singlecountry/{slug}', [SingleController::class, 'render_singleCountry'])->name('singleCountry');
     Route::get('/singlecompany/{slug}', [SingleController::class, 'singleCompany'])->name('singleCompany');
@@ -115,6 +121,9 @@ Route::prefix('/')->group(function () {
     Route::get('/singlepost/{slug}', [SingleController::class, 'render_singlePost'])->name('singlePost');
     Route::get('/gallerys/{slug}', [SingleController::class, 'render_singleImage'])->name('singleImage');
     Route::get('/blogcategory/{slug}', [SingleController::class, 'render_singleBlogpostcategory'])->name('SingleBlogCategory');
+    Route::get('/career', [SingleController::class, 'render_career'])->name('career');
+    Route::get('/volunteer', [SingleController::class, 'render_volunteer'])->name('volunteer');
+      Route::get('/applycareer', [SingleController::class, 'render_applycareer'])->name('applycareer');
 
     // Route::get('/ceo-message', [CeomessageController::class, 'showCeoMessage'])->name('ceo.message');
 
@@ -208,6 +217,7 @@ Route::prefix('/admin')->name('admin.')->middleware(['web', 'auth'])->group(func
 Route::get('/blogs', [FrontViewController::class, 'blogs'])->name('blogs.index');
 
 Route::get('/news', [FrontViewController::class, 'news'])->name('news.index');
+// Route::get('/faqs', [FrontViewController::class, 'faqs'])->name('faqs');
 
 Route::get('/courses/{slug}', 'FrontViewController@viewCourse');
 

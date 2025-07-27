@@ -13,15 +13,9 @@
     min-height: 40vh;
   }
 
-  .md-text {
-    color: #2c3e50;
-    font-weight: 600;
-  }
+  
 
-  .extra-small-text1 {
-    color: #5d6d7e;
-    line-height: 1.6;
-  }
+
 </style>
 
 
@@ -37,8 +31,7 @@
       @foreach ($services as $service)
         <div class="item col-md-4">
           <div class="col-md-10 fcc flex-column">
-            <a href="{{ route('SingleService', ['slug' => $service->slug]) }}" class="">
-             
+            <a href="{{ route('SingleService', ['slug' => $service->slug]) }}" class="text-decoration-none text-dark">
               <div class="d-flex gap-2 justify-content-center">
                 @if ($service->image)
                   <img src="{{ asset('uploads/service/' . $service->image) }}" class="smimage mb-2" alt="Service Image">
@@ -47,9 +40,9 @@
                 @endif
               </div>
               <div class="col-12 flex-column ">
-              <h3 class="md-text mb-2 text-center">{{ Str::limit(strip_tags($service->description), 20) }}</h3>
-              <p class="extra-small-text1 text-center mx-2">
-                {{ Str::limit(strip_tags($service->description), 50) }}
+              <h3 class="md-text mb-2 text-center">{{ Str::limit(strip_tags($service->title), 20) }}</h3>
+              <p class="extra-small-text1  mx-2">
+                  {!! Str::limit(str_replace('&nbsp;', ' ', strip_tags($service->description)), 150) !!}
               </p>
               </div>
             
