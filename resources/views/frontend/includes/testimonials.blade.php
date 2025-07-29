@@ -1,4 +1,5 @@
-<style>
+ {{-- <style>
+ 
   .indextestimonial button {
     background: var(--primary);
     color: var(--white);
@@ -106,3 +107,81 @@
     updateDisplay();
   });
 </script>
+ --}}
+ <!-- Bootstrap 5 CSS CDN -->
+<!-- Bootstrap 5 CSS CDN -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.4.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<section class="py-5" style="background-color: #f7f7f7;">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-10 position-relative">
+
+        <div class="row gx-0 align-items-center">
+
+          <!-- Image Column -->
+          <div class="col-md-6 position-absolute" style="z-index: 2; left: 0;">
+            <div class="floating-wrapper rounded  overflow-hidden" style="height: 320px;">
+              <img src="{{ asset('image/rescue.avif') }}" alt="Portrait of a girl"
+                class="img-fluid w-100 h-100 floating-image" style="object-fit: cover;">
+              <button type="button"
+                class="btn btn-play position-absolute top-50 start-50 translate-middle rounded-circle border border-white"
+                aria-label="Play Video">
+                <svg width="24" height="24" fill="#ef6b20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Text Content -->
+          <div class="offset-md-3 col-md-9 bg-warning text-white rounded shadow p-5" >
+            <div class="row">
+              <div class="col-md-4"></div>
+              <div class="col-md-8">
+                <h2 class="fw-light fst-italic mb-4" style="font-size: 2rem;">“I Have a New Hope…”</h2>
+                <p>Thousands of children are being forced to grow up in dangerous environments — without safety, support, or a chance at a future..</p>
+                <p>Many are denied access to school, pushed into unsafe work, or trapped in cycles of exploitation. But it doesn’t have to stay this way.</p>
+                <p class="fst-italic">
+                  You can help send <strong>Umbrella Organization Nepal</strong> agents to children trapped in these harsh realities and help restore their dreams.
+                </p>
+                <button type="button" class="btn btn-outline-light fw-bold mt-3 px-4 py-2">BECOME A OUR TEAM</button>
+              </div>
+              
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Style Section -->
+<style>
+  .btn-play {
+    background: transparent;
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-play:hover {
+    background-color: rgba(239, 107, 32, 0.8);
+  }
+
+  /* Floating Animation */
+  .floating-image {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+</style>

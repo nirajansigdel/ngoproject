@@ -1,6 +1,5 @@
 <style>
 .gallery-section {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   padding: 80px 0;
   position: relative;
   overflow: hidden;
