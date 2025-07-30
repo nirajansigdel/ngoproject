@@ -9,31 +9,6 @@
     padding: 2px;
   }
 
-  /* Dynamic background colors based on the index of child */
-  .Service .row .col-md-4:nth-child(1) .image-bg {
-    background: var(--bs-yellow);
-  }
-
-  .Service .row .col-md-4:nth-child(2) .image-bg {
-    background: #2ECD9A;
-  }
-
-  .Service .row .col-md-4:nth-child(3) .image-bg {
-    background: var(--primary);
-  }
-
-  .Service .row .col-md-4:nth-child(4) .image-bg {
-    background: gray;
-  }
-
-  .Service .row .col-md-4:nth-child(5) .image-bg {
-    background: yellow;
-  }
-
-  .Service .row .col-md-4:nth-child(6) .image-bg {
-    background: purple;
-  }
-
   .course-card {
     transition: transform 0.3s ease;
     border: none;
@@ -50,7 +25,6 @@
     object-fit: cover;
     transition: transform 0.3s ease;
   }
-
 
   .card-body {
     padding: 1rem;
@@ -97,93 +71,69 @@
   }
 </style>
 
-    <!-- multiple post of service -->
-    <section class="py-5">
+<section class="py-5 Service">
   <div class="container">
-    <!-- Title -->
+
+    <!-- Section Title -->
     <div class="text-center mb-5">
       <h1 class="extralarger blackhighlight">Most popular project</h1>
       <p class="xs-text">
         "Explore our most popular classes - where wellness meets wisdom. Join us in the journey to holistic well-being."
       </p>
     </div>
+    <!-- Carousel for remaining demands or all -->
+    <div id="coursesCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
 
-    <!-- Card 1: School Demands -->
-    <div class="row g-4">
-      @foreach ($demands->where('type', 'school') as $course)
-        @include('frontend.includes._demand_card', ['course' => $course])
-      @endforeach
-    </div>
+        @php
+          $chunks = $demands->chunk(3);
+        @endphp
 
-    <!-- Card 2: College Demands -->
-    <div class="row g-4">
-      @foreach ($demands->where('type', 'college') as $course)
-        @include('frontend.includes._demand_card', ['course' => $course])
-      @endforeach
-    </div>
-
-    <!-- Card 3: Employer Demands -->
-    <div class="row g-4">
-      @foreach ($demands->where('type', 'employer') as $course)
-        @include('frontend.includes._demand_card', ['course' => $course])
-      @endforeach
-    </div>
-
-
-      Cards 4 
-    <div class="row g-4">
-      @foreach ($demands as $course)
-      <div class="col-md-4">
-        <div class="card course-card shadow-sm">
-          @if ($course->image)
-          <img src="{{ asset('uploads/demands/' . $course->image) }}" class="card-img-top course-img" alt="Course Image">
-          @else
-          <img src="https://plus.unsplash.com/premium_photo-1705091309202-5838aeedd653?w=500&auto=format&fit=crop&q=60" class="card-img-top course-img" alt="Default Image">
-          @endif
-          <div class="card-body d-flex flex-column">
-            <h5 class="course-title">{{ Str::limit(strip_tags($course->description), 40) }}</h5>
-            <p class="course-desc">{{ Str::limit(strip_tags($course->vacancy), 50) }}</p>
-            <p class="course-desc mb-3">{{ Str::limit(strip_tags($course->content), 30) }}</p>
-            <div class="mb-4">
-                <button class="join-btn join-now-btn">Join now</button>
+        @foreach ($chunks as $index => $coursesChunk)
+          <div class="carousel-item @if($index == 0) active @endif">
+            <div class="row g-4 justify-content-center">
+              @foreach ($coursesChunk as $course)
+                <a class="col-md-4" style="text-decoration: none;">
+                  <div class="card course-card shadow-sm">
+                    @if ($course->image)
+                      <img src="{{ asset('uploads/demands/' . $course->image) }}" class="card-img-top course-img" alt="Course Image">
+                    @else
+                      <img src="https://plus.unsplash.com/premium_photo-1705091309202-5838aeedd653?w=500&auto=format&fit=crop&q=60" class="card-img-top course-img" alt="Default Image">
+                    @endif
+                    <div class="card-body d-flex flex-column">
+                      <h5 class="course-title">{{ Str::limit(strip_tags($course->description), 40) }}</h5>
+                      <p class="course-desc">{{ Str::limit(strip_tags($course->vacancy), 50) }}</p>
+                      <p class="course-desc mb-3">{{ Str::limit(strip_tags($course->content), 30) }}</p>
+                    </div>
+                  </div>
+                </a>
+              @endforeach
             </div>
           </div>
-        </div>
+        @endforeach
+
       </div>
-      @endforeach
+
+      <!-- Carousel Controls -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#coursesCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#coursesCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
-
- card 5
-
-    <div class="row g-4">
-      @foreach ($demands as $course)
-      <div class="col-md-4">
-        <div class="card course-card shadow-sm">
-          @if ($course->image)
-          <img src="{{ asset('uploads/demands/' . $course->image) }}" class="card-img-top course-img" alt="Course Image">
-          @else
-          <img src="https://plus.unsplash.com/premium_photo-1705091309202-5838aeedd653?w=500&auto=format&fit=crop&q=60" class="card-img-top course-img" alt="Default Image">
-          @endif
-          <div class="card-body d-flex flex-column">
-            <h5 class="course-title">{{ Str::limit(strip_tags($course->description), 40) }}</h5>
-            <p class="course-desc">{{ Str::limit(strip_tags($course->vacancy), 50) }}</p>
-            <p class="course-desc mb-3">{{ Str::limit(strip_tags($course->content), 30) }}</p>
-            <div class="mb-4">
-                <button class="join-btn join-now-btn">Join now</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      @endforeach
-    </div>
-
-    
 
     <!-- View More Button -->
     <div class="text-center mt-5">
       <a href="{{ route('Demand') }}" class="btn btn-primary px-4 py-2 view-more-btn">View More</a>
     </div>
+
   </div>
 </section>
 
-
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Bootstrap JS Bundle (Popper + Bootstrap) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
