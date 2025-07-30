@@ -10,13 +10,32 @@ class Demand extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['country_id','vacancy', 'content', 'image', 'type'];
+      protected $fillable = [
+         'country_id',
+        'heading',
+        'subtitle', 
+        'from_date',
+        'to_date',
+        'content',
+        'image',
+        'vacancy',
+        'number_of_people_required',
+        'type',
+        'demand_types'
+    ];
 
+     protected $casts = [
+        'demand_types' => 'array',
+        'from_date' => 'date',
+        'to_date' => 'date',
+    ];
+
+    
     // Define relationship with Country
-    public function country()
-    {
-        return $this->belongsTo(Country::class);
-    }
+   public function country()
+{
+    return $this->belongsTo(Country::class);
+}
 
     public function scopeActive(Builder $query)
     {

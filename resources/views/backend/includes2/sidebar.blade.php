@@ -171,6 +171,14 @@
                                         class="fas fa-users"></i></span><span class="nav-link-text ps-1">Services
                                 </span></div>
                         </a>
+                        @can('whyus-list')
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('admin.whyus.index') }}">
+        <i class="fas fa-question-circle"></i>
+        <span>Why Us</span>
+    </a>
+</li>
+@endcan
                         <ul class="nav collapse  {{ Request::segment(2) == 'services' ? 'show' : '' }}" id="dashboard6">
                             @can('list_services')
                                 <li class="nav-item"><a

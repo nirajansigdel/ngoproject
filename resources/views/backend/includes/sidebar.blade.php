@@ -341,6 +341,56 @@
 
 
 
+
+
+                @hasanyrole('superadmin')
+<li class="nav-item">
+    <!-- Navbar vertical label -->
+    <div class="row navbar-vertical-label-wrapper mt-3 mb-2">
+        <div class="col-auto navbar-vertical-label">WhyUs</div>
+        <div class="col ps-0">
+            <hr class="mb-0 navbar-vertical-divider">
+        </div>
+    </div>
+    <!-- Dropdown item -->
+    <li class="nav-item">
+        <a class="nav-link {{ Request::segment(2) == 'why-us' ? '' : 'collapsed' }}"
+           href="{{ route('backend.whyus.index') }}"
+           role="button">
+            <div class="d-flex align-items-center">
+                <span class="nav-link-icon"><i class="fas fa-users"></i></span>
+                <span class="nav-link-text ps-1">Why Us</span>
+            </div>
+        </a>
+    </li>
+</li>
+@endhasanyrole
+
+                @hasanyrole('superadmin')
+<li class="nav-item">
+    <!-- Navbar vertical label -->
+    <div class="row navbar-vertical-label-wrapper mt-3 mb-2">
+        <div class="col-auto navbar-vertical-label">Event</div>
+        <div class="col ps-0">
+            <hr class="mb-0 navbar-vertical-divider">
+        </div>
+    </div>
+    <!-- Dropdown item -->
+    <li class="nav-item">
+        <a class="nav-link {{ Request::segment(2) == 'why-us' ? '' : 'collapsed' }}"
+           href="{{ route('backend.event.index') }}"
+           role="button">
+            <div class="d-flex align-items-center">
+                <span class="nav-link-icon"><i class="fas fa-users"></i></span>
+                <span class="nav-link-text ps-1">Event</span>
+            </div>
+        </a>
+    </li>
+</li>
+@endhasanyrole
+
+
+
                 {{-- Beginning of Posts --}}
                 @hasanyrole('superadmin')
                     <li class="nav-item">

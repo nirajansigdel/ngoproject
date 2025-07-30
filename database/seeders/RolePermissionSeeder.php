@@ -14,7 +14,7 @@ class RolePermissionSeeder extends Seeder
         // Define the list of roles
         $listOfRoles = ['superadmin', 'admin'];
 
-        // Define the list of permissions
+        // Define the list of permissions (added WhyUs permissions at the end)
         $arrayOfPermissionNames = [
             'create_site_settings',
             'list_site_settings',
@@ -48,19 +48,14 @@ class RolePermissionSeeder extends Seeder
             'list_countries',
             'edit_countries',
             'delete_countries',
-
-           
             'create_work_categories',
             'list_work_categories',
             'edit_work_categories',
             'delete_work_categories',
-
             'create_companies',
             'list_companies',
             'edit_companies',
             'delete_companies',
-          
-
             'create_testimonials',
             'list_testimonials',
             'edit_testimonials',
@@ -94,22 +89,24 @@ class RolePermissionSeeder extends Seeder
             'edit_demands',
             'delete_demands',
             'list_applications',
-            'list_ceomessage'
+            'list_ceomessage',
 
-
-            // 'create_users',
-            // 'list_users',
-            // 'edit_users',
-            // 'delete_users',
+            // Added WhyUs permissions
+            'create_whyus',
+            'list_whyus',
+            'edit_whyus',
+            'delete_whyus',
         ];
 
-        // Create the permissions
+        // Create the permissions if they do not exist
         foreach ($arrayOfPermissionNames as $permissionName) {
-            Permission::create(['name' => $permissionName, 'guard_name' => 'web']);
+            Permission::firstOrCreate(['name' => $permissionName, 'guard_name' => 'web']);
         }
 
-        // Define permissions for each role
-        $permissionsForSuperAdminRole = Permission::pluck('name');
+        // Fetch all permission names for superadmin
+        $permissionsForSuperAdminRole = Permission::pluck('name')->toArray();
+
+        // Define permissions assigned to admin role (including WhyUs)
         $permissionsForAdminRole = [
             'create_site_settings',
             'list_site_settings',
@@ -135,7 +132,6 @@ class RolePermissionSeeder extends Seeder
             'list_photo_galleries',
             'edit_photo_galleries',
             'delete_photo_galleries',
-
             'create_video_galleries',
             'list_video_galleries',
             'edit_video_galleries',
@@ -143,7 +139,7 @@ class RolePermissionSeeder extends Seeder
             'create_countries',
             'list_countries',
             'edit_countries',
-            'delete_countries',  
+            'delete_countries',
             'create_companies',
             'list_companies',
             'edit_companies',
@@ -185,22 +181,25 @@ class RolePermissionSeeder extends Seeder
             'edit_demands',
             'delete_demands',
             'list_applications',
-            'list_ceomessage'
+            'list_ceomessage',
 
-
+            // Added WhyUs permissions for admin role
+            'create_whyus',
+            'list_whyus',
+            'edit_whyus',
+            'delete_whyus',
         ];
-        $guardName = 'web';
-        // Create roles and assign permissions to each role
-        foreach ($listOfRoles as $roleName) {
-            $role = Role::create(['name' => $roleName]);
 
-            // Assign specific permissions based on role
+        // Create or update roles and assign permissions
+        foreach ($listOfRoles as $roleName) {
+            $role = Role::firstOrCreate(['name' => $roleName]);
+
             switch ($roleName) {
                 case 'superadmin':
                     $role->syncPermissions($permissionsForSuperAdminRole);
                     break;
                 case 'admin':
-                    $role->givePermissionTo($permissionsForAdminRole);
+                    $role->syncPermissions($permissionsForAdminRole);
                     break;
             }
         }

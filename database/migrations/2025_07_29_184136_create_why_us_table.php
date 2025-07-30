@@ -5,20 +5,21 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
-    public function up()
+    public function up(): void
     {
-        Schema::create('faqs', function (Blueprint $table) {
+        Schema::create('why_us', function (Blueprint $table) {
             $table->id();
             $table->string('heading');
-            $table->text('question');
-            $table->text('answer');
+            $table->string('subtitle')->nullable();
+            $table->text('content');
             $table->string('image')->nullable();
             $table->timestamps();
         });
     }
 
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists('faqs');
+        Schema::dropIfExists('why_us');
     }
 };
+

@@ -1,89 +1,144 @@
 @extends('backend.layouts.master')
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span>Edit Demand</span>
-                            <a href="{{ route('admin.demands.index') }}" class="btn btn-primary">Back</a> <!-- Back button -->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header">Edit Demand</div>
+
+                <div class="card-body">
+                    @if (Session::has('success'))
+                        <div class="alert alert-success">{{ Session::get('success') }}</div>
+                    @endif
+
+                    <form method="POST" action="{{ route('admin.demands.update', $demand->id) }}" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="form-group">
+                            <label for="heading">Heading</label>
+                            <input type="text" name="heading" id="heading" class="form-control" value="{{ old('heading', $demand->heading) }}">
                         </div>
-                    </div>
 
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('admin.demands.update', $demand->id) }}" enctype="multipart/form-data">
-                            @csrf
-                            @method('PUT')
+                        <div class="form-group">
+                            <label for="subtitle">Subtitle</label>
+                            <input type="text" name="subtitle" id="subtitle" class="form-control" value="{{ old('subtitle', $demand->subtitle) }}">
+                        </div>
 
-                            <div class="form-group">
-                                <label for="country_id">Country</label>
-                                <select name="country_id" id="country_id" class="form-control">
-                                    @foreach ($countries as $country)
-                                        <option value="{{ $country->id }}" {{ $demand->country_id == $country->id ? 'selected' : '' }}>
-                                            {{ $country->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
+                        <div class="form-group pt-3">
+                            <label for="image">Image</label>
+                            <input type="file" name="image" id="image" class="form-control-file" onchange="previewImage(event)">
+                            @if ($demand->image)
+                                <div id="imagePreview">
+                                    <img src="{{ asset('uploads/demands/' . $demand->image) }}" style="max-width: 200px; max-height: 200px;">
+                                </div>
+                            @else
+                                <div id="imagePreview"></div>
+                            @endif
+                        </div>
 
-                            <div class="form-group">
-                                <label for="from_date">From Date</label>
-                                <input type="date" name="from_date" id="from_date" class="form-control" value="{{ $demand->from_date }}">
-                            </div>
+                        <div class="form-group">
+                            <label for="content">Content</label>
+                            <textarea name="content" id="content" class="form-control summernote" rows="5">{{ old('content', $demand->content) }}</textarea>
+                        </div>
 
-                            <div class="form-group">
-                                <label for="to_date">To Date</label>
-                                <input type="date" name="to_date" id="to_date" class="form-control" value="{{ $demand->to_date }}">
-                            </div>
+                        <div class="form-group">
+                            <label>Demand Categories</label>
+                            <ul style="list-style-type: none; padding-left: 0;">
+                                @php
+                                    $types = old('demand_types', $demand->demand_types ?? []);
+                                @endphp
+                                @foreach(['cyc' => 'Chautari Youth Club (CYC)', 'nsep' => 'Next Steps Education Program (NSEP)', 'frp' => 'Family Reintegration Program (FRP)', 'community_empowerment' => 'Community Empowerment', 'bamboo_project' => 'Bamboo Project', 'child_care_home' => 'Child Care Home'] as $key => $label)
+                                    <li>
+                                        <label>
+                                            <input type="checkbox" class="demand-type" name="demand_types[]" value="{{ $key }}" {{ in_array($key, $types) ? 'checked' : '' }}>
+                                            {{ $label }}
+                                        </label>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
 
-                            <div class="form-group">
-                                <label for="vacancy">Vacancy Title</label>
-                                <input type="text" name="vacancy" id="vacancy" class="form-control" value="{{ $demand->vacancy }}">
-                            </div>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </form>
 
-                            <div class="form-group">
-                                <label for="number_of_people_required">Number of people required </label>
-                                <input type="text" name="number_of_people_required" id="number_of_people_required" class="form-control" value="{{ $demand->number_of_people_required }}">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="image">Image</label>
-                                <input type="file" name="image" class="form-control" id="image" onchange="previewImage(event)">
-                                <img id="preview1" src="{{ asset('uploads/demands/' . $demand->image) }}" style="max-width: 300px; max-height:300px" />
-                            </div>
-                            <div id="imagePreview" class="mt-2"></div>
-
-                            <div class="form-group">
-                                <label for="content">Content </label>
-                                <textarea class="form-control summernote" id="content" name="content" rows="5" required>{{ $demand->content }}</textarea>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">Update</button>
-                        </form>
+                    {{-- Related Demands --}}
+                    <hr>
+                    <div id="related-demands-container">
+                        @if (isset($relatedDemands) && $relatedDemands->count())
+                            <h5>Related Demands</h5>
+                            <ul class="list-group mt-3">
+                                @foreach ($relatedDemands as $rel)
+                                    <li class="list-group-item">
+                                        <strong>{{ ucfirst($rel->type) }}</strong> — {{ $rel->vacancy }}<br>
+                                        <small>{{ $rel->from_date }} to {{ $rel->to_date }}</small>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <p class="text-muted">No related demands found.</p>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        $(document).ready(function() {
-            $('.summernote').summernote({
-                placeholder: 'Enter message here...',
-                tabsize: 2,
-                height: 100
-            });
+{{-- Scripts --}}
+<script>
+    function previewImage(event) {
+        var input = event.target;
+        var preview = document.getElementById('imagePreview');
+        while (preview.firstChild) {
+            preview.removeChild(preview.firstChild);
+        }
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.maxWidth = '200px';
+                img.style.maxHeight = '200px';
+                preview.appendChild(img);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $(document).ready(function () {
+        $('.summernote').summernote({
+            height: 200,
+            focus: true
         });
 
-        const previewImage = e => {
-            const reader = new FileReader();
-            reader.readAsDataURL(e.target.files[0]);
-            reader.onload = () => {
-                const preview = document.getElementById('preview1');
-                preview.src = reader.result;
-            };
-        };
-    </script>
+        $('.demand-type').on('change', function () {
+            let selectedTypes = [];
+            $('.demand-type:checked').each(function () {
+                selectedTypes.push($(this).val());
+            });
+
+            if (selectedTypes.length > 0) {
+                $.ajax({
+                    url: "{{ route('admin.demands.fetchRelated') }}",
+                    method: 'POST',
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        types: selectedTypes
+                    },
+                    success: function (response) {
+                        $('#related-demands-container').html(response.html);
+                    },
+                    error: function () {
+                        $('#related-demands-container').html('<p class="text-danger">Failed to load related demands.</p>');
+                    }
+                });
+            } else {
+                $('#related-demands-container').html('<p class="text-muted">No related demands found.</p>');
+            }
+        });
+    });
+</script>
 @endsection

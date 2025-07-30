@@ -215,6 +215,101 @@
             </div>
         </div>
 
+
+        
+
     </section>
+
+
+
+
+   <section class="why-us-section">
+    <div class="card-grid-container">
+        @foreach($whyUsData as $why)
+            <div class="card">
+                @if($why->image)
+                    <img src="{{ asset('storage/' . $why->image) }}" alt="{{ $why->heading }}">
+                @endif
+                <div class="card-content">
+                    <h2>{{ $why->heading }}</h2>
+                    @if($why->subtitle)
+                        <h3>{{ $why->subtitle }}</h3>
+                    @endif
+                    <p>{{ $why->content }}</p>
+                </div>
+            </div>
+        @endforeach
+    </div>
+</section>
+
+<style>
+.card-grid-container {
+    display: grid;
+    /* This creates 4 columns of equal width */
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px; /* Creates space between rows and columns */
+}
+
+.card {
+    /* --- MODIFICATION START --- */
+    /* Set a fixed height for all cards. Adjust this value as needed. */
+    height: 400px; 
+    /* --- MODIFICATION END --- */
+
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+.card img {
+    width: 100%;
+
+    /* --- MODIFICATION START --- */
+    /* Give the image a fixed height within the card. */
+    height: 200px;
+    /* Prevents the image from stretching or squishing. It will crop to fit. */
+    object-fit: cover; [1, 3, 4]
+    /* --- MODIFICATION END --- */
+}
+
+.card-content {
+    padding: 15px;
+    flex-grow: 1;
+    /* These properties help manage content that might overflow the fixed card size */
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.card-content p {
+    /* Allows the paragraph to scroll if its content is too long for the space */
+    overflow-y: auto;
+}
+
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 992px) {
+    .card-grid-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 cards per row */
+    }
+}
+
+@media (max-width: 576px) {
+    .card-grid-container {
+        grid-template-columns: 1fr; /* 1 card per row */
+    }
+    
+    /* --- MODIFICATION START --- */
+    /* On very small screens, you might prefer the height to adjust automatically */
+    .card {
+        height: auto;
+    }
+    /* --- MODIFICATION END --- */
+}
+
+</style>
 
 @endsection
