@@ -2,62 +2,60 @@
 
 @section('content')
 <div class="container mt-4">
-    <h2 class="mb-4">{{ $page_title }}</h2>
+    <h2>Events List</h2>
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <a href="{{ route('backend.event.create') }}" class="btn btn-primary mb-3">+ Create New Event</a>
+    <a href="{{ route('backend.event.create') }}" class="btn btn-success mb-3">Create New Event</a>
 
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped table-hover">
-            <thead class="table-dark">
+    @if($events->count())
+        <table class="table table-bordered table-striped">
+            <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Title</th>
+                    <th>ID</th>
+                    <th>Heading</th>
                     <th>Subtitle</th>
-                    <th>Status</th>
+                    <th>Content</th>
                     <th>Image</th>
+                    <th>Created At</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @forelse($events as $event)
+                @foreach($events as $event)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $event->title }}</td>
-                        <td>{{ $event->subtitle ?? '-' }}</td>
-                        <td>
-                            <span class="badge {{ $event->status ? 'bg-success' : 'bg-secondary' }}">
-                                {{ $event->status ? 'Active' : 'Inactive' }}
-                            </span>
-                        </td>
+                        <td>{{ $event->id }}</td>
+                        <td>{{ $event->heading }}</td>
+                        <td>{{ $event->subtitle }}</td>
+                        <td>{{ \Illuminate\Support\Str::limit($event->content, 50) }}</td>
                         <td>
                             @if($event->image)
-                                <img src="{{ asset('uploads/events/' . $event->image) }}" width="100" alt="event image">
+                                <img src="{{ asset('storage/' . $event->image) }}" alt="Image" width="80">
                             @else
-                                <span>No Image</span>
+                                N/A
                             @endif
                         </td>
+                        <td>{{ $event->created_at->format('Y-m-d') }}</td>
                         <td>
-                            <a href="{{ route('backend.event.edit', $event->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                            <a href="{{ route('backend.event.edit', $event->id) }}" class="btn btn-primary btn-sm">Edit</a>
 
-                            <form action="{{ route('backend.event.destroy', $event->id) }}" method="POST" class="d-inline"
-                                  onsubmit="return confirm('Are you sure you want to delete this event?');">
+                            <form action="{{ route('backend.event.destroy', $event->id) }}" method="POST" style="display:inline-block" onsubmit="return confirm('Are you sure you want to delete this event?');">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-sm btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                             </form>
                         </td>
                     </tr>
-                @empty
-                    <tr>
-                        <td colspan="6" class="text-center">No events found.</td>
-                    </tr>
-                @endforelse
+                @endforeach
             </tbody>
         </table>
-    </div>
+
+        {{ $events->links() }}
+
+    @else
+        <p>No events found.</p>
+    @endif
 </div>
 @endsection

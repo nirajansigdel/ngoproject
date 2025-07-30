@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str; // ✅ Import Str for slug
 
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\PostController;
@@ -38,6 +39,8 @@ use App\Http\Controllers\CeoMessageController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\WhyUsController;
 use App\Http\Controllers\EventController;
+
+use App\Models\Event; // ✅ Import Event Model
 
 /*
 |--------------------------------------------------------------------------
@@ -123,8 +126,6 @@ Route::prefix('/admin')->name('admin.')->middleware(['web', 'auth'])->group(func
     // ✅ EVENT CRUD
     Route::resource('events', EventController::class);
 
-
-
     Route::resource('countries', CountryController::class);
     Route::resource('companies', CompanyController::class);
     Route::resource('student-details', StudentDetailController::class);
@@ -156,12 +157,11 @@ Route::post('/apply/{id}', [ApplicationController::class, 'store'])->name('apply
 Route::get('/create/whyus', [WhyUsController::class, 'create'])->name('backend.whyus.create');
 Route::get('/index/whyus', [WhyUsController::class, 'index'])->name('backend.whyus.index');
 Route::post('/store/whyus', [WhyUsController::class, 'store'])->name('backend.whyus.store');
-Route::get('item/{id}/edit', [App\Http\Controllers\WhyUsController::class, 'edit'])->name('item.edit');
-Route::put('item/{id}', [App\Http\Controllers\WhyUsController::class, 'update'])->name('item.update');
-Route::delete('item/{id}', [App\Http\Controllers\WhyUsController::class, 'destroy'])->name('item.destroy');
+Route::get('item/{id}/edit', [WhyUsController::class, 'edit'])->name('item.edit');
+Route::put('item/{id}', [WhyUsController::class, 'update'])->name('item.update');
+Route::delete('item/{id}', [WhyUsController::class, 'destroy'])->name('item.destroy');
 
-
-/* Event section starts here */
+/* Event section */
 Route::get('/create/event', [EventController::class, 'create'])->name('backend.event.create');
 Route::get('/index/event', [EventController::class, 'index'])->name('backend.event.index');
 Route::post('/store/event', [EventController::class, 'store'])->name('backend.event.store');
@@ -169,3 +169,11 @@ Route::get('/event/{id}/edit', [EventController::class, 'edit'])->name('backend.
 Route::put('/event/{id}', [EventController::class, 'update'])->name('backend.event.update');
 Route::delete('/event/{id}', [EventController::class, 'destroy'])->name('backend.event.destroy');
 
+
+Event::whereNull('slug')
+    ->orWhere('slug', '')
+    ->get()
+    ->each(function ($event) {
+        $event->slug = Str::slug($event->heading);
+        $event->save();
+    });

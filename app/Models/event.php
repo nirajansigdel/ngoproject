@@ -11,45 +11,88 @@ class Event extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title',
+        'heading',
         'subtitle',
         'content',
         'image',
+        'status',
         'slug',
-        'status'
     ];
 
     protected $casts = [
         'status' => 'boolean',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
-    // Auto-generate slug when creating
+    // Define a local scope called active
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
+    }
+
+    // Automatically generate slug when creating/updating
     protected static function boot()
     {
         parent::boot();
 
         static::creating(function ($event) {
             if (empty($event->slug)) {
-                $event->slug = Str::slug($event->title);
+                $event->slug = static::generateUniqueSlug($event->heading);
             }
         });
 
         static::updating(function ($event) {
-            if ($event->isDirty('title')) {
-                $event->slug = Str::slug($event->title);
+            if (empty($event->slug) || $event->isDirty('heading')) {
+                $event->slug = static::generateUniqueSlug($event->heading, $event->id);
             }
         });
     }
 
-    // Scope for active events
-    public function scopeActive($query)
+    // Generate unique slug
+    protected static function generateUniqueSlug($title, $ignoreId = null)
     {
-        return $query->where('status', 1);
+        $slug = Str::slug($title);
+        $originalSlug = $slug;
+        $counter = 1;
+
+        $query = static::where('slug', $slug);
+        if ($ignoreId) {
+            $query->where('id', '!=', $ignoreId);
+        }
+
+        while ($query->exists()) {
+            $slug = $originalSlug . '-' . $counter;
+            $counter++;
+            $query = static::where('slug', $slug);
+            if ($ignoreId) {
+                $query->where('id', '!=', $ignoreId);
+            }
+        }
+
+        return $slug;
     }
 
-    // Get image URL
+    // Accessor for image URL
     public function getImageUrlAttribute()
     {
-        return $this->image ? asset('uploads/events/' . $this->image) : null;
+        if ($this->image) {
+            return asset('storage/' . $this->image);
+        }
+        return asset('image/default-event.jpg'); // fallback image
+    }
+
+    // Accessor for excerpt
+    public function getExcerptAttribute()
+    {
+        return Str::limit(strip_tags($this->content), 150);
+    }
+
+    // Accessor for reading time (approximate)
+    public function getReadingTimeAttribute()
+    {
+        $wordCount = str_word_count(strip_tags($this->content));
+        $minutes = ceil($wordCount / 200); // Average reading speed
+        return $minutes . ' min read';
     }
 }

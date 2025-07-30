@@ -90,19 +90,24 @@
         <div class="row mb-4">
             <!-- Social Icons -->
             <div class="footer-social col-12 col-md-2 text-center text-md-start mb-3 mb-md-0">
-                @if($sitesetting->facebook_link)
+
+                @if($sitesetting && $sitesetting->facebook_link)
                     <a href="{{ $sitesetting->facebook_link }}"><i class="fab fa-facebook-f"></i></a>
                 @endif
-                @if($sitesetting->instagram_link)
+
+                @if($sitesetting && $sitesetting->instagram_link)
                     <a href="{{ $sitesetting->instagram_link }}"><i class="fab fa-instagram"></i></a>
                 @endif
-                @if($sitesetting->linkedin_link)
+
+                @if($sitesetting && $sitesetting->linkedin_link)
                     <a href="{{ $sitesetting->linkedin_link }}"><i class="fab fa-linkedin-in"></i></a>
                 @endif
-                @if($sitesetting->snapchat_link)
+
+                @if($sitesetting && $sitesetting->snapchat_link)
                     <a href="{{ $sitesetting->snapchat_link }}"><i class="fab fa-snapchat-ghost"></i></a>
                 @endif
-                @if($sitesetting->x_link)
+
+                @if($sitesetting && $sitesetting->x_link)
                     <a href="{{ $sitesetting->x_link }}"><i class="fab fa-x-twitter"></i></a>
                 @endif
             </div>

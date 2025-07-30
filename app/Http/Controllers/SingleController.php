@@ -20,7 +20,7 @@ use App\Models\BlogPostsCategory;
 use App\Models\ClientMessage;
 use App\Models\Demand;
 use App\Models\WhyUs;
-use App\Models\Event; // ✅ Add this
+use App\Models\Event;
 
 use Illuminate\Http\Request;
 
@@ -81,6 +81,15 @@ class SingleController extends Controller
         $testimonials = Testimonial::latest()->take(12)->get();
 
         return view('frontend.testimonials', compact('testimonials', 'demands', 'clientMessages'));
+    }
+
+    public function render_faqs()
+    {
+        $clientMessages = ClientMessage::latest()->get();
+        $demands = Demand::latest()->get(); 
+        $testimonials = Testimonial::latest()->take(12)->get();
+
+        return view('frontend.Procurement', compact('testimonials', 'demands', 'clientMessages'));
     }
 
     public function render_blogpostcategory()
@@ -191,13 +200,48 @@ class SingleController extends Controller
         return view('frontend.singleImage', compact('image', 'services', 'categories', 'sitesetting', 'about', 'demands'));
     }
 
-    public function render_events()
+    // ======= EVENTS METHODS =======
+    public function render_events(Request $request)
     {
-        $events = Event::active()->latest()->paginate(6);
+        $query = Event::active()->latest();
+        
+        // Search functionality
+        if ($request->has('search') && !empty($request->search)) {
+            $searchTerm = $request->search;
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('heading', 'like', "%{$searchTerm}%")
+                  ->orWhere('subtitle', 'like', "%{$searchTerm}%")
+                  ->orWhere('content', 'like', "%{$searchTerm}%");
+            });
+        }
+
+        // Date filtering
+        if ($request->has('month') && !empty($request->month)) {
+            $query->whereMonth('created_at', $request->month);
+        }
+
+        if ($request->has('year') && !empty($request->year)) {
+            $query->whereYear('created_at', $request->year);
+        }
+
+        $events = $query->paginate(9);
         $sitesetting = SiteSetting::first();
         $demands = Demand::latest()->get();
 
-        return view('frontend.event', compact('events', 'sitesetting', 'demands'));
+        // Get available years and months for filtering
+        $availableYears = Event::active()
+            ->selectRaw('YEAR(created_at) as year')
+            ->groupBy('year')
+            ->orderBy('year', 'desc')
+            ->pluck('year');
+
+        $availableMonths = Event::active()
+            ->selectRaw('MONTH(created_at) as month')
+            ->groupBy('month')
+            ->orderBy('month')
+            ->pluck('month');
+
+        return view('frontend.event', compact('events', 'sitesetting', 'demands', 'availableYears', 'availableMonths'));
     }
 
     public function render_singleEvent($slug)
@@ -205,8 +249,15 @@ class SingleController extends Controller
         $event = Event::where('slug', $slug)->active()->firstOrFail();
         $sitesetting = SiteSetting::first();
         $demands = Demand::latest()->get();
+        
+        // Get related events (latest 3 excluding current)
+        $relatedEvents = Event::active()
+            ->where('id', '!=', $event->id)
+            ->latest()
+            ->take(3)
+            ->get();
 
-        return view('frontend.singleEvent', compact('event', 'sitesetting', 'demands'));
+        return view('frontend.singleEvent', compact('event', 'sitesetting', 'demands', 'relatedEvents'));
     }
 
     public function teams()
