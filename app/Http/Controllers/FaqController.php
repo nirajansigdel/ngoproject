@@ -7,85 +7,80 @@ use Illuminate\Http\Request;
 
 class FaqController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Backend - List all FAQs with pagination
     public function index()
     {
         $faqs = Faq::latest()->paginate(5);
         return view('backend.faq.index', compact('faqs'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Backend - Show create form
     public function create()
     {
         return view('backend.faq.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    // Backend - Store new FAQ
     public function store(Request $request)
     {
         $request->validate([
-            'question' => 'required',
-            'answer' => 'required',
+            'heading' => 'required|string|max:255',
+            'question' => 'required|string',
+            'answer' => 'required|string',
+            'image' => 'nullable|image|max:2048',
         ]);
 
-        Faq::create($request->all());
+        $data = $request->only(['heading', 'question', 'answer']);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('faq_images', 'public');
+        }
+
+        Faq::create($data);
 
         return redirect()->route('admin.faqs.index')->with('success', 'FAQ created successfully.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Faq  $faq
-     * @return \Illuminate\Http\Response
-     */
+    // Backend - Show edit form
     public function edit(Faq $faq)
     {
-        return view('backend.faq.update', compact('faq'));
+        return view('backend.faq.edit', compact('faq'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Faq  $faq
-     * @return \Illuminate\Http\Response
-     */
+    // Backend - Update existing FAQ
     public function update(Request $request, Faq $faq)
     {
         $request->validate([
-            'question' => 'required',
-            'answer' => 'required',
+            'heading' => 'required|string|max:255',
+            'question' => 'required|string',
+            'answer' => 'required|string',
+            'image' => 'nullable|image|max:2048',
         ]);
 
-        $faq->update($request->all());
+        $data = $request->only(['heading', 'question', 'answer']);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('faq_images', 'public');
+        }
+
+        $faq->update($data);
 
         return redirect()->route('admin.faqs.index')->with('success', 'FAQ updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Faq  $faq
-     * @return \Illuminate\Http\Response
-     */
+    // Backend - Delete FAQ
     public function destroy(Faq $faq)
     {
         $faq->delete();
-
         return redirect()->route('admin.faqs.index')->with('success', 'FAQ deleted successfully.');
     }
+
+    // Frontend - Display FAQs dynamically
+    public function frontendIndex()
+    {
+        $faqs = Faq::latest()->get();  // fetch all FAQs ordered by latest
+        return view('frontend.faq.index', compact('faqs'));
+    }
+
+    
 }

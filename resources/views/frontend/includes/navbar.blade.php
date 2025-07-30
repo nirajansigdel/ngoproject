@@ -181,12 +181,12 @@
                         Projects
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="">Chautari youth project</a></li>
-                        <li><a class="dropdown-item" href="">next steps education program(NSEP)</a></li>
-                        <li><a class="dropdown-item" href="">Family REintegration</a></li>
-                        <li><a class="dropdown-item" href="">community Empowerment</a></li>
-                        <li><a class="dropdown-item" href="">Bamboo Project</a></li>
-                        <li><a class="dropdown-item" href="">Child CAre Home</a></li>
+                        <li><a class="dropdown-item" href="{{ route('project1') }}">Chautari youth project</a></li>
+                        <li><a class="dropdown-item" href="{{ route('project2') }}">next steps education program(NSEP)</a></li>
+                        <li><a class="dropdown-item" href="{{ route('project3') }}">Family REintegration</a></li>
+                       <li><a class="dropdown-item" href="{{ route('project4') }}">community Empowerment</a></li>
+                     <li><a class="dropdown-item" href="{{ route('project5') }}">Bamboo Project</a></li>
+                        <li><a class="dropdown-item" href="{{ route('project6') }}">Child CAre Home</a></li>
                     </ul>
                 </li>
 

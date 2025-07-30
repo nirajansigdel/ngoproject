@@ -3,8 +3,7 @@
 @section('content')
     <section class="sample_page py-5 bg-white">
         <div class="container">
-            <div class="row gx-5 gy-2">
-
+            <div class="row gx-5 gy-1">
                 {{-- Main Image --}}
                 <div class="col-lg-12 col-md-12 col-sm-12 order-1 order-md-1">
                     <div class="overflow-hidden rounded shadow-lg mb-3" style="border: 1px solid #ddd;">

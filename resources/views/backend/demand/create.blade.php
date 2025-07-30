@@ -19,16 +19,17 @@
                     <form method="POST" action="{{ route('admin.demands.store') }}" enctype="multipart/form-data">
                         @csrf
 
-                        
-
-                
-
                         <div class="form-group">
-                            <label for="vacancy">Vacancy Title</label>
-                            <input type="text" name="vacancy" id="vacancy" class="form-control">
+                            <label for="heading">Heading</label>
+                            <input type="text" name="heading" id="heading" class="form-control">
                         </div>
 
-                    
+                        <div class="form-group">
+                            <label for="subtitle">Subtitle</label>
+                            <input type="text" name="subtitle" id="subtitle" class="form-control">
+                        </div>
+
+                       
 
                         <div class="form-group pt-3">
                             <label for="image">Image</label>
@@ -40,18 +41,28 @@
                             <label for="content">Content</label>
                             <textarea name="content" id="content" class="form-control summernote" rows="5"></textarea>
                         </div>
+
                         {{-- Demand Type Selection --}}
                         <div class="form-group">
                             <label>Demand Categories</label>
                             <ul style="list-style-type: none; padding-left: 0;">
                                 <li>
-                                    <label><input type="checkbox" class="demand-type" value="school" name="demand_types[]"> School Demand</label>
+                                    <label><input type="checkbox" class="demand-type" value="cyc" name="demand_types[]"> Chautari Youth Club (CYC)</label>
                                 </li>
                                 <li>
-                                    <label><input type="checkbox" class="demand-type" value="college" name="demand_types[]"> College Demand</label>
+                                    <label><input type="checkbox" class="demand-type" value="nsep" name="demand_types[]"> Next Steps Education Program (NSEP)</label>
                                 </li>
                                 <li>
-                                    <label><input type="checkbox" class="demand-type" value="employer" name="demand_types[]"> Employer Demand</label>
+                                    <label><input type="checkbox" class="demand-type" value="frp" name="demand_types[]"> Family Reintegration Program (FRP)</label>
+                                </li>
+                                <li>
+                                    <label><input type="checkbox" class="demand-type" value="community_empowerment" name="demand_types[]"> Community Empowerment</label>
+                                </li>
+                                <li>
+                                    <label><input type="checkbox" class="demand-type" value="bamboo_project" name="demand_types[]"> Bamboo Project</label>
+                                </li>
+                                <li>
+                                    <label><input type="checkbox" class="demand-type" value="child_care_home" name="demand_types[]"> Child Care Home</label>
                                 </li>
                             </ul>
                         </div>
@@ -60,19 +71,21 @@
 
                     {{-- Related Demands Display --}}
                     <hr>
-                    @if ($relatedDemands->count())
-    <h5>Related Demands</h5>
-    <ul class="list-group mt-3">
-        @foreach ($relatedDemands as $demand)
-            <li class="list-group-item">
-                <strong>{{ ucfirst($demand->type) }}</strong> — {{ $demand->vacancy }}<br>
-                <small>{{ $demand->from_date }} to {{ $demand->to_date }}</small>
-            </li>
-        @endforeach
-    </ul>
-@else
-    <p class="text-muted">No related demands found.</p>
-@endif
+                    <div id="related-demands-container">
+                        @if ($relatedDemands->count())
+                            <h5>Related Demands</h5>
+                            <ul class="list-group mt-3">
+                                @foreach ($relatedDemands as $demand)
+                                    <li class="list-group-item">
+                                        <strong>{{ ucfirst($demand->type) }}</strong> — {{ $demand->vacancy }}<br>
+                                        <small>{{ $demand->from_date }} to {{ $demand->to_date }}</small>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <p class="text-muted">No related demands found.</p>
+                        @endif
+                    </div>
 
                 </div>
             </div>

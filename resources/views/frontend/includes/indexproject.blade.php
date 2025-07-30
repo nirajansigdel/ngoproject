@@ -8,6 +8,7 @@
     border-radius: 8px;
     padding: 2px;
   }
+jkh ujh
 
   .course-card {
     transition: transform 0.3s ease;
@@ -69,63 +70,73 @@
     padding: 8px 24px;
     font-size: 0.95rem;
   }
+
+  .demand-section { display: none; }
+  .demand-section.active { display: block; }
+  .category-button.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+  }
 </style>
 
-<section class="py-5 Service">
+<section class="py-5">
   <div class="container">
-
-    <!-- Section Title -->
     <div class="text-center mb-5">
       <h1 class="extralarger blackhighlight">Most popular project</h1>
       <p class="xs-text">
         "Explore our most popular classes - where wellness meets wisdom. Join us in the journey to holistic well-being."
       </p>
     </div>
-    <!-- Carousel for remaining demands or all -->
-    <div id="coursesCarousel" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
 
-        @php
-          $chunks = $demands->chunk(3);
-        @endphp
+   @php
+  $types = [
+    'cyc' => 'Chautari Youth (CYC)',
+    'nsep' => 'Next Steps (NSEP)',
+    'frp' => 'Family Reintegration (FRP)',
+    'community' => 'Community Empowerment',
+    'bamboo' => 'Bamboo Project',
+    'childcare' => 'Child Care Home'
+  ];
+@endphp
 
-        @foreach ($chunks as $index => $coursesChunk)
-          <div class="carousel-item @if($index == 0) active @endif">
-            <div class="row g-4 justify-content-center">
-              @foreach ($coursesChunk as $course)
-                <a class="col-md-4" style="text-decoration: none;">
-                  <div class="card course-card shadow-sm">
-                    @if ($course->image)
-                      <img src="{{ asset('uploads/demands/' . $course->image) }}" class="card-img-top course-img" alt="Course Image">
-                    @else
-                      <img src="https://plus.unsplash.com/premium_photo-1705091309202-5838aeedd653?w=500&auto=format&fit=crop&q=60" class="card-img-top course-img" alt="Default Image">
-                    @endif
-                    <div class="card-body d-flex flex-column">
-                      <h5 class="course-title">{{ Str::limit(strip_tags($course->description), 40) }}</h5>
-                      <p class="course-desc">{{ Str::limit(strip_tags($course->vacancy), 50) }}</p>
-                      <p class="course-desc mb-3">{{ Str::limit(strip_tags($course->content), 30) }}</p>
-                    </div>
-                  </div>
-                </a>
-              @endforeach
+<div class="text-center mb-4">
+  <div class="btn-group flex-wrap" role="group" aria-label="Project Categories">
+    @foreach ($types as $key => $label)
+      <button type="button"
+              class="btn btn-outline-primary m-1 category-button"
+              data-category="{{ $key }}">
+        {{ $label }}
+      </button>
+    @endforeach
+  </div>
+</div>
+
+
+    @foreach ($types as $key => $label)
+      <div id="{{ $key }}-demands" class="row g-4 demand-section">
+        @foreach ($demands->where('type', $key)->take(3) as $course)
+          <div class="col-md-4">
+            <div class="card course-card shadow-sm">
+              @if ($course->image)
+                <img src="{{ asset('uploads/demands/' . $course->image) }}" class="card-img-top course-img" alt="Course Image">
+              @else
+                <img src="https://plus.unsplash.com/premium_photo-1705091309202-5838aeedd653?w=500&auto=format&fit=crop&q=60" class="card-img-top course-img" alt="Default Image">
+              @endif
+              <div class="card-body d-flex flex-column">
+                <h5 class="course-title">{{ Str::limit(strip_tags($course->description), 40) }}</h5>
+                <p class="course-desc">{{ Str::limit(strip_tags($course->vacancy), 50) }}</p>
+                <p class="course-desc mb-3">{{ Str::limit(strip_tags($course->content), 30) }}</p>
+                <div class="mb-4">
+                  <button class="join-btn join-now-btn">Join now</button>
+                </div>
+              </div>
             </div>
           </div>
         @endforeach
-
       </div>
+    @endforeach
 
-      <!-- Carousel Controls -->
-      <button class="carousel-control-prev" type="button" data-bs-target="#coursesCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#coursesCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
-
-    <!-- View More Button -->
     <div class="text-center mt-5">
       <a href="{{ route('Demand') }}" class="btn btn-primary px-4 py-2 view-more-btn">View More</a>
     </div>
@@ -133,7 +144,4 @@
   </div>
 </section>
 
-<!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-<!-- Bootstrap JS Bundle (Popper + Bootstrap) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+

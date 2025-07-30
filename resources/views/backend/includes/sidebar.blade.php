@@ -184,6 +184,7 @@
 
 
                 {{-- Beginning of Informations --}}
+                {{-- 
                 @hasanyrole('superadmin')
                     <li class="nav-item">
                         <div class="row navbar-vertical-label-wrapper mt-3 mb-2">
@@ -202,7 +203,7 @@
                         </a>
                         <ul class="nav collapse {{ Request::segment(2) == 'informations' ? 'show' : '' }}"
                             id="dashboard15">
-                            {{-- Country --}}
+                         
                             @can('list_countries')
                                 <li class="nav-item">
                                     <a class="nav-link {{ Request::segment(2) == 'countries' ? 'active' : '' }}"
@@ -214,7 +215,7 @@
                                 </li>
                             @endcan
 
-                            {{-- Company --}}
+                          
                             @can('list_companies')
                                 <li class="nav-item">
                                     <a class="nav-link {{ Request::segment(2) == 'company' ? 'active' : '' }}"
@@ -226,7 +227,7 @@
                                 </li>
                             @endcan
 
-                            {{-- Course --}}
+                           
                             @can('list_work_categories')
                                 <li class="nav-item">
                                     <a class="nav-link {{ Request::segment(2) == 'work-category' ? 'active' : '' }}"
@@ -238,7 +239,7 @@
                                 </li>
                             @endcan
 
-                            {{-- Demand --}}
+                        
                             @can('list_demands')
                                 <li class="nav-item">
                                     <a class="nav-link {{ Request::segment(2) == 'demands' ? 'active' : '' }}"
@@ -250,7 +251,7 @@
                                 </li>
                             @endcan
 
-                             {{-- View Application --}}
+                        
                              @can('list_applications')
                              <li class="nav-item">
                                  <a class="nav-link {{ Request::segment(2) == 'demands' ? 'active' : '' }}"
@@ -265,6 +266,9 @@
                     </li>
                     </li>
                 @endhasanyrole
+
+
+                 --}}
                 {{-- End of Informations --}}
 
 
@@ -313,7 +317,7 @@
                                     </div>
                                 </a>
                             </li>
-                            {{-- Services --}}
+                            {{-- Services 
                             <li class="nav-item">
                                 <a class="nav-link {{ Request::segment(2) == 'services' ? 'active' : '' }}"
                                     href="{{ route('admin.services.index') }}">
@@ -323,6 +327,9 @@
                                     </div>
                                 </a>
                             </li>
+
+--}}
+
                             {{-- Teams --}}
                             <li class="nav-item">
                                 <a class="nav-link {{ Request::segment(2) == 'team' ? 'active' : '' }}"
@@ -341,7 +348,71 @@
 
 
 
+@hasanyrole('superadmin|admin')
+<li class="nav-item">
+  <!-- Dropdown trigger -->
+  <a class="nav-link dropdown-indicator {{ in_array(Request::segment(2), ['why-us', 'event', 'faqs']) ? '' : 'collapsed' }}"
+     href="#updateDropdown"
+     role="button"
+     data-bs-toggle="collapse"
+     aria-expanded="{{ in_array(Request::segment(2), ['why-us', 'event', 'faqs']) ? 'true' : 'false' }}"
+     aria-controls="updateDropdown">
+    <div class="d-flex align-items-center">
+      <span class="nav-link-icon"><i class="fas fa-edit"></i></span>
+      <span class="nav-link-text ps-1">Update</span>
+    </div>
+  </a>
+
+  <!-- Dropdown contents -->
+  <ul class="nav collapse {{ in_array(Request::segment(2), ['why-us', 'event', 'blogs']) ? 'show' : '' }}"
+      id="updateDropdown">
+
+    <!-- Why Us -->
+    @hasrole('superadmin')
+    <li class="nav-item">
+      <a class="nav-link {{ Request::segment(2) == 'why-us' ? 'active' : '' }}"
+         href="{{ route('backend.whyus.index') }}">
+        <div class="d-flex align-items-center">
+          <i class="fa fa-angle-double-right"></i>
+          <span class="nav-link-text ps-1">Why Us</span>
+        </div>
+      </a>
+    </li>
+    @endhasrole
+
+    <!-- Event -->
+    @hasrole('superadmin')
+    <li class="nav-item">
+      <a class="nav-link {{ Request::segment(2) == 'event' ? 'active' : '' }}"
+         href="{{ route('backend.event.index') }}">
+        <div class="d-flex align-items-center">
+          <i class="fa fa-angle-double-right"></i>
+          <span class="nav-link-text ps-1">Event</span>
+        </div>
+      </a>
+    </li>
+    @endhasrole
+
+    <!-- Blogs -->
+    <li class="nav-item">
+      <a class="nav-link {{ Request::segment(2) == 'blogs' ? 'active' : '' }}"
+         href="{{ route('admin.blog-posts-categories.index') }}">
+        <div class="d-flex align-items-center">
+          <i class="fa fa-angle-double-right"></i>
+          <span class="nav-link-text ps-1">Blogs</span>
+        </div>
+      </a>
+    </li>
+
+  </ul>
+</li>
+@endhasanyrole
+
+
+
+
                 {{-- Beginning of Posts --}}
+                {{-- 
                 @hasanyrole('superadmin')
                     <li class="nav-item">
                         <!-- Navbar vertical label -->
@@ -364,7 +435,7 @@
                         </a>
                         <!-- Collapse content -->
                         <ul class="nav collapse {{ Request::segment(2) == 'posts' ? 'show' : '' }}" id="dashboard23">
-                            {{-- Categories --}}
+                        
                             <li class="nav-item">
                                 <a class="nav-link {{ Request::segment(2) == 'categories' ? 'active' : '' }}"
                                     href="{{ route('admin.categories.index') }}">
@@ -374,7 +445,7 @@
                                     </div>
                                 </a>
                             </li>
-                            {{-- Post (Add & List) --}}
+                           
                             <li class="nav-item">
                                 <a class="nav-link {{ Request::segment(3) == 'create' || (Request::segment(2) == 'posts' && Request::segment(3) != 'categories') ? 'active' : '' }}"
                                     href="{{ route('admin.posts.index') }}">
@@ -385,9 +456,10 @@
                                 </a>
                             </li>
                         </ul>
-                    </li> <!-- Corrected closing tag -->
+                    </li> 
                     </li>
                 @endhasanyrole
+                 --}}
                 {{-- End of Posts --}}
 
 
@@ -449,6 +521,7 @@
 
 
                 {{-- Beginning of Student Reviews --}}
+                {{--  
                 @hasanyrole('superadmin|admin')
                     <li class="nav-item">
                         <div class="row navbar-vertical-label-wrapper mt-3 mb-2">
@@ -481,42 +554,14 @@
                         </ul>
                     </li>
                     </li>
+                    
                 @endhasanyrole
+                --}}
                 {{-- End of Student Reviews --}}
 
                 {{-- Beginning of Blog Posts Category --}}
-                @hasanyrole('superadmin|admin')
-                    <li class="nav-item">
-                        <div class="row navbar-vertical-label-wrapper mt-3 mb-2">
-                            <div class="col-auto navbar-vertical-label">Blogs</div>
-                            <div class="col ps-0">
-                                <hr class="mb-0 navbar-vertical-divider">
-                            </div>
-                        </div>
-                    <li class="nav-item">
-                        <a class="nav-link dropdown-indicator" href="#blog-post-category" role="button"
-                            data-bs-toggle="collapse" aria-expanded="true" aria-controls="blog-post-category">
-                            <div class="d-flex align-items-center">
-                                <span class="nav-link-icon"><i class="fas fa-users"></i></span>
-                                <span class="nav-link-text ps-1">Blogs</span>
-                            </div>
-                        </a>
-                        <ul class="nav collapse {{ Request::segment(2) == 'faqs' ? 'show' : '' }}"
-                            id="blog-post-category" id="dashboard19">
-                            {{-- Add Blog Post Category --}}
-                            <li class="nav-item">
-                                <a class="nav-link {{ Request::segment(2) == 'faqs' && Request::segment(3) == 'create' ? 'active' : '' }}"
-                                    href="{{ route('admin.blog-posts-categories.index') }}">
-                                    <div class="d-flex align-items-center">
-                                        <i class="fa fa-angle-double-right"></i>
-                                        <span class="nav-link-text ps-1">Blogs</span>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    </li>
-                @endhasanyrole
+                
+             
                 {{-- End of Blog Posts Category --}}
 
 
@@ -526,7 +571,7 @@
                 @hasanyrole('superadmin|admin')
                     <li class="nav-item">
                         <div class="row navbar-vertical-label-wrapper mt-3 mb-2">
-                            <div class="col-auto navbar-vertical-label">Frequently Asked Questions</div>
+                            <div class="col-auto navbar-vertical-label">Procurement</div>
                             <div class="col ps-0">
                                 <hr class="mb-0 navbar-vertical-divider">
                             </div>
@@ -537,7 +582,7 @@
                             aria-controls="faq">
                             <div class="d-flex align-items-center">
                                 <span class="nav-link-icon"><i class="fas fa-question-circle"></i></span>
-                                <span class="nav-link-text ps-1">FAQs</span>
+                                <span class="nav-link-text ps-1">Procurement</span>
                             </div>
                         </a>
                         <ul class="nav collapse {{ Request::segment(2) == 'faqs' ? 'show' : '' }}" id="faq">
@@ -547,7 +592,7 @@
                                     href="{{ route('admin.faqs.index') }}">
                                     <div class="d-flex align-items-center">
                                         <i class="fa fa-list"></i>
-                                        <span class="nav-link-text ps-1">FAQ</span>
+                                        <span class="nav-link-text ps-1">Procurement</span>
                                     </div>
                                 </a>
                             </li>

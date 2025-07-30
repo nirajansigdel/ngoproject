@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use App\Models\Post;
 use App\Models\Team;
 use App\Models\About;
@@ -13,52 +15,63 @@ use App\Models\SiteSetting;
 use App\Models\Testimonial;
 use App\Models\PhotoGallery;
 use App\Models\VideoGallery;
-use Illuminate\Http\Request;
 use App\Models\DirectorMessage;
 use App\Models\BlogPostsCategory;
 use App\Models\ClientMessage;
-use App\Models\Faq;
 use App\Models\Demand;
+use App\Models\WhyUs;
+use App\Models\Event; // ✅ Add this
 
+use Illuminate\Http\Request;
 
 class SingleController extends Controller
 {
     public function render_about()
-{
-    $about = About::first();
-    $teams = Team::all();
-    $posts = Post::with('category')->latest()->get()->take(3);
-    $listservices = Service::latest()->get()->take(5);
-    $message = DirectorMessage::first();
-    $siteSetting = SiteSetting::first(); 
-    $demands = Demand::latest()->get(); 
+    {
+        $about = About::first();
+        $teams = Team::all();
+        $posts = Post::with('category')->latest()->take(3)->get();
+        $listservices = Service::latest()->take(5)->get();
+        $message = DirectorMessage::first();
+        $siteSetting = SiteSetting::first(); 
+        $demands = Demand::latest()->get(); 
 
-    return view('frontend.aboutus', compact('about', 'posts', 'listservices', 'message', 'siteSetting', 'teams', 'demands'));
-}
+        return view('frontend.aboutus', compact('about', 'posts', 'listservices', 'message', 'siteSetting', 'teams', 'demands'));
+    }
 
     public function render_team(Request $request)
     {
         $teams = Team::all();
         $page_title = 'Our Team';
-        $services = Service::latest()->get()->take(6);
+        $services = Service::latest()->take(6)->get();
         $sitesetting = SiteSetting::first();
-        $categories = Category::latest()->get()->take(10);
+        $categories = Category::latest()->take(10)->get();
         $about = About::first();
-        $posts = Post::with('category')->latest()->get()->take(3);
+        $posts = Post::with('category')->latest()->take(3)->get();
         return view('frontend.team', compact('teams', 'sitesetting', 'categories', 'about', 'page_title', 'services', 'posts'));
     }
 
     public function render_service()
     {
-    
         $images = PhotoGallery::latest()->get();
         $categories = Category::all();
         $services = Service::latest()->get();
         $sitesetting = SiteSetting::first();
         $about = About::first();
-        $serviceHead = Service::latest()->get()->take(1);
+        $serviceHead = Service::latest()->take(1)->get();
         $demands = Demand::latest()->get(); 
-        return view('frontend.services', compact('images', 'services', 'categories', 'sitesetting', 'about', 'serviceHead','demands'));
+
+        return view('frontend.services', compact('images', 'services', 'categories', 'sitesetting', 'about', 'serviceHead', 'demands'));
+    }
+
+    public function render_whyus()
+    {
+        $clientMessages = ClientMessage::latest()->get();
+        $demands = Demand::latest()->get(); 
+        $whyUsItems = WhyUs::latest()->take(12)->get();
+        $whyUsData = WhyUs::latest()->get();
+
+        return view('frontend.whyus', compact('whyUsItems', 'demands', 'clientMessages', 'whyUsData'));
     }
 
     public function render_testimonial()
@@ -66,41 +79,26 @@ class SingleController extends Controller
         $clientMessages = ClientMessage::latest()->get();
         $demands = Demand::latest()->get(); 
         $testimonials = Testimonial::latest()->take(12)->get();
-        return view('frontend.testimonials', compact('testimonials','demands','clientMessages'));
+
+        return view('frontend.testimonials', compact('testimonials', 'demands', 'clientMessages'));
     }
 
-
-    
-    public function render_whyus()
-    {
-        $clientMessages = ClientMessage::latest()->get();
-        $demands = Demand::latest()->get(); 
-        $testimonials = Testimonial::latest()->take(12)->get();
-        return view('frontend.whyus', compact('testimonials','demands','clientMessages'));
-    }
-
-
-    
     public function render_blogpostcategory()
     {
         $demands = Demand::latest()->get(); 
         $blogpostcategories = BlogPostsCategory::all();
-        return view('frontend.blogpostcategories', compact('blogpostcategories','demands'));
 
+        return view('frontend.blogpostcategories', compact('blogpostcategories', 'demands'));
     }
 
-// app/Http/Controllers/BlogPostsCategoryController.php
+    public function render_singleBlogpostcategory($slug)
+    {
+        $demands = Demand::latest()->get(); 
+        $blogpostcategory = BlogPostsCategory::where('slug', $slug)->firstOrFail();
+        $listblogs = BlogPostsCategory::where('slug', '!=', $slug)->latest()->take(5)->get();
 
-public function render_singleBlogpostcategory($slug)
-{
-    $demands = Demand::latest()->get(); 
-    $blogpostcategory = BlogPostsCategory::where('slug', $slug)->firstOrFail();
-    $listblogs = BlogPostsCategory::where('slug', '!=', $slug)->latest()->take(5)->get();
-
-    return view('frontend.blogpostcategory', compact('blogpostcategory', 'listblogs', 'demands'));
-}
-
-
+        return view('frontend.blogpostcategory', compact('blogpostcategory', 'listblogs', 'demands'));
+    }
 
     public function render_singleService($slug)
     {
@@ -112,8 +110,10 @@ public function render_singleBlogpostcategory($slug)
         $about = About::first();
         $listservices = Service::where('slug', '!=', $slug)->get();
         $demands = Demand::latest()->get(); 
-        return view('frontend.service', compact('service', 'images', 'services', 'categories', 'sitesetting', 'about', 'listservices','demands'));
+
+        return view('frontend.service', compact('service', 'images', 'services', 'categories', 'sitesetting', 'about', 'listservices', 'demands'));
     }
+
     public function render_Countries()
     {
         $countries = Country::all();
@@ -124,18 +124,21 @@ public function render_singleBlogpostcategory($slug)
     {
         $country = Country::where('slug', $slug)->firstOrFail();
         $recommendedCountries = Country::where('slug', '!=', $slug)->get();
-        // $countries = Country::all();
+
         return view('frontend.single', compact('country', 'recommendedCountries'));
     }
+
     public function render_singleCompany($slug)
     {
         $company = Company::where('slug', $slug)->firstOrFail();
         return view('frontend.company', compact('company'));
     }
+
     public function render_singleworkCategory($slug)
     {
         $work_category = WorkCategory::where('slug', $slug)->firstOrFail();
-        $listwork_category = WorkCategory::latest()->get()->take(4);
+        $listwork_category = WorkCategory::latest()->take(4)->get();
+
         return view('frontend.work_category', compact('work_category', 'listwork_category'));
     }
 
@@ -144,15 +147,16 @@ public function render_singleBlogpostcategory($slug)
         $category = Category::where('slug', $slug)->firstOrFail();
         $relatedCategories = Category::where('id', '!=', $category->id)->get();
         $posts = $category->posts()->paginate(10);
+
         return view('frontend.category', compact('category', 'relatedCategories', 'posts'));
     }
+
     public function render_singlePost($slug)
     {
         $post = Post::where('slug', $slug)->firstOrFail();
-        // Get the category associated with the post
         $category = $post->category;
-        // Get all posts related to the same category
         $relatedPosts = $category->posts()->where('id', '!=', $post->id)->get();
+
         return view('frontend.post', compact('post', 'relatedPosts'));
     }
 
@@ -164,17 +168,17 @@ public function render_singleBlogpostcategory($slug)
         $services = Service::latest()->get();
         $sitesetting = SiteSetting::first();
         $videos = VideoGallery::latest()->get();
-    $videos = $videos->map(function($video) {
-        $video->embed_url = 'https://www.youtube.com/embed/' . $video->url;
-        return $video;
-    });
-    $videos = $videos->map(function($video) {
-        $video->embed_url = 'https://www.youtube.com/embed/' . $video->url;
-        return $video;
-    });
+
+        $videos = $videos->map(function ($video) {
+            $video->embed_url = 'https://www.youtube.com/embed/' . $video->url;
+            return $video;
+        });
+
         $about = About::first();
-        return view('frontend.galleries', compact('images', 'videos','services', 'categories', 'sitesetting', 'about','demands'));
+
+        return view('frontend.galleries', compact('images', 'videos', 'services', 'categories', 'sitesetting', 'about', 'demands'));
     }
+
     public function render_singleImage($slug)
     {
         $demands = Demand::latest()->get(); 
@@ -183,20 +187,27 @@ public function render_singleBlogpostcategory($slug)
         $services = Service::latest()->get();
         $sitesetting = SiteSetting::first();
         $about = About::first();
-        return view('frontend.singleImage', compact('image', 'services', 'categories', 'sitesetting', 'about','demands'));
+
+        return view('frontend.singleImage', compact('image', 'services', 'categories', 'sitesetting', 'about', 'demands'));
     }
 
     public function render_events()
-{
-    $demands = Demand::latest()->get(); 
-    $images = PhotoGallery::latest()->get();
-    $categories = Category::all();
-    $services = Service::latest()->get();
-    $sitesetting = SiteSetting::first();
-    $about = About::first();
-    $blogpostcategories = BlogPostsCategory::all();
-    return view('frontend.event', compact('images', 'services', 'categories', 'sitesetting', 'about','demands','blogpostcategories'));
-}
+    {
+        $events = Event::active()->latest()->paginate(6);
+        $sitesetting = SiteSetting::first();
+        $demands = Demand::latest()->get();
+
+        return view('frontend.event', compact('events', 'sitesetting', 'demands'));
+    }
+
+    public function render_singleEvent($slug)
+    {
+        $event = Event::where('slug', $slug)->active()->firstOrFail();
+        $sitesetting = SiteSetting::first();
+        $demands = Demand::latest()->get();
+
+        return view('frontend.singleEvent', compact('event', 'sitesetting', 'demands'));
+    }
 
     public function teams()
     {
@@ -205,77 +216,89 @@ public function render_singleBlogpostcategory($slug)
         $services = Service::latest()->get();
         $sitesetting = SiteSetting::first();
         $about = About::first();
+
         return view('portal.team', compact('teams', 'services', 'categories', 'sitesetting', 'about'));
     }
+
     public function render_contact()
     {
         $demands = Demand::latest()->get(); 
         $page_title = 'Contact Us';
         $googleMapsLink = SiteSetting::first()->google_maps_link;
-        return view('frontend.contactpage', compact('page_title', 'googleMapsLink','demands'));
 
+        return view('frontend.contactpage', compact('page_title', 'googleMapsLink', 'demands'));
     }
+
     public function render_singledemand($id)
     {
         $demand = Demand::where('id', $id)->firstOrFail();
         $demands = Demand::latest()->get(); 
         $listdemands = Demand::where('id', '!=', $id)->get();
-        return view('frontend.demand', compact('demand','listdemands','demands'));
-
+        return view('frontend.demand', compact('demand', 'listdemands', 'demands'));
     }
-    
-    
+
     public function render_demands()
     {
         $demand = Demand::latest()->get();
         $demands = Demand::latest()->get(); 
         $listdemands = Demand::latest()->get();
-        return view('frontend.demand', compact('demand','listdemands','demands'));
+
+        return view('frontend.demand', compact('demand', 'listdemands', 'demands'));
     }
+
     public function showApplicationForm($id)
     {
         $demand = Demand::findOrFail($id);
         $demands = Demand::latest()->get(); 
-        return view('frontend.apply', compact('demand','demands'));
+
+        return view('frontend.apply', compact('demand', 'demands'));
     }
 
 
-    public function render_faqs()
+ public function render_project1()
     {
         $demand = Demand::latest()->get();
         $demands = Demand::latest()->get(); 
-        $listdemands = Demand::latest()->get();
-          $faqs = Faq::latest()->get();
-        return view('frontend.Procurement', compact('demand','listdemands','demands','faqs'));
-    }
 
-   public function render_career()
-    {
-        $demand = Demand::latest()->get();
-        $demands = Demand::latest()->get(); 
-        $listdemands = Demand::latest()->get();
-          $faqs = Faq::latest()->get();
-        return view('frontend.career', compact('demand','listdemands','demands','faqs'));
-    }
-
-       public function render_volunteer()
-    {
-        $demand = Demand::latest()->get();
-        $demands = Demand::latest()->get(); 
-        $listdemands = Demand::latest()->get();
-          $faqs = Faq::latest()->get();
-        return view('frontend.volunteer', compact('demand','listdemands','demands','faqs'));
+        return view('frontend.project1', compact('demand', 'demands'));
     }
 
 
-        public function render_applycareer()
+
+     public function render_project2()
     {
         $demand = Demand::latest()->get();
         $demands = Demand::latest()->get(); 
-        $listdemands = Demand::latest()->get();
-          $faqs = Faq::latest()->get();
-        return view('frontend.careerapply', compact('demand','listdemands','demands','faqs'));
+
+        return view('frontend.project2', compact('demand', 'demands'));
+    }
+     public function render_project3()
+    {
+        $demand = Demand::latest()->get();
+        $demands = Demand::latest()->get(); 
+
+        return view('frontend.project3', compact('demand', 'demands'));
+    }
+     public function render_project4()
+    {
+        $demand = Demand::latest()->get();
+        $demands = Demand::latest()->get(); 
+
+        return view('frontend.project4', compact('demand', 'demands'));
+    }
+     public function render_project5()
+    {
+        $demand = Demand::latest()->get();
+        $demands = Demand::latest()->get(); 
+
+        return view('frontend.project5', compact('demand', 'demands'));
+    }
+     public function render_project6()
+    {
+        $demand = Demand::latest()->get();
+        $demands = Demand::latest()->get(); 
+
+        return view('frontend.project6', compact('demand', 'demands'));
     }
 
 }
-

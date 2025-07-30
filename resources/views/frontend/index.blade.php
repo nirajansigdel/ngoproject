@@ -1,3 +1,5 @@
+
+@section('content')
 @extends('frontend.layouts.master')
 @include("frontend.includes.herosection")
 @include("frontend.includes.indexservice")
