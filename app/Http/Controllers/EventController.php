@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class EventController extends Controller
 {
@@ -31,16 +31,21 @@ class EventController extends Controller
             'image' => 'nullable|image|max:2048',
         ]);
 
-        $imagePath = null;
+        $imageName = null;
+
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('events', 'public');
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+
+            // Move to public/uploads/events
+            $image->move(public_path('uploads/events'), $imageName);
         }
 
         Event::create([
             'heading' => $request->heading,
             'subtitle' => $request->subtitle,
             'content' => $request->content,
-            'image' => $imagePath,
+            'image' => $imageName,
         ]);
 
         return redirect()->route('backend.event.index')->with('success', 'Event created successfully!');
@@ -66,10 +71,16 @@ class EventController extends Controller
         $event = Event::findOrFail($id);
 
         if ($request->hasFile('image')) {
-            if ($event->image) {
-                Storage::disk('public')->delete($event->image);
+            // Delete old image if exists
+            $oldPath = public_path('uploads/events/' . $event->image);
+            if (File::exists($oldPath)) {
+                File::delete($oldPath);
             }
-            $event->image = $request->file('image')->store('events', 'public');
+
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('uploads/events'), $imageName);
+            $event->image = $imageName;
         }
 
         $event->heading = $request->heading;
@@ -84,11 +95,21 @@ class EventController extends Controller
     public function destroy($id)
     {
         $event = Event::findOrFail($id);
-        if ($event->image) {
-            Storage::disk('public')->delete($event->image);
+
+        // Delete image if exists
+        $imagePath = public_path('uploads/events/' . $event->image);
+        if (File::exists($imagePath)) {
+            File::delete($imagePath);
         }
+
         $event->delete();
 
         return redirect()->route('backend.event.index')->with('success', 'Event deleted successfully!');
     }
+    public function show($slug)
+{
+    $event = Event::where('slug', $slug)->firstOrFail();
+    return view('frontend.event-detail', compact('event'));
+}
+
 }

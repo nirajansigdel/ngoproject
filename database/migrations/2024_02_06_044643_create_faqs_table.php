@@ -9,6 +9,7 @@ return new class extends Migration {
     {
         Schema::create('faqs', function (Blueprint $table) {
             $table->id();
+            $table->string('type')->nullable();    // Add this column to filter FAQ types
             $table->string('heading');
             $table->text('question');
             $table->text('answer');

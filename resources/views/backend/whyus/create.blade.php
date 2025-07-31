@@ -4,13 +4,13 @@
 <div class="container mt-4">
     <h2>Add Why Us</h2>
 
-    {{-- Check for a success message and display it --}}
     @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-success alert-dismissible fade show">
             {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     @endif
+
     <form action="{{ route('backend.whyus.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
