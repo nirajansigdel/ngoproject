@@ -2,7 +2,7 @@
     <script>
         var navbarStyle = localStorage.getItem("navbarStyle");
         if (navbarStyle && navbarStyle !== 'transparent') {
-            document.querySelector('.navbar-vertical').classList.add(`navbar-${navbarStyle}`);
+            document.querySelector('.navbar-vertical').classList.add(navbar-${navbarStyle});
         }
     </script>
     <div class="d-flex align-items-center">
@@ -684,7 +684,7 @@
 
             </ul>
         </div>
-    </div>
+    </div>
 
 
 </nav>

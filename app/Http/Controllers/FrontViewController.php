@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Faq;
 use App\Models\Post;
 use App\Models\Team;
 use App\Models\About;
@@ -44,6 +45,7 @@ class FrontViewController extends Controller
         $clientMessages = ClientMessage::latest()->get();
         $latestVacancies = Demand::where('to_date', '>=', Carbon::today())->get();
         $images = PhotoGallery::latest()->get();
+        $faqs=Faq::latest()->get();
      // Assuming you have an Event model
         // or paginate if needed
     
@@ -64,6 +66,7 @@ class FrontViewController extends Controller
             'clientMessages',
             'latestVacancies',
             'images' ,
+            'faqs'
         
             // ✅ Corrected here (no quotes!)
         ));

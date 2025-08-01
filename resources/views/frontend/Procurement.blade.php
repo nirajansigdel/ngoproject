@@ -49,7 +49,7 @@
 <section class="container-fluid my-5">
   <h2 class="section-title">Procurement</h2>
   <div class="container">
-    @forelse ($faqs as $index => $faq)
+    @forelse ($Faqs as $index => $faq)
       <div class="border rounded mb-4">
         <!-- Header -->
         <div class="d-flex align-items-center mx-4 py-4 procurement-header" style="cursor:pointer;" data-target="content-{{ $index }}">

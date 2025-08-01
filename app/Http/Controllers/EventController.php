@@ -4,96 +4,89 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
+    // Show list of events
     public function index()
     {
-        $events = Event::latest()->get();
-        $page_title = 'Events';
-        return view('backend.event.index', compact('events', 'page_title'));
+        $events = Event::latest()->paginate(10);
+        return view('backend.event.index', compact('events'));
     }
 
+    // Show create form
     public function create()
     {
-        $page_title = 'Create Event';
-        return view('backend.event.create', compact('page_title'));
+        return view('backend.event.create');
     }
 
+    // Store new event
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255|unique:events,title',
+            'heading' => 'required|string|max:255',
             'subtitle' => 'nullable|string|max:255',
             'content' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'status' => 'required|boolean'
+            'image' => 'nullable|image|max:2048',
         ]);
 
-        $data = $request->except('_token', 'image');
-
+        $imagePath = null;
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '_' . preg_replace('/\s+/', '_', $image->getClientOriginalName());
-            $image->move(public_path('uploads/events'), $imageName);
-            $data['image'] = $imageName;
+            $imagePath = $request->file('image')->store('events', 'public');
         }
 
-        Event::create($data);
+        Event::create([
+            'heading' => $request->heading,
+            'subtitle' => $request->subtitle,
+            'content' => $request->content,
+            'image' => $imagePath,
+        ]);
 
         return redirect()->route('backend.event.index')->with('success', 'Event created successfully!');
     }
 
-    public function show(Event $event)
+    // Show edit form
+    public function edit($id)
     {
-        // Redirect to edit page, as a separate show page is often not needed in admin panels
-        return redirect()->route('backend.event.edit', $event->id);
+        $event = Event::findOrFail($id);
+        return view('backend.event.edit', compact('event'));
     }
 
-
-    public function edit(Event $event)
-    {
-        $page_title = 'Edit Event';
-        return view('backend.event.edit', compact('event', 'page_title'));
-    }
-
-    public function update(Request $request, Event $event)
+    // Update event
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'title' => 'required|string|max:255|unique:events,title,' . $event->id,
+            'heading' => 'required|string|max:255',
             'subtitle' => 'nullable|string|max:255',
             'content' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'status' => 'required|boolean'
+            'image' => 'nullable|image|max:2048',
         ]);
 
-        $data = $request->except('_token', '_method', 'image');
+        $event = Event::findOrFail($id);
 
         if ($request->hasFile('image')) {
-            // Delete old image if it exists
-            if ($event->image && File::exists(public_path('uploads/events/' . $event->image))) {
-                File::delete(public_path('uploads/events/' . $event->image));
+            if ($event->image) {
+                Storage::disk('public')->delete($event->image);
             }
-
-            $image = $request->file('image');
-            $imageName = time() . '_' . preg_replace('/\s+/', '_', $image->getClientOriginalName());
-            $image->move(public_path('uploads/events'), $imageName);
-            $data['image'] = $imageName;
+            $event->image = $request->file('image')->store('events', 'public');
         }
 
-        $event->update($data);
+        $event->heading = $request->heading;
+        $event->subtitle = $request->subtitle;
+        $event->content = $request->content;
+        $event->save();
 
         return redirect()->route('backend.event.index')->with('success', 'Event updated successfully!');
     }
 
-    public function destroy(Event $event)
+    // Delete event
+    public function destroy($id)
     {
-        // Delete image file if it exists
-        if ($event->image && File::exists(public_path('uploads/events/' . $event->image))) {
-            File::delete(public_path('upload s/events/' . $event->image));
+        $event = Event::findOrFail($id);
+        if ($event->image) {
+            Storage::disk('public')->delete($event->image);
         }
-
         $event->delete();
 
         return redirect()->route('backend.event.index')->with('success', 'Event deleted successfully!');

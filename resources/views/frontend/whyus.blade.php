@@ -225,10 +225,10 @@
 
    <section class="why-us-section">
     <div class="card-grid-container">
-        @foreach($whyUsData as $why)
+        @foreach($whyus as $why)
             <div class="card">
                 @if($why->image)
-                    <img src="{{ asset('storage/' . $why->image) }}" alt="{{ $why->heading }}">
+                    <img src="{{ asset('storage/whyus' . $why->image) }}" alt="{{ $why->heading }}">
                 @endif
                 <div class="card-content">
                     <h2>{{ $why->heading }}</h2>
