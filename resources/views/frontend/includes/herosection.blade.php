@@ -11,28 +11,34 @@
     border-color: #ffffff;
     transition: all 0.3s ease-in-out;
   }
+  .text-whiteee{
+   color: #f0f0f0;
+  }
+
 </style>
 
 <section class="container-fluid mt-2">
-  <div class="container bg-dark text-white py-5 min-vh-84 d-flex align-items-center rounded">
+  <div class="container bg-dark  py-5 min-vh-84 d-flex align-items-center rounded">
     <div class="row align-items-center">
 
       <!-- Left Content -->
       <div class="col-12 col-lg-6 px-lg-5">
-        <h1 class="display-5 display-md-4 fw-bold mb-4">Welcome To The <br>Umbrella Organization</h1>
-        <p class="text-secondary mb-4">
-          We rescue vulnerable children, reintegrate them into safe family environments, and provide vital support through education, childcare homes, and community outreach. Explore how each of our services helps rebuild lives and restore futures across Nepal.
-        </p>
+        <h1 class="display-5 display-md-4 fw-bold mb-4 text-white">Welcome To The <br>Umbrella Organization</h1>
+       <p style="color: #dcdcdc; margin-bottom: 1rem;" class="pb-3">
+  We rescue vulnerable children, reintegrate them into safe family environments, and provide vital support through education, childcare homes, and community outreach. Explore how each of our services helps rebuild lives and restore futures across Nepal.
+</p>
+
+      
         <div class="d-flex flex-column flex-sm-row gap-3">
-          <a href="{{ route('Contact') }}" class="btn btn-danger px-4 py-2">Book an Appointment</a>
-          <a href="{{ route('Service') }}" class="btn btn-outline-light px-4 py-2">Explore Services</a>
+          <a href="{{ route('Contact') }}" class="btn bg-green px-4 py-3 hovergreen">Book  Appointment</a>
+          <a href="{{ route('Service') }}" class="btn btn-outline-light px-4 py-3">Explore Services</a>
         </div>
       </div>
 
       <!-- Right Content -->
       <div class="col-12 col-lg-5  px-lg-0">
         <div class="d-flex flex-column flex-md-row gap-4 mb-4">
-          <div class="bg-danger text-white p-4 rounded-3 flex-fill text-center">
+          <div class="bg-green text-white p-4 rounded-3 flex-fill text-center">
             <h2 class="mb-1">4.9 <span class="text-warning">★</span></h2>
             <p class="mb-0">100% Client Satisfaction</p>
           </div>

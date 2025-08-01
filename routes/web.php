@@ -163,7 +163,7 @@ Route::prefix('backend')->name('backend.')->group(function () {
     Route::get('/whyus', [WhyUsController::class, 'index'])->name('whyus.index');
     Route::get('/whyus/create', [WhyUsController::class, 'create'])->name('whyus.create');
     Route::post('/whyus/store', [WhyUsController::class, 'store'])->name('whyus.store');
-    Route::get('/whyus/{id}/edit', [WhyUsController::class, 'edit'])->name('whyus.update');
+    Route::get('/whyus/{id}/edit', [WhyUsController::class, 'edit'])->name('whyus.edit');
     Route::put('/whyus/{id}', [WhyUsController::class, 'update'])->name('whyus.update');
     Route::delete('/whyus/{id}', [WhyUsController::class, 'destroy'])->name('whyus.destroy');
 });
@@ -175,13 +175,14 @@ Route::prefix('backend')->name('backend.')->group(function () {
     Route::get('/event', [EventController::class, 'index'])->name('event.index');
     Route::get('/event/create', [EventController::class, 'create'])->name('event.create');
     Route::post('/event/store', [EventController::class, 'store'])->name('event.store');
+    Route::get('/event/{id}/edit', [EventController::class, 'edit'])->name('event.edit');
     Route::put('/event/{id}', [EventController::class, 'update'])->name('event.update');
     Route::delete('/event/{id}', [EventController::class, 'destroy'])->name('event.destroy');
 });
 
 
 Route::get('/events/{slug}', [EventController::class, 'show'])
-     ->name('SingleBlogCategory');
+     ->name('singleevents');
 
 
 

@@ -1,7 +1,6 @@
 <style>
   .contactsection {
     background: var(--primary);
-    padding: 60px 0;
     color: #fff;
   }
 
@@ -15,40 +14,39 @@
 
 
   .search-form-button {
-    border: 2px solid white;
-    /* You can adjust the border color */
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-weight: 500;
+     border-color:black;
+    color: white;
+    background: #000;
+    border-radius:4px;
     cursor: pointer;
     transition: all 0.3s ease;
-    background: var(--primary);
     color: white;
   }
 
   .search-form-button:hover {
-    border-color: #999;
+     border: 2px solid white;
+     background: none;
   }
 </style>
 
 
 <section class="container-fluid contactsection py-4">
   <div class="container">
-    <div class="row align-items-center gap-5 fcc">
+    <div class="row align-items-center gap-5">
 
       <!-- Left Section (col-md-6) -->
-      <div class="col-md-7">
+      <div class="col-md-8">
         <div class="content-left ">
           <h1 class="md-text-bd whitehighlight">Let’s Connect with us</h1>
           <p class="sm-text py-2 whitehighlight">Umbreela Nepal is a dedicated NGO based in the heart of Nepal, working
             to uplift communities through empowerment, education, and sustainable development initiatives.</p>
-          <button class=" search-form-button mt-2" href="{{ route('Contact') }}">Contact Us</button>
+          <button class=" search-form-button mt-4 p-3 px-5" href="{{ route('Contact') }}">Contact Us</button>
 
         </div>
       </div>
 
       <!-- Right Section (col-md-5) -->
-      <div class="mx-3 col-md-4 d-flex align-items-center">
+      <div class="mx-3 col-md-3 d-flex  ">
         <div class="content-right">
           <img src="{{asset('image/contactindex.png')}}" alt="Happy Client">
         </div>

@@ -18,11 +18,14 @@
 
 
 <section class="container-fluid bg-light">
-   <h1 style="text-align:center; font-family:Arial, sans-serif; font-size:3rem; color:#2f8b45; margin:40px 0; letter-spacing:2px; text-transform:uppercase; text-shadow:1px 1px 3px rgba(0,0,0,0.2);">
-  Our Events
-</h1>
 
 <div class="container py-5 ">
+    <div class="directors-header mb-5">
+            <h2 class="section-title directors-title fw-bold text-danger mb-3">🌟 Collection of Events</h2>
+            <p class="section-subtitle text-secondary text-center">
+                Our board brings expertise and heart to every decision, shaping a better Nepal for future generations.
+            </p>
+        </div>
     <div class="row">
         @foreach ($events->take(3) as $event)
             <div class="col-md-4 mb-4">
@@ -33,7 +36,7 @@
                         <span class="badge">Event</span>
                         <h5>{{ $event->heading }}</h5>
                          <p>{{Str::limit(strip_tags($event->content), 150) }}</p>
-                       <a href="{{ route('SingleBlogCategory', $event->slug) }}" class="btn btn-sm btn-outline-light mt-2 read-more-btn">Read More</a>
+                       <a href="{{ route('singleevents', $event->slug) }}" class="btn btn-sm btn-outline-light mt-2 read-more-btn">Read More</a>
                     </div>
                 </div>
             </div>

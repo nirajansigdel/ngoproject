@@ -1,6 +1,7 @@
 <section class="py-5" style="background-color: #f4f4f4;">
   <div class="container">
     <div class="row align-items-center">
+      
 
       <!-- LEFT: Text Content -->
       <div class="col-lg-6 mb-4 mb-lg-0">

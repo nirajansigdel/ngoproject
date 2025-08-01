@@ -39,7 +39,7 @@
                     </td>
                     <td>{{ $event->created_at->format('Y-m-d') }}</td>
                     <td>
-                        <a href="{{ route('backend.event.update', $event->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                        <a href="{{ route('backend.event.edit', $event->id) }}" class="btn btn-primary btn-sm">Edit</a>
 
                         <form action="{{ route('backend.event.destroy', $event->id) }}" method="POST" style="display:inline-block" onsubmit="return confirm('Are you sure?');">
                             @csrf

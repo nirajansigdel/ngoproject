@@ -1,6 +1,15 @@
 @extends('frontend.layouts.master')
 
 @section('content')
+<style>
+  .text-orange {
+  color: #f26522 !important;
+}
+.bg-orange{
+  background:#f26522;
+
+}
+</style>
 
 <!-- Hero Contact Section -->
 <section class="py-5 bg-white">
@@ -8,10 +17,10 @@
     <div class="row align-items-center g-4">
       <!-- Left Text -->
       <div class="col-md-6">
-        <p class="text-danger fw-semibold mb-2">Contact Us</p>
-        <h2 class="fw-bold">We Would <span class="text-danger">Love To Connect!</span></h2>
+        <p class="text-success fw-semibold mb-2">Contact Us</p>
+        <h2 class="fw-bold">We Would <span class="text-orange">Love To Connect!</span></h2>
         <p class="text-muted">Always here to support, guide, and connect with you. Feel free to reach out.</p>
-        <a href="https://wa.me/yourwhatsapplink" class="btn btn-danger rounded-pill px-4 py-2 d-inline-flex align-items-center">
+        <a href="https://wa.me/yourwhatsapplink" class="btn btn-success rounded bg-green px-4 py-3 d-inline-flex align-items-center">
           <i class="bi bi-whatsapp me-2"></i> Whatsapp
         </a>
       </div>
@@ -31,7 +40,7 @@
 
       <!-- Address -->
       <div class="col-md-3 text-center bg-white rounded shadow-sm p-4" data-aos="zoom-in">
-        <i class="fa-solid fa-location-dot text-danger fa-2x mb-2"></i>
+        <i class="fa-solid fa-location-dot classgreen fa-2x mb-2"></i>
         <h5 class="fw-semibold mb-2">Office Address</h5>
         @if (!empty($sitesetting->office_address))
           @foreach ((array)json_decode($sitesetting->office_address) as $address)
@@ -42,7 +51,7 @@
 
       <!-- Contact -->
       <div class="col-md-3 text-center bg-white rounded shadow-sm p-4" data-aos="zoom-in" data-aos-delay="100">
-        <i class="fa-solid fa-phone text-danger fa-2x mb-2"></i>
+        <i class="fa-solid fa-phone classgreen fa-2x mb-2"></i>
         <h5 class="fw-semibold mb-2">Office Contact</h5>
         @if (!empty($sitesetting->office_contact))
           @foreach ((array)json_decode($sitesetting->office_contact) as $contact)
@@ -53,7 +62,7 @@
 
       <!-- Email -->
       <div class="col-md-3 text-center bg-white rounded shadow-sm p-4" data-aos="zoom-in" data-aos-delay="200">
-        <i class="fa-solid fa-envelope text-danger fa-2x mb-2"></i>
+        <i class="fa-solid fa-envelope classgreen fa-2x mb-2"></i>
         <h5 class="fw-semibold mb-2">Office Email</h5>
         @if (!empty($sitesetting->office_email))
           @foreach ((array)json_decode($sitesetting->office_email) as $email)
@@ -72,7 +81,7 @@
     <div class="row gx-5 align-items-stretch rounded shadow">
       
       <!-- Left Column -->
-      <div class="col-md-4 bg-danger text-white p-4 rounded-start d-flex flex-column justify-content-center">
+      <div class="col-md-4 bg-orange classgreen text-white p-4 rounded-start d-flex flex-column justify-content-center">
         <h4 class="fw-bold mb-4">Book Virtual Appointment</h4>
         <ul class="list-unstyled">
           <li class="mb-3"><i class="fa-solid fa-circle-check me-2"></i> Volunteer Opportunities</li>
@@ -115,7 +124,7 @@
             </div>
 
             <div class="col-12">
-              <button type="submit" class="btn btn-danger px-4 py-2 rounded-pill shadow">Book Appointment</button>
+              <button type="submit" class="btn bg-green px-4 py-3 rounded shadow">Book Appointment</button>
             </div>
           </div>
 

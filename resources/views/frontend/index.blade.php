@@ -4,57 +4,13 @@
 @include("frontend.includes.herosection")
 @include("frontend.includes.indexservice")
 @include("frontend.includes.donate")
-@include("frontend.includes.indexproject")
 @include("frontend.includes.testimonials")
 @include("frontend.includes.indexgallary")
 @include("frontend.includes.contact")
 @include("frontend.includes.ourclient")
 @include("frontend.includes.rescue")
-
-{{-- Vacancy Modal --}}
- @if($latestVacancies->count())
-    <div class="modal fade" id="vacancyModal" tabindex="-1" aria-labelledby="vacancyModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="vacancyModalLabel">Latest Vacancies</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        <div class="row">
-                            @foreach($latestVacancies->take(4) as $demand)
-                                <div class="col-md-{{ $latestVacancies->count() == 1 ? '12' : '6' }} mb-3">
-                                    <div class="card h-100">
-                                        <div class="card-body p-3">
-                                            <h6 class="card-title mb-2 text-truncate" title="{{ $demand->vacancy }}">
-                                                {{ $demand->vacancy }}
-                                            </h6>
-                                            <p class="card-text small mb-3">
-                                                <small class="text-muted">
-                                                    From: {{ $demand->from_date }} to {{ $demand->to_date }}
-                                                </small>
-                                            </p>
-                                            <a href="{{ route('SingleDemand', ['id' => $demand->id]) }}"
-                                               class="btn btn-success btn-sm w-100">
-                                                Apply Now
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-@endif 
-
-{{-- WhatsApp Modal
+{{--  
+ WhatsApp Modal
 <div class="modal fade" id="whatsappModal" tabindex="-1" aria-labelledby="whatsappModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -84,8 +40,8 @@
         </div>
     </div>
 </div> 
- --}}
 
+--}}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var whatsappModal = new bootstrap.Modal(document.getElementById('whatsappModal'), {
@@ -148,21 +104,5 @@
         });
     });
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @endsection

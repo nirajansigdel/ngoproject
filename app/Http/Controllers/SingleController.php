@@ -105,11 +105,10 @@ class SingleController extends Controller
 
     public function render_singleBlogpostcategory($slug)
     {
-        $demands = Demand::latest()->get();
+        $demands = Demand::latest()->get(); 
         $blogpostcategory = BlogPostsCategory::where('slug', $slug)->firstOrFail();
-        $listblogs = BlogPostsCategory::where('slug', '!=', $slug)->latest()->take(5)->get();
-
-        return view('frontend.blogpostcategory', compact('blogpostcategory', 'listblogs', 'demands'));
+        $listblogs = BlogPostsCategory::where('slug', '!=', $slug)->latest()->get()->take(5);
+        return view('frontend.blogpostcategory', compact('blogpostcategory', 'listblogs','demands'));
     }
 
     public function render_singleService($slug)
@@ -255,7 +254,7 @@ class SingleController extends Controller
             ->take(3)
             ->get();
 
-        return view('frontend.singleEvent', compact('event', 'sitesetting', 'demands', 'relatedEvents'));
+        return view('frontend.singleevents', compact('event', 'sitesetting', 'demands', 'relatedEvents'));
     }
 
     public function teams()
@@ -295,14 +294,7 @@ class SingleController extends Controller
 
         return view('frontend.demand', compact('demand', 'listdemands', 'demands'));
     }
-     public function render_career()
-    {
-        $demand = Demand::latest()->get();
-        $demands = Demand::latest()->get();
-        $listdemands = Demand::latest()->get();
-
-        return view('frontend.career', compact('demand', 'listdemands', 'demands'));
-    }
+    
 
     public function showApplicationForm($id)
     {
@@ -319,4 +311,30 @@ class SingleController extends Controller
         $demands = Demand::latest()->get();
         return view('frontend.includes.indexproject', compact('demands'));
     }
+
+
+
+ public function render_career()
+    {
+        $faqs = Faq::where('type', 'procurement')->latest()->get();
+        $demands = Demand::latest()->get();
+
+        return view('frontend.career', compact('faqs', 'demands'));
+    }
+     public function render_volunteer()
+    {
+        $faqs = Faq::where('type', 'procurement')->latest()->get();
+        $demands = Demand::latest()->get();
+
+        return view('frontend.volunteer', compact('faqs', 'demands'));
+    }
+
+     public function render_applycareer()
+    {
+        $faqs = Faq::where('type', 'procurement')->latest()->get();
+        $demands = Demand::latest()->get();
+
+        return view('frontend.careerapply', compact('faqs', 'demands'));
+    }
+
 }

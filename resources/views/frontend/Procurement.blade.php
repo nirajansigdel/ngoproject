@@ -38,17 +38,17 @@
   }
   .procurement-header {
     background-color: white;
-    padding: 1rem;
+    padding:2rem 1rem;
     cursor: pointer;
   }
 </style>
 
 <section class="container-fluid my-5">
-  <h2 class="section-title text-center mb-4">Procurement FAQs</h2>
+  <h2 class="section-title text-center mb-4">Procurement </h2>
   <div class="container">
 
     @forelse($faqs as $index => $faq)
-      <div class="border rounded mb-4">
+      <div class="border mb-4">
         <!-- Header -->
         <div class="d-flex align-items-center procurement-header"
              data-target="content-{{ $index }}">
@@ -59,17 +59,18 @@
         <!-- Content -->
         <div id="content-{{ $index }}" class="procurement-content px-4">
           <div class="row align-items-center">
-            <div class="col-md-7 text-success">
+            <div class="col-md-7">
               <h4 class="fw-bold">{{ $faq->question }}</h4>
-              <p>{!! nl2br(e($faq->answer)) !!}</p>
+              <p class="xs-text-des">{!! nl2br(e($faq->answer)) !!}</p>
               @if(!empty($faq->image))
-                <button type="button"
-                        class="btn btn-success text-uppercase fw-semibold open-image-modal"
+                <a type="button"
+                        class="open-image-modal py-3 px-3 classgreen"
                         data-bs-toggle="modal"
                         data-bs-target="#imageModal"
-                        data-img="{{ asset('storage/' . $faq->image) }}">
-                  SEE DETAILS
-                </button>
+                        data-img="{{ asset('storage/' . $faq->image) }}"
+                        style="text-decoration:none;">
+                  See Details
+                </a>
               @endif
             </div>
             <div class="col-md-5 text-center">

@@ -8,44 +8,9 @@
         overflow: hidden;
     }
 
-    .section-header {
-        text-align: center;
-        margin-bottom:32px;
-        position: relative;
-        padding: 0 15px;
-    }
 
-    .section-header::after {
-        content: '';
-        position: absolute;
-        bottom: -15px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 80px;
-        height: 3px;
-        border-radius: 2px;
-    }
+   
 
-    .section-header h1 {
-        margin-bottom: 20px;
-        position: relative;
-        display: inline-block;
-        font-size: 2.5rem;
-        font-weight: 700;
-        background: linear-gradient(45deg, var(--primary) 0%, var(--secondary) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        text-transform: capitalize;
-    }
-
-    .section-header .xs-text {
-        color: #6c757d;
-        max-width: 600px;
-        margin: 0 auto;
-        margin-bottom: 0px;
-        font-size: 1.1rem;
-    
-    }
 
     .gallery-wrapper {
         position: relative;
@@ -248,12 +213,12 @@
 
 <section class="gallery-section">
     <div class="container">
-        <div class="section-header">
-            <h1 class="extralarger blackhighlight">Our Photo Gallery</h1>
+        <div class=" text-center gap-1">
+            <h1 class="extralarger blackhighlight mb-1">Our Photo Gallery</h1>
             <p class="xs-text">Journey through our moments of inspiration, achievement, and community spirit</p>
         </div>
 
-        <div class="filter-container">
+        <div class="filter-container mt-4">
             <div class="btn-group">
                 <button id="imageButton" class="active">Images</button>
                 <button id="videoButton">Videos</button>

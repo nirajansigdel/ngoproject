@@ -19,6 +19,12 @@
 
 <section class="container-fluid bg-light">
 <div class="container py-5 ">
+    <div class="directors-header mb-5">
+            <h2 class="section-title directors-title fw-bold text-danger mb-3">🌟 Collection of Blogs</h2>
+            <p class="section-subtitle text-secondary text-center">
+                Our blog shares stories, insights, and updates from passionate voices working to shape a better Nepal—one idea at a time.
+            </p>
+        </div>
     <div class="row">
         @foreach ($blogpostcategories->take(3) as $blogs)
             <div class="col-md-4 mb-4">
@@ -27,9 +33,9 @@
 
                     <div class="blog-info">
                         <span class="badge">BLOG</span>
-                        <h5>{{ $blogs->title }}</h5>
+                        <h5 class="fw-blod">{{ $blogs->title }}</h5>
                          <p>{{Str::limit(strip_tags($blogs->content), 150) }}</p>
-                       <a href="{{ route('SingleBlogCategory', $blogs->slug) }}" class="btn btn-sm btn-outline-light mt-2 read-more-btn">Read More</a>
+                       <a href="{{ route('SingleBlogpostcategory', $blogs->slug) }}" class="btn btn-sm btn-outline-light mt-2 read-more-btn">Read More</a>
                     </div>
                 </div>
             </div>
@@ -174,6 +180,5 @@
 </section>
 
 @endsection
-
 
 

@@ -13,10 +13,10 @@
     width: 260px;
     height: 260px;
     cursor: pointer;
-    border-left: 4px solid #0d6efd;
+    /* border-left: 4px solid #0d6efd; */
     overflow: hidden;
     transition: border-color 0.3s ease;
-    border-radius: 8px;
+   
   }
 
   .card-image {
@@ -25,13 +25,14 @@
     object-fit: cover;
     display: block;
     transition: filter 0.3s ease;
+    
   }
 
   .client-card:hover .card-image {
     filter: brightness(85%);
   }
 
-  /* Slide-in overlay from left to right */
+  /* Slide-in overlay from left to right
   .overlay {
     position: absolute;
     top: 0;
@@ -43,11 +44,13 @@
     transition: transform 0.9s ease;
     z-index: 1;
     pointer-events: none;
+    border-radius:200px;
   }
 
   .client-card:hover .overlay {
     transform: translateX(0);
     pointer-events: auto;
+    border-radius:200px;
   }
 
   .client-name {
@@ -70,18 +73,20 @@
   .client-card:hover .client-name {
     opacity: 1;
   }
+     */
 </style>
 
 <section class="container-fluid bg-light client-section py-5">
   <div class="container">
     <div class="text-center mb-5">
-      <h2 class="section-title fw-bold">🌟 Our Partners</h2>
+      <h2 class="section-title fw-bold p-0">🌟 Our Partners</h2>
+      <p class="xs-text">Explore the path to inner and self-discovery. Learn Yoga Meditation with us.</p>
     </div>
 
     <div id="clientScrollContainer" class="d-flex gap-4 overflow-auto px-3 pb-3" style="scroll-behavior: smooth;">
       @foreach ($clients as $client)
         <!-- Client Card -->
-        <div class="client-card rounded shadow flex-shrink-0">
+        <div class="client-card rounded flex-shrink-0">
           <img src="{{ asset('uploads/client/' . $client->image) }}" alt="{{ $client->name ?? 'Client' }}" class="card-image" />
           <div class="overlay"></div>
           <h5 class="client-name">{{ $client->name ?? 'Client' }}</h5>

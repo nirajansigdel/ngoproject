@@ -342,7 +342,7 @@
 
           </p>
           <a href="{{ route('SingleService', ['slug' => $service->slug]) }}" 
-             class="btn btn-primary px-4 py-2 rounded-pill text-white" style="width: fit-content;">
+             class=" bg-green px-4 py-3 rounded text-white " style="width: fit-content;text-decoration:none">
             Learn More
           </a>
         </div>

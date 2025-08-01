@@ -16,12 +16,10 @@
             </div>
             {{-- Content --}}
             <div class="col-lg-8 col-md-8 col-sm-12 order-2 order-md-3 ">
-                <h2 class=" fw-bold text-primary pb-2 m-0">{{ $blogpostcategory->title }}</h2>
+                <h2 class=" fw-bold pb-2 m-0">{{ $blogpostcategory->title }}</h2>
                 <div class="text-secondary xs-text-des" style=" letter-spacing: 0.01em;">
-                    {{ app()->getLocale() === 'ne'
-                        ? strip_tags($blogpostcategory->content_ne)
-                        : strip_tags($blogpostcategory->content) 
-                    }}
+                    {{ strip_tags(app()->getLocale() === 'ne' ? $blogpostcategory->content_ne : $blogpostcategory->content) }}
+
                 </div>
             </div>
 

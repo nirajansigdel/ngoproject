@@ -109,7 +109,16 @@ class EventController extends Controller
     public function show($slug)
 {
     $event = Event::where('slug', $slug)->firstOrFail();
-    return view('frontend.event-detail', compact('event'));
+    $sitesetting = \App\Models\SiteSetting::first();
+    $demands = \App\Models\Demand::latest()->get();
+
+    $relatedEvents = Event::active()
+        ->where('id', '!=', $event->id)
+        ->latest()
+        ->take(3)
+        ->get();
+
+    return view('frontend.singleevents', compact('event', 'sitesetting', 'demands', 'relatedEvents'));
 }
 
 }

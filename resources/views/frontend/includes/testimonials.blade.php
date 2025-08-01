@@ -114,6 +114,7 @@
 
 <section class="py-5" style="background-color: #f7f7f7;">
   <div class="container">
+    
     <div class="row justify-content-center">
       <div class="col-10 position-relative">
 
@@ -135,7 +136,7 @@
           </div>
 
           <!-- Text Content -->
-          <div class="offset-md-3 col-md-9 bg-warning text-white rounded shadow p-5" >
+          <div class="offset-md-3 col-md-9  text-white rounded shadow p-5" style="background: #448c4ce4;" >
             <div class="row">
               <div class="col-md-4"></div>
               <div class="col-md-8">
@@ -145,7 +146,7 @@
                 <p class="fst-italic">
                   You can help send <strong>Umbrella Organization Nepal</strong> agents to children trapped in these harsh realities and help restore their dreams.
                 </p>
-                <button type="button" class="btn btn-outline-light fw-bold mt-3 px-4 py-2">BECOME A OUR TEAM</button>
+                <button type="button" class="btn btn-outline-light  mt-3 px-4 py-3">BECOME A OUR TEAM</button>
               </div>
               
             </div>

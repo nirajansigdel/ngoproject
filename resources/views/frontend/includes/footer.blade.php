@@ -37,7 +37,7 @@
     }
 
     .footer-menu a:hover {
-        color: #f00;
+        color: var(--primary);
     }
 
     .footer-bottom {
@@ -53,7 +53,7 @@
     }
 
     .footer-bottom a:hover {
-        color: #f00;
+        color: var(--primary);
     }
 
     .forlogoandcontact {
