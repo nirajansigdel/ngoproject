@@ -1,43 +1,45 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 
-use App\Http\Controllers\FaqController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\TeamController;
-use App\Http\Controllers\AboutController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\WorkCategoryController;
-use App\Http\Controllers\DemandController;
-use App\Http\Controllers\SearchController;
-use App\Http\Controllers\SingleController;
-use App\Http\Controllers\ContactController;
-use App\Http\Controllers\CountryController;
-use App\Http\Controllers\FaviconController;
-use App\Http\Controllers\ServiceController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\FrontViewController;
-use App\Http\Controllers\CoverImageController;
-use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\SiteSettingController;
-use App\Http\Controllers\TestimonialController;
-use App\Http\Controllers\VisitorBookController;
-use App\Http\Controllers\PhotoGalleryController;
-use App\Http\Controllers\ApplicationController;
-use App\Http\Controllers\VideoGalleryController;
-use App\Http\Controllers\StudentDetailController;
-use App\Http\Controllers\UserManagementController;
-use App\Http\Controllers\ClientMessageController;
-use App\Http\Controllers\BlogPostsCategoryController;
-use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\CeoMessageController;
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\WhyUsController;
-use App\Http\Controllers\EventController;
+use App\Http\Controllers\{
+    FaqController,
+    PostController,
+    TeamController,
+    AboutController,
+    AdminController,
+    WorkCategoryController,
+    DemandController,
+    SearchController,
+    SingleController,
+    ContactController,
+    CountryController,
+    FaviconController,
+    ServiceController,
+    CategoryController,
+    FrontViewController,
+    CoverImageController,
+    CompanyController,
+    SiteSettingController,
+    TestimonialController,
+    VisitorBookController,
+    PhotoGalleryController,
+    ApplicationController,
+    VideoGalleryController,
+    StudentDetailController,
+    UserManagementController,
+    ClientMessageController,
+    BlogPostsCategoryController,
+    Auth\ResetPasswordController,
+    CeoMessageController,
+    ClientController,
+    WhyUsController,
+    EventController,
+    ProjectController
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -45,133 +47,137 @@ use App\Http\Controllers\EventController;
 |--------------------------------------------------------------------------
 */
 
-// Language switching
+// 🌐 Language switching
 Route::get('/lang/{lang}', function ($lang) {
     $supportedLocales = config('app.available_locales');
     if (!in_array($lang, array_keys($supportedLocales))) {
-        return redirect()->route('fronted.index');
+        return redirect()->route('index');
     }
     app()->setLocale($lang);
     session()->put('locale', $lang);
-    return redirect()->route('fronted.index');
+    return redirect()->route('index');
 });
 
-// Frontend Routes
+// ========================
+// 🌐 Frontend Routes
+// ========================
 Route::get('/', [FrontViewController::class, 'index'])->name('index');
-Route::get('/singleposts/{slug}', [FrontViewController::class, 'singlePost'])->name('SinglePost');
+Route::get('/search', [SearchController::class, 'search'])->name('search');
 Route::post('/contactpage', [ContactController::class, 'store'])->name('Contact.store');
 
-Route::prefix('/')->group(function () {
-    Route::get('/search', [SearchController::class, 'search'])->name('search');
-    Route::get('/contactpage', [SingleController::class, 'render_contact'])->name('Contact');
-    Route::get('/aboutus', [SingleController::class, 'render_about'])->name('About');
-    Route::get('/whyus', [SingleController::class, 'render_whyus'])->name('whyus');
-    Route::get('/testimonial', [SingleController::class, 'render_testimonial'])->name('Testimonial');
-    Route::get('/blogpostcategories', [SingleController::class, 'render_blogpostcategory'])->name('Blogpostcategory');
-    Route::get('/blog-category/{slug}', [SingleController::class, 'render_singleBlogpostcategory'])->name('SingleBlogpostcategory');
-    Route::get('/team', [SingleController::class, 'render_team'])->name('Team');
-    Route::get('/services', [SingleController::class, 'render_service'])->name('Service');
-    Route::get('/singleservice/{slug}', [SingleController::class, 'render_singleService'])->name('SingleService');
-    Route::get('/demands', [SingleController::class, 'render_demands'])->name('Demand');
-    Route::get('/singledemand/{id}', [SingleController::class, 'render_singledemand'])->name('SingleDemand');
-    Route::get('/apply/{id}', [SingleController::class, 'showApplicationForm'])->name('apply');
-    Route::post('/apply/{id}', [SingleController::class, 'submitApplication'])->name('submitApplication');
-    Route::get('/gallery', [SingleController::class, 'render_gallery'])->name('Gallery');
-    Route::get('/events', [SingleController::class, 'render_events'])->name('events');
-    Route::get('/singleevent/{slug}', [SingleController::class, 'render_singleEvent'])->name('singleEvent');
-    Route::get('/faqs', [SingleController::class, 'render_faqs'])->name('faqs');
-    Route::get('/countries', [SingleController::class, 'render_Countries'])->name('Countries');
-    Route::get('/singlecountry/{slug}', [SingleController::class, 'render_singleCountry'])->name('singleCountry');
-    Route::get('/singlecompany/{slug}', [SingleController::class, 'singleCompany'])->name('singleCompany');
-    Route::get('/singleworkcategory/{slug}', [SingleController::class, 'render_singleworkCategory'])->name('singleworkCategory');
-    Route::get('/singlecategory/{slug}', [SingleController::class, 'render_singleCategory'])->name('singleCategory');
-    Route::get('/singlepost/{slug}', [SingleController::class, 'render_singlePost'])->name('singlePost');
-    Route::get('/gallerys/{slug}', [SingleController::class, 'render_singleImage'])->name('singleImage');
-    Route::get('/blogcategory/{slug}', [SingleController::class, 'render_singleBlogpostcategory'])->name('SingleBlogCategory');
-    Route::get('/career', [SingleController::class, 'render_career'])->name('career');
-    Route::get('/volunteer', [SingleController::class, 'render_volunteer'])->name('volunteer');
-    Route::get('/applycareer', [SingleController::class, 'render_applycareer'])->name('applycareer');
-    Route::get('/project1', [SingleController::class, 'render_project1'])->name('project1');
-    Route::get('/project2', [SingleController::class, 'render_project2'])->name('project2');
-    Route::get('/project3', [SingleController::class, 'render_project3'])->name('project3');
-    Route::get('/project4', [SingleController::class, 'render_project4'])->name('project4');
-    Route::get('/project5', [SingleController::class, 'render_project5'])->name('project5');
-    Route::get('/project6', [SingleController::class, 'render_project6'])->name('project6');
-});
+// 📄 Static Pages
+Route::get('/contactpage', [SingleController::class, 'render_contact'])->name('Contact');
+Route::get('/aboutus', [SingleController::class, 'render_about'])->name('About');
+Route::get('/whyus', [SingleController::class, 'render_whyus'])->name('whyus');
+Route::get('/testimonial', [SingleController::class, 'render_testimonial'])->name('Testimonial');
+Route::get('/faqs', [SingleController::class, 'render_faqs'])->name('faqs'); // ✅ Procurement FAQ Page
+Route::get('/procurement', [SingleController::class, 'render_faqs'])->name('frontend.procurement'); // alias
 
-// Authentication
+// 📰 Blog & Categories
+Route::get('/blogpostcategories', [SingleController::class, 'render_blogpostcategory'])->name('Blogpostcategory');
+Route::get('/blog-category/{slug}', [SingleController::class, 'render_singleBlogpostcategory'])->name('SingleBlogpostcategory');
+Route::get('/singlecategory/{slug}', [SingleController::class, 'render_singleCategory'])->name('singleCategory');
+Route::get('/singlepost/{slug}', [SingleController::class, 'render_singlePost'])->name('singlePost');
+
+// 👥 Team & Services
+Route::get('/team', [SingleController::class, 'render_team'])->name('Team');
+Route::get('/services', [SingleController::class, 'render_service'])->name('Service');
+Route::get('/singleservice/{slug}', [SingleController::class, 'render_singleService'])->name('SingleService');
+
+// 🌏 Countries & Companies
+Route::get('/countries', [SingleController::class, 'render_Countries'])->name('Countries');
+Route::get('/singlecountry/{slug}', [SingleController::class, 'render_singleCountry'])->name('singleCountry');
+Route::get('/singlecompany/{slug}', [SingleController::class, 'render_singleCompany'])->name('singleCompany');
+Route::get('/singleworkcategory/{slug}', [SingleController::class, 'render_singleworkCategory'])->name('singleworkCategory');
+
+// 📷 Gallery & Events
+Route::get('/gallery', [SingleController::class, 'render_gallery'])->name('Gallery');
+Route::get('/gallerys/{slug}', [SingleController::class, 'render_singleImage'])->name('singleImage');
+Route::get('/events', [SingleController::class, 'render_events'])->name('events');
+Route::get('/singleevent/{slug}', [SingleController::class, 'render_singleEvent'])->name('singleEvent');
+
+// 📢 Demands & Application
+Route::get('/demands', [SingleController::class, 'render_demands'])->name('Demand');
+Route::get('/singledemand/{id}', [SingleController::class, 'render_singledemand'])->name('SingleDemand');
+Route::get('/apply/{id}', [SingleController::class, 'showApplicationForm'])->name('apply');
+Route::post('/apply/{id}', [ApplicationController::class, 'store'])->name('apply.store');
+
+// Extra static pages (optional)
+Route::get('/career', [SingleController::class, 'render_career'])->name('career');
+Route::get('/volunteer', [SingleController::class, 'render_volunteer'])->name('volunteer');
+Route::get('/applycareer', [SingleController::class, 'render_applycareer'])->name('applycareer');
+
+// ========================
+// 🔐 Authentication Routes
+// ========================
 Auth::routes();
-Route::post('/change-password', [ResetPasswordController::class, 'updatePassword'])->name('changePassword')->middleware('auth');
+Route::post('/change-password', [ResetPasswordController::class, 'updatePassword'])
+    ->name('changePassword')->middleware('auth');
 
-// Admin Backend Routes
+// ========================
+// 🛠 Backend (Admin) Routes
+// ========================
 Route::prefix('/admin')->name('admin.')->middleware(['web', 'auth'])->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('index');
 
-    Route::resource('site-settings', SiteSettingController::class);
-    Route::resource('cover-images', CoverImageController::class);
-    Route::resource('about-us', AboutController::class);
-    Route::resource('ceomessage', CeoMessageController::class);
-    Route::resource('client', ClientController::class);
-    Route::resource('services', ServiceController::class);
-    Route::resource('categories', CategoryController::class);
-    Route::resource('posts', PostController::class);
-    Route::resource('photo-galleries', PhotoGalleryController::class);
-    Route::resource('video-galleries', VideoGalleryController::class);
-    Route::resource('testimonials', TestimonialController::class);
-    Route::resource('visitors-book', VisitorBookController::class);
-    Route::resource('blog-posts-categories', BlogPostsCategoryController::class);
-    Route::resource('work_categories', WorkCategoryController::class);
-    Route::resource('teams', TeamController::class);
+    // Resource Controllers
+    Route::resources([
+        'site-settings' => SiteSettingController::class,
+        'cover-images' => CoverImageController::class,
+        'about-us' => AboutController::class,
+        'ceomessage' => CeoMessageController::class,
+        'client' => ClientController::class,
+        'services' => ServiceController::class,
+        'categories' => CategoryController::class,
+        'posts' => PostController::class,
+        'photo-galleries' => PhotoGalleryController::class,
+        'video-galleries' => VideoGalleryController::class,
+        'testimonials' => TestimonialController::class,
+        'visitors-book' => VisitorBookController::class,
+        'blog-posts-categories' => BlogPostsCategoryController::class,
+        'work_categories' => WorkCategoryController::class,
+        'teams' => TeamController::class,
+        'faqs' => FaqController::class,
+        'events' => EventController::class,
+        'countries' => CountryController::class,
+        'companies' => CompanyController::class,
+        'student-details' => StudentDetailController::class,
+        'contacts' => ContactController::class,
+        'favicons' => FaviconController::class,
+        'client_messages' => ClientMessageController::class,
+        'demands' => DemandController::class,
+        'projects' => ProjectController::class,
+    ]);
 
-    // ✅ FAQ CRUD
-    Route::resource('faqs', FaqController::class);
-
-    // ✅ EVENT CRUD
-    Route::resource('events', EventController::class);
-
-
-
-    Route::resource('countries', CountryController::class);
-    Route::resource('companies', CompanyController::class);
-    Route::resource('student-details', StudentDetailController::class);
-    Route::resource('contacts', ContactController::class);
-    Route::resource('favicons', FaviconController::class);
-    Route::resource('client_messages', ClientMessageController::class);
-    Route::resource('demands', DemandController::class);
-
-    // AJAX for Demands
-    Route::post('demands/fetch-related', [DemandController::class, 'fetchRelated'])->name('demands.fetchRelated');
-
-    // Applications
+    // Applications Management
     Route::get('/applications', [ApplicationController::class, 'adminIndex'])->name('applications.index');
     Route::post('/applications/{application}/accept', [ApplicationController::class, 'accept'])->name('applications.accept');
     Route::post('/applications/{application}/reject', [ApplicationController::class, 'reject'])->name('applications.reject');
 });
 
-// Additional Frontend
-Route::get('/blogs', [FrontViewController::class, 'blogs'])->name('blogs.index');
-Route::get('/news', [FrontViewController::class, 'news'])->name('news.index');
+// ========================
+// 🎯 WhyUs Section (Backend)
+// ========================
+Route::prefix('backend')->name('backend.')->group(function () {
+    Route::get('/whyus', [WhyUsController::class, 'index'])->name('whyus.index');
+    Route::get('/whyus/create', [WhyUsController::class, 'create'])->name('whyus.create');
+    Route::post('/whyus/store', [WhyUsController::class, 'store'])->name('whyus.store');
+    Route::get('/whyus/{id}/edit', [WhyUsController::class, 'edit'])->name('whyus.edit');
+    Route::put('/whyus/{id}', [WhyUsController::class, 'update'])->name('whyus.update');
+    Route::delete('/whyus/{id}', [WhyUsController::class, 'destroy'])->name('whyus.destroy');
+});
 
-// Courses (legacy)
-Route::get('/courses/{slug}', [FrontViewController::class, 'viewCourse']);
-
-// Application submission (frontend)
-Route::post('/apply/{id}', [ApplicationController::class, 'store'])->name('apply.store');
-
-/*whyus section start here */
-Route::get('/create/whyus', [WhyUsController::class, 'create'])->name('backend.whyus.create');
-Route::get('/index/whyus', [WhyUsController::class, 'index'])->name('backend.whyus.index');
-Route::post('/store/whyus', [WhyUsController::class, 'store'])->name('backend.whyus.store');
-Route::get('item/{id}/edit', [App\Http\Controllers\WhyUsController::class, 'edit'])->name('item.edit');
-Route::put('item/{id}', [App\Http\Controllers\WhyUsController::class, 'update'])->name('item.update');
-Route::delete('item/{id}', [App\Http\Controllers\WhyUsController::class, 'destroy'])->name('item.destroy');
+// ========================
+// 🎯 Events Section (Backend alias)
+// ========================
+Route::prefix('backend')->name('backend.')->group(function () {
+    Route::get('/event', [EventController::class, 'index'])->name('event.index');
+    Route::get('/event/create', [EventController::class, 'create'])->name('event.create');
+    Route::post('/event/store', [EventController::class, 'store'])->name('event.store');
+    Route::put('/event/{id}', [EventController::class, 'update'])->name('event.update');
+    Route::delete('/event/{id}', [EventController::class, 'destroy'])->name('event.destroy');
+});
 
 
-/* Event section starts here */
-Route::get('/create/event', [EventController::class, 'create'])->name('backend.event.create');
-Route::get('/index/event', [EventController::class, 'index'])->name('backend.event.index');
-Route::post('/store/event', [EventController::class, 'store'])->name('backend.event.store');
-Route::get('/event/{id}/edit', [EventController::class, 'edit'])->name('backend.event.edit');
-Route::put('/event/{id}', [EventController::class, 'update'])->name('backend.event.update');
-Route::delete('/event/{id}', [EventController::class, 'destroy'])->name('backend.event.destroy');
-
+Route::get('/events/{slug}', [EventController::class, 'show'])
+     ->name('SingleBlogCategory');

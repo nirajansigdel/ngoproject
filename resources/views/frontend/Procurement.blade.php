@@ -16,7 +16,6 @@
     border: 2px solid black;
     flex-shrink: 0;
   }
-
   .procurement-question {
     border-left: 2px solid #2f8b45;
     padding-left: 1rem;
@@ -24,7 +23,6 @@
     font-weight: 700;
     font-size: 1.1rem;
   }
-
   .procurement-content {
     max-height: 0;
     overflow: hidden;
@@ -33,60 +31,64 @@
     transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
     padding: 0;
   }
-
   .procurement-content.active {
     max-height: 1000px;
     opacity: 1;
     padding: 2rem 0;
   }
-
   .procurement-header {
     background-color: white;
     padding: 1rem;
+    cursor: pointer;
   }
 </style>
 
 <section class="container-fluid my-5">
-  <h2 class="section-title">Procurement</h2>
+  <h2 class="section-title text-center mb-4">Procurement FAQs</h2>
   <div class="container">
-    @forelse ($Faqs as $index => $faq)
+
+    @forelse($faqs as $index => $faq)
       <div class="border rounded mb-4">
         <!-- Header -->
-        <div class="d-flex align-items-center mx-4 py-4 procurement-header" style="cursor:pointer;" data-target="content-{{ $index }}">
+        <div class="d-flex align-items-center procurement-header"
+             data-target="content-{{ $index }}">
           <div class="procurement-check">✓</div>
-          <div class="procurement-question ms-3 flex-grow-1">
-            {{ $faq->question }}
-          </div>
+          <div class="procurement-question ms-3">{{ $faq->heading }}</div>
         </div>
 
         <!-- Content -->
         <div id="content-{{ $index }}" class="procurement-content px-4">
           <div class="row align-items-center">
             <div class="col-md-7 text-success">
-              <h4 class="fw-bold">Procurement of the Tractor</h4>
+              <h4 class="fw-bold">{{ $faq->question }}</h4>
               <p>{!! nl2br(e($faq->answer)) !!}</p>
-
-              <!-- SEE DETAILS button triggers bootstrap modal -->
-              <button type="button" class="btn btn-success text-uppercase fw-semibold open-image-modal" 
-                      data-bs-toggle="modal" 
-                      data-bs-target="#imageModal"
-                      data-img="{{ asset('image/um.jpg') }}">
-                SEE DETAILS
-              </button>
+              @if(!empty($faq->image))
+                <button type="button"
+                        class="btn btn-success text-uppercase fw-semibold open-image-modal"
+                        data-bs-toggle="modal"
+                        data-bs-target="#imageModal"
+                        data-img="{{ asset('storage/' . $faq->image) }}">
+                  SEE DETAILS
+                </button>
+              @endif
             </div>
             <div class="col-md-5 text-center">
-              <img src="{{ asset('image/um.jpg') }}" alt="procurement image" class="img-fluid" style="max-width: 200px;">
+              @if(!empty($faq->image))
+                <img src="{{ asset('storage/' . $faq->image) }}" alt="procurement image"
+                     class="img-fluid" style="max-width: 200px;">
+              @endif
             </div>
           </div>
         </div>
       </div>
     @empty
-      <p class="text-muted text-center">No procurement data available.</p>
+      <p class="text-muted text-center">No procurement FAQs available.</p>
     @endforelse
+
   </div>
 </section>
 
-<!-- Bootstrap Modal -->
+<!-- Modal for Image Preview -->
 <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-fullscreen modal-dialog-centered">
     <div class="modal-content bg-dark text-white position-relative">
@@ -109,7 +111,6 @@
   </div>
 </div>
 
-
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     // Accordion toggle
@@ -119,17 +120,14 @@
         const content = document.getElementById(targetId);
         const isActive = content.classList.contains('active');
 
-        // Collapse all
+        // Close all
         document.querySelectorAll('.procurement-content').forEach(c => c.classList.remove('active'));
-
-        // Toggle this one
-        if (!isActive) {
-          content.classList.add('active');
-        }
+        // Toggle current
+        if (!isActive) content.classList.add('active');
       });
     });
 
-    // Bootstrap modal image setup
+    // Modal functionality
     const imageModal = document.getElementById('imageModal');
     const modalImage = document.getElementById('modalImage');
     const downloadLink = document.getElementById('downloadImage');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Faq;
 use App\Models\Post;
 use App\Models\Team;
 use App\Models\About;
@@ -21,8 +22,6 @@ use App\Models\ClientMessage;
 use App\Models\Demand;
 use App\Models\WhyUs;
 use App\Models\Event;
-use App\Models\Faq;
-
 use Illuminate\Http\Request;
 
 class SingleController extends Controller
@@ -49,6 +48,7 @@ class SingleController extends Controller
         $categories = Category::latest()->take(10)->get();
         $about = About::first();
         $posts = Post::with('category')->latest()->take(3)->get();
+
         return view('frontend.team', compact('teams', 'sitesetting', 'categories', 'about', 'page_title', 'services', 'posts'));
     }
 
@@ -67,8 +67,10 @@ class SingleController extends Controller
 
     public function render_whyus()
     {
-        $whyus = WhyUs::latest()->get();
-
+        $clientMessages = ClientMessage::latest()->get();
+        $demands = Demand::latest()->get();
+        $whyUsItems = WhyUs::latest()->take(12)->get();
+        $whyUsData = WhyUs::latest()->get();
 
         return view('frontend.whyus', compact('whyus'));
     }
@@ -84,14 +86,15 @@ class SingleController extends Controller
         return view('frontend.testimonials', compact('testimonials', 'demands', 'clientMessages'));
     }
 
+    /**
+     * ✅ Corrected render_faqs method
+     */
     public function render_faqs()
     {
-        $clientMessages = ClientMessage::latest()->get();
+        $faqs = Faq::where('type', 'procurement')->latest()->get();
         $demands = Demand::latest()->get();
-        $testimonials = Testimonial::latest()->take(12)->get();
-        $faqs = Faq::latest()->get(); // Lowercase 'f'
-        return view('frontend.Procurement', compact('testimonials', 'demands', 'clientMessages', 'faqs'));
 
+        return view('frontend.procurement', compact('faqs', 'demands'));
     }
 
     public function render_blogpostcategory()
@@ -202,11 +205,44 @@ class SingleController extends Controller
         return view('frontend.singleImage', compact('image', 'services', 'categories', 'sitesetting', 'about', 'demands'));
     }
 
-    // ======= EVENTS METHODS =======
-    public function render_events()
+    public function render_events(Request $request)
     {
-        $Events = Event::active()->latest();
-        return view('frontend.event', compact('Events'));
+        $query = Event::active()->latest();
+
+        if ($request->filled('search')) {
+            $searchTerm = $request->search;
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('heading', 'like', "%{$searchTerm}%")
+                    ->orWhere('subtitle', 'like', "%{$searchTerm}%")
+                    ->orWhere('content', 'like', "%{$searchTerm}%");
+            });
+        }
+
+        if ($request->filled('month')) {
+            $query->whereMonth('created_at', $request->month);
+        }
+
+        if ($request->filled('year')) {
+            $query->whereYear('created_at', $request->year);
+        }
+
+        $events = $query->paginate(9);
+        $sitesetting = SiteSetting::first();
+        $demands = Demand::latest()->get();
+
+        $availableYears = Event::active()
+            ->selectRaw('YEAR(created_at) as year')
+            ->groupBy('year')
+            ->orderBy('year', 'desc')
+            ->pluck('year');
+
+        $availableMonths = Event::active()
+            ->selectRaw('MONTH(created_at) as month')
+            ->groupBy('month')
+            ->orderBy('month')
+            ->pluck('month');
+
+        return view('frontend.event', compact('events', 'sitesetting', 'demands', 'availableYears', 'availableMonths'));
     }
 
     public function render_singleEvent($slug)
@@ -215,7 +251,6 @@ class SingleController extends Controller
         $sitesetting = SiteSetting::first();
         $demands = Demand::latest()->get();
 
-        // Get related events (latest 3 excluding current)
         $relatedEvents = Event::active()
             ->where('id', '!=', $event->id)
             ->latest()
@@ -295,53 +330,5 @@ class SingleController extends Controller
         $demands = Demand::latest()->get();
 
         return view('frontend.apply', compact('demand', 'demands'));
-    }
-
-
-
-    public function render_project1()
-    {
-        $demand = Demand::latest()->get();
-        $demands = Demand::latest()->get();
-
-        return view('frontend.project1', compact('demand', 'demands'));
-    }
-
-
-
-    public function render_project2()
-    {
-        $demand = Demand::latest()->get();
-        $demands = Demand::latest()->get();
-
-        return view('frontend.project2', compact('demand', 'demands'));
-    }
-    public function render_project3()
-    {
-        $demand = Demand::latest()->get();
-        $demands = Demand::latest()->get();
-
-        return view('frontend.project3', compact('demand', 'demands'));
-    }
-    public function render_project4()
-    {
-        $demand = Demand::latest()->get();
-        $demands = Demand::latest()->get();
-
-        return view('frontend.project4', compact('demand', 'demands'));
-    }
-    public function render_project5()
-    {
-        $demand = Demand::latest()->get();
-        $demands = Demand::latest()->get();
-
-        return view('frontend.project5', compact('demand', 'demands'));
-    }
-    public function render_project6()
-    {
-        $demand = Demand::latest()->get();
-        $demands = Demand::latest()->get();
-
-        return view('frontend.project6', compact('demand', 'demands'));
     }
 }

@@ -1,18 +1,18 @@
 @extends('backend.layouts.master')
 
 @section('content')
-<div class="container mt-4">
+<div class="container">
     <h2>Create New Event</h2>
 
     @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>Whoops!</strong> Please fix the following errors:<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+    <div class="alert alert-danger">
+        <strong>Whoops!</strong> Please fix the following errors:<br><br>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
     @endif
 
     <form action="{{ route('backend.event.store') }}" method="POST" enctype="multipart/form-data">
@@ -35,7 +35,7 @@
 
         <div class="mb-3">
             <label for="image" class="form-label">Event Image</label>
-            <input type="file" name="image" id="image" class="form-control" accept="image/*">
+            <input type="file" name="image" id="image" class="form-control" accept="image/*" />
         </div>
 
         <button type="submit" class="btn btn-primary">Create Event</button>

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\WhyUs;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class WhyUsController extends Controller
 {
@@ -23,15 +22,16 @@ class WhyUsController extends Controller
     {
         $request->validate([
             'heading' => 'required|string|max:255',
-            'subtitle' => 'required|string',
+            'subtitle' => 'required|string|max:255',
             'content' => 'required|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $imageName = null;
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('whyus', 'public');
-            $imageName = $path;
+            $image = $request->file('image');
+            $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/whyus'), $imageName);
         }
 
         WhyUs::create([
@@ -41,31 +41,38 @@ class WhyUsController extends Controller
             'image' => $imageName,
         ]);
 
-        return redirect()->route('backend.whyus.index')
-                         ->with('success', 'Item created successfully.');
+        return redirect()->route('backend.whyus.index')->with('success', 'Why Us item created successfully.');
     }
 
-    public function edit(WhyUs $whyus)
+    public function edit($id)
     {
+        $whyus = WhyUs::findOrFail($id);
         return view('backend.whyus.edit', compact('whyus'));
     }
 
-    public function update(Request $request, WhyUs $whyus)
+    public function update(Request $request, $id)
     {
+        $whyus = WhyUs::findOrFail($id);
+
         $request->validate([
             'heading' => 'required|string|max:255',
             'subtitle' => 'nullable|string|max:255',
             'content' => 'required|string',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
 
         $data = $request->only(['heading', 'subtitle', 'content']);
 
         if ($request->hasFile('image')) {
-            if ($whyus->image && Storage::disk('public')->exists($whyus->image)) {
-                Storage::disk('public')->delete($whyus->image);
+            if ($whyus->image && file_exists(public_path('uploads/whyus/' . $whyus->image))) {
+                unlink(public_path('uploads/whyus/' . $whyus->image));
             }
-            $data['image'] = $request->file('image')->store('whyus', 'public');
+
+            $image = $request->file('image');
+            $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/whyus'), $imageName);
+
+            $data['image'] = $imageName;
         }
 
         $whyus->update($data);
@@ -73,10 +80,12 @@ class WhyUsController extends Controller
         return redirect()->route('backend.whyus.index')->with('success', 'Why Us updated successfully!');
     }
 
-    public function destroy(WhyUs $whyus)
+    public function destroy($id)
     {
-        if ($whyus->image && Storage::disk('public')->exists($whyus->image)) {
-            Storage::disk('public')->delete($whyus->image);
+        $whyus = WhyUs::findOrFail($id);
+
+        if ($whyus->image && file_exists(public_path('uploads/whyus/' . $whyus->image))) {
+            unlink(public_path('uploads/whyus/' . $whyus->image));
         }
 
         $whyus->delete();

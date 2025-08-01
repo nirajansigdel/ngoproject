@@ -4,7 +4,6 @@
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2>Why Us</h2>
-        {{-- This route name matches the resource route definition --}}
         <a href="{{ route('backend.whyus.create') }}" class="btn btn-primary">Add New</a>
     </div>
 
@@ -23,7 +22,6 @@
             </tr>
         </thead>
         <tbody>
-            {{-- Use a forelse loop to handle cases where there are no items --}}
             @forelse($whyus as $item)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
@@ -31,20 +29,18 @@
                     <td>{{ $item->subtitle }}</td>
                     <td>
                         @if($item->image)
-                            {{-- This path is now correct because 'storage:link' links --}}
-                            {{-- 'public/storage' to 'storage/app/public'. --}}
-                            <img src="{{ asset('storage/whyus/' . $item->image) }}" width="80" alt="{{ $item->heading }}">
+                            <img src="{{ asset('uploads/whyus/' . $item->image) }}" width="80" alt="Why Us Image">
                         @else
                             <span>No Image</span>
                         @endif
                     </td>
                     <td>
-                        {{-- Use the correct route name as defined in web.php --}}
-                        <a href="{{ route('item.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                        <form action="{{ route('item.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this item?');">
-                            @csrf
+                        <a href="{{ route('backend.whyus.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="{{ route('backend.whyus.destroy', $item->id) }}" method="POST" class="d-inline"
+                              onsubmit="return confirm('Are you sure?');">
+                            @csrf 
                             @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            <button class="btn btn-sm btn-danger">Delete</button>
                         </form>
                     </td>
                 </tr>
@@ -56,7 +52,6 @@
         </tbody>
     </table>
 
-    {{-- This renders pagination links --}}
     <div class="d-flex justify-content-center">
         {{ $whyus->links() }}
     </div>
