@@ -236,27 +236,46 @@
     </div>
 </section>
 
-<!-- Dynamic Why Us Section -->
-<section class="why-us-section container my-5">
-      <h1 style="text-align:center; font-family:Arial, sans-serif; font-size:3rem; color:#2f8b45; margin:40px 0; letter-spacing:2px; text-transform:uppercase; text-shadow:1px 1px 3px rgba(0,0,0,0.2);">
-  Why Us?
-</h1>
-    <div class="card-grid-container">
-        @foreach($whyUsData as $why)
-            <div class="card">
-                @if($why->image)
-                    <img src="{{ asset('uploads/whyus/' . $why->image) }}" alt="{{ $why->heading }}">
-                @endif
-                <div class="card-content">
-                    <h2>{{ $why->heading }}</h2>
-                    @if($why->subtitle)
-                        <h3>{{ $why->subtitle }}</h3>
+<section class="container-fluid">
+    <div class="container">
+        @forelse($whyUsData as $why)
+            <div class="row gx-5 mt-5">
+                <div class="col-md-12">
+                    <h2 class="section-title mb-4 text-center">{{ $why->heading }}</h2>
+
+                    <!-- @if(!empty($why->subtitle))
+                        <h3 class="mb-3 text-center">{{ $why->subtitle }}</h3>
+                    @endif -->
+
+                    <p class="text-gray">
+                        {{ $why->content }}
+                    </p>
+
+                    @if(!empty($why->image))
+                        <div class="text-center mt-4">
+                            <img 
+                                src="{{ asset('uploads/whyus/' . $why->image) }}" 
+                                alt="{{ $why->heading }} image" 
+                                class="why-usimage rounded img-fluid" 
+                                loading="lazy"
+                            >
+                        </div>
                     @endif
-                    <p>{{ $why->content }}</p>
                 </div>
             </div>
-        @endforeach
+        @empty
+            <div class="row mt-5">
+                <div class="col-md-12 text-center">
+                    <p>No data available at the moment.</p>
+                </div>
+            </div>
+        @endforelse
     </div>
 </section>
+
+
+
+       
+
 
 @endsection

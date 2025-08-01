@@ -1,8 +1,10 @@
+
+@section('content')
 @extends('frontend.layouts.master')
 @include("frontend.includes.herosection")
 @include("frontend.includes.indexservice")
 @include("frontend.includes.donate")
-@include("frontend.includes.indexproject")
+
 @include("frontend.includes.testimonials")
 @include("frontend.includes.indexgallary")
 @include("frontend.includes.contact")
@@ -146,21 +148,5 @@
         });
     });
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @endsection

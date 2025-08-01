@@ -119,9 +119,9 @@
 
     <!-- Category Buttons -->
     <div class="text-center mb-4">
-        <button class="btn btn-outline-primary mx-2 category-button active" data-category="cyc">Chautari Youth Club (CYC)</button>
-        <button class="btn btn-outline-primary mx-2 category-button" data-category="nsep">Next Steps Education Program (NSEP)</button>
-        <button class="btn btn-outline-primary mx-2 category-button" data-category="frp">Family Reintegration Program (FRP)</button>
+        <button class="btn btn-outline-primary mx-2 category-button active" data-category="cyc">Chautari Youth Club</button>
+        <button class="btn btn-outline-primary mx-2 category-button" data-category="nsep">Next Steps Education</button>
+        <button class="btn btn-outline-primary mx-2 category-button" data-category="frp">Family Reintegration</button>
         <button class="btn btn-outline-primary mx-2 category-button" data-category="community">Community Empowerment</button>
         <button class="btn btn-outline-primary mx-2 category-button" data-category="bamboo">Bamboo Project</button>
         <button class="btn btn-outline-primary mx-2 category-button" data-category="childcare">Child Care Home</button>
@@ -251,11 +251,6 @@
           </div>
         </div>
       @endforeach
-    </div>
-
-    <!-- View More Button -->
-    <div class="text-center mt-5">
-      <a href="{{ route('Demand') }}" class="btn btn-primary px-4 py-2 view-more-btn">View More</a>
     </div>
   </div>
 </section>
