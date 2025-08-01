@@ -25,10 +25,10 @@ class Demand extends Model
     ];
 
      protected $casts = [
-        'demand_types' => 'array',
-        'from_date' => 'date',
-        'to_date' => 'date',
-    ];
+    'demand_types' => 'array', // This will work with json column
+    'from_date' => 'date',
+    'to_date' => 'date',
+];
 
     
     // Define relationship with Country

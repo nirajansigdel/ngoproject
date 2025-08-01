@@ -102,6 +102,7 @@ Route::get('/singledemand/{id}', [SingleController::class, 'render_singledemand'
 Route::get('/apply/{id}', [SingleController::class, 'showApplicationForm'])->name('apply');
 Route::post('/apply/{id}', [ApplicationController::class, 'store'])->name('apply.store');
 
+
 // Extra static pages (optional)
 Route::get('/career', [SingleController::class, 'render_career'])->name('career');
 Route::get('/volunteer', [SingleController::class, 'render_volunteer'])->name('volunteer');
@@ -162,7 +163,7 @@ Route::prefix('backend')->name('backend.')->group(function () {
     Route::get('/whyus', [WhyUsController::class, 'index'])->name('whyus.index');
     Route::get('/whyus/create', [WhyUsController::class, 'create'])->name('whyus.create');
     Route::post('/whyus/store', [WhyUsController::class, 'store'])->name('whyus.store');
-    Route::get('/whyus/{id}/edit', [WhyUsController::class, 'edit'])->name('whyus.edit');
+    Route::get('/whyus/{id}/edit', [WhyUsController::class, 'edit'])->name('whyus.update');
     Route::put('/whyus/{id}', [WhyUsController::class, 'update'])->name('whyus.update');
     Route::delete('/whyus/{id}', [WhyUsController::class, 'destroy'])->name('whyus.destroy');
 });
@@ -181,3 +182,17 @@ Route::prefix('backend')->name('backend.')->group(function () {
 
 Route::get('/events/{slug}', [EventController::class, 'show'])
      ->name('SingleBlogCategory');
+
+
+
+    Route::get('/demand/create', [DemandController::class, 'create'])->name('backend.demand.create');
+    Route::post('/demand/store', [DemandController::class, 'store'])->name('backend.demand.store');
+    Route::get('/demand/index', [DemandController::class, 'index'])->name('backend.demand.index');
+      
+// Or if you're adding to an existing controller
+Route::get('/projects/{demandType}', [DemandController::class, 'showProjectDemands'])->name('projects.show');
+
+Route::get('/demands/{id}/detail', [DemandController::class, 'detail'])->name('demands.detail');
+
+// routes/web.php
+Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');

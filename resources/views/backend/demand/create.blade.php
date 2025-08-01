@@ -42,9 +42,9 @@
                             <textarea name="content" id="content" class="form-control summernote" rows="5"></textarea>
                         </div>
 
-                        {{-- Demand Type Selection --}}
+                        {{-- Project Type Selection --}}
                         <div class="form-group">
-                            <label>Demand Categories</label>
+                            <label>Project Categories</label>
                             <ul style="list-style-type: none; padding-left: 0;">
                                 <li>
                                     <label><input type="checkbox" class="demand-type" value="cyc" name="demand_types[]"> Chautari Youth Club (CYC)</label>
@@ -133,7 +133,7 @@
 
             if (selectedTypes.length > 0) {
                 $.ajax({
-                    url: "{{ route('admin.demands.fetchRelated') }}",
+                    url: "{{ route('backend.demand.store') }}",
                     method: 'POST',
                     data: {
                         _token: "{{ csrf_token() }}",

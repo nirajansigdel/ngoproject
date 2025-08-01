@@ -72,10 +72,8 @@ class SingleController extends Controller
         $whyUsItems = WhyUs::latest()->take(12)->get();
         $whyUsData = WhyUs::latest()->get();
 
-        return view('frontend.whyus', compact('whyus'));
+        return view('frontend.whyus', compact('whyUsItems', 'demands', 'clientMessages', 'whyUsData'));
     }
-
-
 
     public function render_testimonial()
     {
@@ -285,6 +283,7 @@ class SingleController extends Controller
         $demand = Demand::where('id', $id)->firstOrFail();
         $demands = Demand::latest()->get();
         $listdemands = Demand::where('id', '!=', $id)->get();
+
         return view('frontend.demand', compact('demand', 'listdemands', 'demands'));
     }
 
@@ -296,7 +295,7 @@ class SingleController extends Controller
 
         return view('frontend.demand', compact('demand', 'listdemands', 'demands'));
     }
-    public function render_career()
+     public function render_career()
     {
         $demand = Demand::latest()->get();
         $demands = Demand::latest()->get();
@@ -304,25 +303,6 @@ class SingleController extends Controller
 
         return view('frontend.career', compact('demand', 'listdemands', 'demands'));
     }
-    public function render_applycareer()
-    {
-        $demand = Demand::latest()->get();
-        $demands = Demand::latest()->get();
-        $listdemands = Demand::latest()->get();
-
-        return view('frontend.careerapply', compact('demand', 'listdemands', 'demands'));
-    }
-
-    public function render_volunteer()
-    {
-        $demand = Demand::latest()->get();
-        $demands = Demand::latest()->get();
-        $listdemands = Demand::latest()->get();
-
-        return view('frontend.volunteer', compact('demand', 'listdemands', 'demands'));
-    }
-
-
 
     public function showApplicationForm($id)
     {
@@ -330,5 +310,13 @@ class SingleController extends Controller
         $demands = Demand::latest()->get();
 
         return view('frontend.apply', compact('demand', 'demands'));
+    }
+
+
+
+
+    public function indexproject(){
+        $demands = Demand::latest()->get();
+        return view('frontend.includes.indexproject', compact('demands'));
     }
 }

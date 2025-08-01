@@ -15,16 +15,19 @@ class CreateDemandsTable extends Migration
     {
         Schema::create('demands', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('country_id')->nullable()->constrained()->onDelete('cascade'); // Added nullable()
-             $table->string('heading')->nullable();
-            $table->string('subtitle')->nullable();
-            $table->date('from_date')->nullable(); // Added nullable()
-            $table->date('to_date')->nullable(); // Added nullable()
-            $table->text('content')->nullable(); // Added nullable()
+            $table->foreignId('country_id')->nullable()->constrained()->onDelete('cascade');
             
-            $table->string('image')->nullable(); // Added nullable()
-            $table->string('vacancy')->nullable(); // Added nullable()
-            $table->string('demand_types[]')->nullable(); // Added nullable()
+            $table->string('heading')->nullable();
+            $table->string('subtitle')->nullable();
+            $table->date('from_date')->nullable();
+            $table->date('to_date')->nullable();
+            $table->text('content')->nullable();
+            $table->string('image')->nullable();
+            $table->string('vacancy')->nullable();
+            
+            // FIXED: Use json() instead of string('demand_types[]')
+            $table->json('demand_types')->nullable();
+            
             $table->timestamps();
         });
     }

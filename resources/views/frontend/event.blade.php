@@ -24,28 +24,23 @@
 
 <div class="container py-5 ">
     <div class="row">
-        @foreach ($Events->take(3) as $event)
+        @foreach ($events->take(3) as $event)
             <div class="col-md-4 mb-4">
                 <div class="blog-card">
-                    <img src="{{ asset('uploads/events/' . $event->image) }}" class="Event-img" >
+                    <img src="{{ asset('uploads/events/' . $event->image) }}" >
 
                     <div class="blog-info">
                         <span class="badge">Event</span>
                         <h5>{{ $event->heading }}</h5>
                          <p>{{Str::limit(strip_tags($event->content), 150) }}</p>
-                       <a href="#" class="btn btn-sm btn-outline-light mt-2 read-more-btn">Read More</a>
+                       <a href="{{ route('SingleBlogCategory', $event->slug) }}" class="btn btn-sm btn-outline-light mt-2 read-more-btn">Read More</a>
                     </div>
                 </div>
             </div>
-
         @endforeach
     </div>
 </div>
 </section>
-
-
-
 @endsection
-
 
 

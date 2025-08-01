@@ -127,9 +127,9 @@ class DemandController extends Controller
             }
 
             if ($demand->save()) {
-                return redirect()->route('admin.demands.index')->with('success', 'Success! Demand created.');
+                return redirect()->route('admin.demands.index')->with('success', 'Success! Project created.');
             } else {
-                return redirect()->back()->withInput()->with('error', 'Error! Demand not created.');
+                return redirect()->back()->withInput()->with('error', 'Error! Project not created.');
             }
         } catch (\Illuminate\Validation\ValidationException $e) {
             return redirect()->back()
@@ -274,4 +274,85 @@ class DemandController extends Controller
             return redirect()->route('admin.demands.index')->with('error', 'Error deleting demand.');
         }
     }
+
+
+public function show($demandType)
+{
+    // Get demands that match the type in either 'type' column or 'demand_types' JSON array
+    $demands = Demand::where(function($query) use ($demandType) {
+        $query->where('type', $demandType)
+              ->orWhereJsonContains('demand_types', $demandType);
+    })
+    ->orderBy('created_at', 'desc')
+    ->get();
+    
+    // Define the mapping of values to display names
+    $demandTypeNames = [
+        'cyc' => 'Chautari Youth Project',
+        'nsep' => 'Next Steps Education Program (NSEP)',
+        'frp' => 'Family Reintegration',
+        'community_empowerment' => 'Community Empowerment',
+        'bamboo_project' => 'Bamboo Project',
+        'child_care_home' => 'Child Care Home'
+    ];
+    
+    $projectName = $demandTypeNames[$demandType] ?? 'Unknown Project';
+    
+    return view('projects.show', compact('demands', 'projectName', 'demandType'));
 }
+
+public function showProjectDemands($demandType)
+{
+    // Same logic as show method
+    $demands = Demand::where(function($query) use ($demandType) {
+        $query->where('type', $demandType)
+              ->orWhereJsonContains('demand_types', $demandType);
+    })
+    ->orderBy('created_at', 'desc')
+    ->get();
+    
+    $demandTypeNames = [
+        'cyc' => 'Chautari Youth Project',
+        'nsep' => 'Next Steps Education Program (NSEP)',
+        'frp' => 'Family Reintegration',
+        'community_empowerment' => 'Community Empowerment',
+        'bamboo_project' => 'Bamboo Project',
+        'child_care_home' => 'Child Care Home'
+    ];
+    
+    $projectName = $demandTypeNames[$demandType] ?? 'Unknown Project';
+    
+    return view('projects.show', compact('demands', 'projectName', 'demandType'));
+}
+
+public function detail($id)
+{
+    try {
+        $demand = Demand::with('country')->findOrFail($id);
+        
+        // Get related demands of the same type (excluding current demand)
+        $relatedDemands = Demand::where(function($query) use ($demand) {
+            if ($demand->type) {
+                $query->where('type', $demand->type);
+            }
+            if ($demand->demand_types && is_array($demand->demand_types)) {
+                foreach($demand->demand_types as $demandType) {
+                    $query->orWhereJsonContains('demand_types', $demandType);
+                }
+            }
+        })
+        ->where('id', '!=', $demand->id)
+        ->limit(5)
+        ->get();
+        
+        return view('demands.detail', compact('demand', 'relatedDemands'));
+        
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Demand not found.');
+    }
+}
+
+
+}
+
+
