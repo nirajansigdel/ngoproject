@@ -5,14 +5,14 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">All Demands</div>
+                <div class="card-header">All Project</div>
 
                 <div class="card-body">
                     @if (Session::has('success'))
                         <div class="alert alert-success">{{ Session::get('success') }}</div>
                     @endif
 
-                    <a href="{{ route('admin.demands.create') }}" class="btn btn-primary mb-3">Create New Demand</a>
+                    <a href="{{ route('admin.demands.create') }}" class="btn btn-primary mb-3">Create New project</a>
 
                     @if ($demands && $demands->count())
                         <table class="table table-bordered">

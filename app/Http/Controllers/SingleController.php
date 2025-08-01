@@ -303,4 +303,12 @@ class SingleController extends Controller
 
         return view('frontend.apply', compact('demand', 'demands'));
     }
+
+
+
+
+    public function indexproject(){
+        $demands = Demand::latest()->get();
+        return view('frontend.includes.indexproject', compact('demands'));
+    }
 }

@@ -35,7 +35,7 @@
                         @endif
                     </td>
                     <td>
-                        <a href="{{ route('backend.whyus.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="{{ route('backend.whyus.update', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
                         <form action="{{ route('backend.whyus.destroy', $item->id) }}" method="POST" class="d-inline"
                               onsubmit="return confirm('Are you sure?');">
                             @csrf 

@@ -47,7 +47,7 @@ class WhyUsController extends Controller
     public function edit($id)
     {
         $whyus = WhyUs::findOrFail($id);
-        return view('backend.whyus.edit', compact('whyus'));
+        return view('backend.whyus.update', compact('whyus'));
     }
 
     public function update(Request $request, $id)

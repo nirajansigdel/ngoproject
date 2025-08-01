@@ -175,20 +175,63 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link text-dark fw-medium " href="" id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Projects
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="">Chautari youth project</a></li>
-                        <li><a class="dropdown-item" href="">next steps education program(NSEP)</a></li>
-                        <li><a class="dropdown-item" href="">Family REintegration</a></li>
-                        <li><a class="dropdown-item" href="">community Empowerment</a></li>
-                        <li><a class="dropdown-item" href="">Bamboo Project</a></li>
-                        <li><a class="dropdown-item" href="">Child CAre Home</a></li>
-                    </ul>
-                </li>
+     <li class="nav-item dropdown">
+    <a class="nav-link text-dark fw-medium" href="" id="navbarDropdown" role="button"
+        data-bs-toggle="dropdown" aria-expanded="false">
+        Projects
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+        @php
+            // Get unique demand types from both 'type' and 'demand_types' columns
+            $demands = App\Models\Demand::select('type', 'demand_types')
+                ->whereNotNull('type')
+                ->orWhereNotNull('demand_types')
+                ->get();
+            
+            $allDemandTypes = collect();
+            
+            foreach($demands as $demand) {
+                // Add from 'type' column
+                if ($demand->type) {
+                    $allDemandTypes->push($demand->type);
+                }
+                
+                // Add from 'demand_types' JSON column
+                if ($demand->demand_types && is_array($demand->demand_types)) {
+                    foreach($demand->demand_types as $demandType) {
+                        $allDemandTypes->push($demandType);
+                    }
+                }
+            }
+            
+            $createdDemandTypes = $allDemandTypes->unique()->sort();
+                             
+            // Define the mapping of values to display names
+            $demandTypeNames = [
+                'cyc' => 'Chautari Youth Project',
+                'nsep' => 'Next Steps Education Program (NSEP)',
+                'frp' => 'Family Reintegration',
+                'community_empowerment' => 'Community Empowerment',
+                'bamboo_project' => 'Bamboo Project',
+                'child_care_home' => 'Child Care Home'
+            ];
+        @endphp
+                 
+        @if($createdDemandTypes->count() > 0)
+            @foreach($createdDemandTypes as $demandType)
+                @if(isset($demandTypeNames[$demandType]))
+                    <li>
+                        <a class="dropdown-item" href="{{ route('projects.show', $demandType) }}">
+                            {{ $demandTypeNames[$demandType] }}
+                        </a>
+                    </li>
+                @endif
+            @endforeach
+        @else
+            <li><span class="dropdown-item text-muted">No projects available</span></li>
+        @endif
+    </ul>
+</li>
 
                 <li class="nav-item">
                     <a class="nav-link text-dark fw-medium" href="{{ route('Service') }}">Our Service</a>
