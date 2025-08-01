@@ -351,11 +351,11 @@
 @hasanyrole('superadmin|admin')
 <li class="nav-item">
   <!-- Dropdown trigger -->
-  <a class="nav-link dropdown-indicator {{ in_array(Request::segment(2), ['why-us', 'event', 'faqs']) ? '' : 'collapsed' }}"
+  <a class="nav-link dropdown-indicator {{ in_array(Request::segment(2), ['why-us', 'event', 'faqs', 'notifications']) ? '' : 'collapsed' }}"
      href="#updateDropdown"
      role="button"
      data-bs-toggle="collapse"
-     aria-expanded="{{ in_array(Request::segment(2), ['why-us', 'event', 'faqs']) ? 'true' : 'false' }}"
+     aria-expanded="{{ in_array(Request::segment(2), ['why-us', 'event', 'faqs', 'notifications']) ? 'true' : 'false' }}"
      aria-controls="updateDropdown">
     <div class="d-flex align-items-center">
       <span class="nav-link-icon"><i class="fas fa-edit"></i></span>
@@ -364,7 +364,7 @@
   </a>
 
   <!-- Dropdown contents -->
-  <ul class="nav collapse {{ in_array(Request::segment(2), ['why-us', 'event', 'blogs']) ? 'show' : '' }}"
+  <ul class="nav collapse {{ in_array(Request::segment(2), ['why-us', 'event', 'blogs', 'notifications']) ? 'show' : '' }}"
       id="updateDropdown">
 
     <!-- Why Us -->
@@ -392,6 +392,17 @@
       </a>
     </li>
     @endhasrole
+
+    <!-- Notifications -->
+    <li class="nav-item">
+      <a class="nav-link {{ Request::segment(2) == 'notifications' ? 'active' : '' }}"
+         href="{{ route('admin.notifications.index') }}">
+        <div class="d-flex align-items-center">
+          <i class="fa fa-bell"></i>
+          <span class="nav-link-text ps-1">Notifications</span>
+        </div>
+      </a>
+    </li>
 
     <!-- Blogs -->
     <li class="nav-item">

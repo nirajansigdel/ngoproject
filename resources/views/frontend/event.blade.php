@@ -20,8 +20,8 @@
 <section class="container-fluid bg-light">
 
 <div class="container py-5 ">
-    <div class="directors-header mb-5">
-            <h2 class="section-title directors-title fw-bold text-danger mb-3">🌟 Collection of Events</h2>
+    <div class="directors-header mb-5 text-center">
+            <h1 class="extralarger blackhighlight mb-1">🌟 Collection of Events</h1>
             <p class="section-subtitle text-secondary text-center">
                 Our board brings expertise and heart to every decision, shaping a better Nepal for future generations.
             </p>

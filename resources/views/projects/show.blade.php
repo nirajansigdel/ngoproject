@@ -1,5 +1,18 @@
 @include('frontend.includes.navbar')
 
+<style>
+    .xs-text-des {
+        font-size: 1.15rem;
+        color: #444;
+        line-height: 1.6;
+        font-weight: 400;
+        font-family: var(--font-family-inter);
+        margin-bottom: 1.5rem;
+        letter-spacing: 0.02em;
+
+    }
+</style>
+
 @yield('content')
 @section('content')
 
@@ -17,6 +30,7 @@
         <p class="text-white-50 text-uppercase small mt-2">Home / {{ $projectName }}</p>
     </div>
 </section>
+
 <div class="py-3"></div>
 
 <section class="text-center">
@@ -38,8 +52,7 @@
                                 @if($demand->subtitle)
                                     <h6 class="text-muted my-3">{{ $demand->subtitle }}</h6>
                                 @endif
-
-                                <p class="mt-2">
+                                <p class="mt-2 xs-text-des">
                                     {!! nl2br(e(strip_tags($demand->content))) !!}
                                 </p>
 

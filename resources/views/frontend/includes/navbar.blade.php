@@ -13,11 +13,6 @@
         height: 100%;
         object-fit: cover;
     }
-
-
-
-
-
     .nav-item .dropdown-menu {
         top: 100%;
         left: 0;
@@ -47,7 +42,6 @@
         top: 0;
         background-color: #eeedf3;
         z-index: 1000;
-        /* adjust z-index as needed */
     }
 
 
@@ -55,10 +49,6 @@
         --tw-bg-opacity: 1;
         background-color: rgb(239 68 68 / var(--tw-bg-opacity));
     }
-
-
-
-
     .navbar-nav .nav-link {
         color: var(--black-off) !important;
         font-size: 18px;
@@ -108,10 +98,6 @@
         }
     }
 
-
-
-
-
     @media (max-width: 1366px) {
         .navbar-expand-lg .navbar-collapse {
             display: none !important;
@@ -128,6 +114,10 @@
         .navbar-expand-lg .navbar-collapse.show {
             display: block !important;
         }
+    }
+
+    .navbar-collapse{
+        
     }
 
     .badge.bg-danger {
@@ -268,7 +258,7 @@
             <div class="d-flex align-items-center gap-3">
                 <div class="position-relative border px-3 py-2 rounded-pill d-flex align-items-center">
                     <span>📞 +91 5714749074</span>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-green">
                         1
                     </span>
                 </div>

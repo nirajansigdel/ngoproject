@@ -9,59 +9,68 @@
 @include("frontend.includes.contact")
 @include("frontend.includes.ourclient")
 @include("frontend.includes.rescue")
-{{--  
- WhatsApp Modal
-<div class="modal fade" id="whatsappModal" tabindex="-1" aria-labelledby="whatsappModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="whatsappModalLabel">Connect with us on WhatsApp</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-                <p class="mb-4">Stay updated with our latest opportunities! Connect with us on WhatsApp.</p>
-                <div class="whatsapp-icon mb-3">
-                    <i class="fab fa-whatsapp" style="font-size: 48px; color: #25D366;"></i>
+
+{{-- Vacancy Modal --}}
+
+   
+
+
+{{-- Dynamic Notification Modal --}}
+@if($notifications->count() > 0)
+    @foreach($notifications as $notification)
+        <div class="modal fade" id="notificationModal{{ $notification->id }}" tabindex="-1" aria-labelledby="notificationModalLabel{{ $notification->id }}" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered"> <!-- Use modal-xl for wide width -->
+        <div class="modal-content w-100 border-0 rounded-4 overflow-hidden shadow-lg">
+            <div class="modal-header bg-primary text-white px-4 py-3">
+                <div class="d-flex align-items-center w-100 justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-bell me-2 fs-5"></i>
+                        <h5 class="modal-title mb-0" id="notificationModalLabel{{ $notification->id }}">{{ $notification->title }}</h5>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                @if(!empty($sitesetting->office_contact))
-                    @php
-                        $officeContacts = json_decode($sitesetting->office_contact, true);
-                        $firstContact = is_array($officeContacts) ? $officeContacts[0] : $sitesetting->office_contact;
-                        $whatsappNumber = preg_replace('/[^0-9]/', '', $firstContact);
-                    @endphp
-                    <a href="https://wa.me/{{ $whatsappNumber }}" target="_blank" class="btn btn-success">
-                        <i class="fab fa-whatsapp me-2"></i>Chat with us
-                    </a>
-                @endif
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <div class="modal-body px-4 py-4">
+                @if($notification->image)
+                    <div class="notification-image mb-3">
+                        <img src="{{ asset('uploads/notifications/' . $notification->image) }}" 
+                             alt="{{ $notification->title }}" 
+                             class="img-fluid rounded shadow-sm"
+                             style="width: 100%; min-height: 500px; object-fit: cover;">
+                    </div>
+                @endif
             </div>
         </div>
     </div>
-</div> 
+</div>
 
---}}
+    @endforeach
+@endif
+
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var whatsappModal = new bootstrap.Modal(document.getElementById('whatsappModal'), {
-            keyboard: false
-        });
-    
-        @if($latestVacancies->count())
-        var vacancyModal = new bootstrap.Modal(document.getElementById('vacancyModal'), {
-            keyboard: false
-        });
+        @if($notifications->count() > 0)
+            // Show the first notification modal
+            var firstNotificationModal = new bootstrap.Modal(document.getElementById('notificationModal{{ $notifications->first()->id }}'), {
+                keyboard: false
+            });
+            
+            @if($latestVacancies->count())
+                var vacancyModal = new bootstrap.Modal(document.getElementById('vacancyModal'), {
+                    keyboard: false
+                });
 
-        vacancyModal.show();
+                vacancyModal.show();
 
-        document.getElementById('vacancyModal').addEventListener('hidden.bs.modal', function () {
-            setTimeout(function() {
-                whatsappModal.show();
-            }, 500);
-        });
-        @else
-        whatsappModal.show();
+                document.getElementById('vacancyModal').addEventListener('hidden.bs.modal', function () {
+                    setTimeout(function() {
+                        firstNotificationModal.show();
+                    }, 100);
+                });
+            @else
+                firstNotificationModal.show();
+            @endif
         @endif
 
         if (!localStorage.getItem('modalsShown')) {
@@ -104,5 +113,83 @@
         });
     });
 </script>
+<style>
+    .notification-image img {
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        transition: transform 0.3s ease;
+        object-fit: cover;
+        max-height: 320px;
+        width:500px;
+    }
+
+    .notification-image img:hover {
+        transform: scale(1.01);
+    }
+
+    .modal-content {
+        border-radius: 12px;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+        border: none;
+        overflow: hidden;
+    }
+
+    .modal-header {
+        background:var(--primary) !important;
+        color: #fff;
+        padding: 1rem 1.5rem;
+        border-bottom: none;
+    }
+
+    .modal-header .modal-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+
+    .modal-body {
+        padding: 2rem;
+    }
+
+    .modal-footer {
+        padding: 1rem 1.5rem;
+        border-top: none;
+    }
+
+    .btn-close-white {
+        filter: brightness(0) invert(1);
+    }
+
+    .notification-content h6 {
+        font-size: 0.875rem;
+        color: #6c757d;
+        font-weight: 500;
+    }
+
+    .notification-content p {
+        font-size: 1rem;
+        color: #333;
+        margin-bottom: 0;
+    }
+
+    @media (max-width: 576px) {
+        .modal-body {
+            padding: 1.25rem;
+        }
+
+        .notification-image img {
+            max-height: 240px;
+        }
+
+        .modal-header, .modal-footer {
+            padding: 1rem;
+        }
+
+        .modal-title {
+            font-size: 1rem;
+        }
+    }
+</style>
+
+
 
 @endsection

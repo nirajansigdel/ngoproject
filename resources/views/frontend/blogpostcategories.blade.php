@@ -19,8 +19,8 @@
 
 <section class="container-fluid bg-light">
 <div class="container py-5 ">
-    <div class="directors-header mb-5">
-            <h2 class="section-title directors-title fw-bold text-danger mb-3">🌟 Collection of Blogs</h2>
+    <div class="directors-header mb-5 text-center">
+            <h1 class="extralarger blackhighlight mb-1">🌟 Collection of Blogs</h1>
             <p class="section-subtitle text-secondary text-center">
                 Our blog shares stories, insights, and updates from passionate voices working to shape a better Nepal—one idea at a time.
             </p>
