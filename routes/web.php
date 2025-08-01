@@ -38,7 +38,8 @@ use App\Http\Controllers\{
     ClientController,
     WhyUsController,
     EventController,
-    ProjectController
+    ProjectController,
+    NotificationController
 };
 
 /*
@@ -148,7 +149,11 @@ Route::prefix('/admin')->name('admin.')->middleware(['web', 'auth'])->group(func
         'client_messages' => ClientMessageController::class,
         'demands' => DemandController::class,
         'projects' => ProjectController::class,
+        'notifications' => NotificationController::class,
     ]);
+
+    // Notifications Status Toggle
+    Route::patch('/notifications/{id}/toggle-status', [NotificationController::class, 'toggleStatus'])->name('notifications.toggle-status');
 
     // Applications Management
     Route::get('/applications', [ApplicationController::class, 'adminIndex'])->name('applications.index');

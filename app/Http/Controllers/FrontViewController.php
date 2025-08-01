@@ -17,6 +17,7 @@ use App\Models\CoverImage;
 use App\Models\SiteSetting;
 use App\Models\Testimonial;
 use App\Models\PhotoGallery;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Models\BlogPostsCategory;
 use App\Models\Client;
@@ -44,6 +45,9 @@ class FrontViewController extends Controller
         $clientMessages = ClientMessage::latest()->get();
         $latestVacancies = Demand::where('to_date', '>=', Carbon::today())->get();
         $images = PhotoGallery::latest()->get();
+        
+        // Fetch active notifications
+        $notifications = Notification::where('status', 1)->latest()->get();
      // Assuming you have an Event model
         // or paginate if needed
     
@@ -63,8 +67,8 @@ class FrontViewController extends Controller
             'firstCategory',
             'clientMessages',
             'latestVacancies',
-            'images' ,
-        
+            'images',
+            'notifications'
             // ✅ Corrected here (no quotes!)
         ));
     }
