@@ -225,19 +225,9 @@
                 <li class="nav-item">
                     <a class="nav-link text-dark fw-medium" href="{{ route('Service') }}">Our Service</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link text-dark fw-medium " href="" id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        opportunity
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{{ route('career') }}">career Opprotunity</a></li>
-                        <li><a class="dropdown-item" href="{{ route('volunteer') }}">Volunteer</a></li>
-
-                    </ul>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark fw-medium" href="{{ route('career') }}"> opportunity</a>
                 </li>
-
-
                 <li class="nav-item dropdown">
                     <a class="nav-link text-dark fw-medium " href="" id="navbarDropdown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">

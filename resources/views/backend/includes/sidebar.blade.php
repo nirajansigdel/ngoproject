@@ -405,26 +405,7 @@
     </li>
 
     <!-- Career Opportunities -->
-    <li class="nav-item">
-      <a class="nav-link {{ Request::segment(2) == 'careers' ? 'active' : '' }}"
-         href="{{ route('admin.careers.index') }}">
-        <div class="d-flex align-items-center">
-          <i class="fa fa-briefcase"></i>
-          <span class="nav-link-text ps-1">Career Opportunities</span>
-        </div>
-      </a>
-    </li>
-
-    <!-- Career Applications -->
-    <li class="nav-item">
-      <a class="nav-link {{ Request::segment(2) == 'career-applications' ? 'active' : '' }}"
-         href="{{ route('admin.career-applications.index') }}">
-        <div class="d-flex align-items-center">
-          <i class="fa fa-file-alt"></i>
-          <span class="nav-link-text ps-1">Application Reports</span>
-        </div>
-      </a>
-    </li>
+   
 
     <!-- Blogs -->
     <li class="nav-item">
@@ -441,6 +422,59 @@
 </li>
 @endhasanyrole
 
+
+@hasanyrole('superadmin')
+    <li class="nav-item">
+        <!-- Navbar vertical label -->
+        <div class="row navbar-vertical-label-wrapper mt-3 mb-2">
+            <div class="col-auto navbar-vertical-label">Opportunities</div>
+            <div class="col ps-0">
+                <hr class="mb-0 navbar-vertical-divider">
+            </div>
+        </div>
+
+        <!-- Dropdown item -->
+        <li class="nav-item">
+            <a class="nav-link dropdown-indicator 
+                {{ Request::segment(2) == 'careers' || Request::segment(2) == 'career-applications' ? '' : 'collapsed' }}"
+               href="#opportunitiesMenu" role="button" data-bs-toggle="collapse"
+               aria-expanded="{{ Request::segment(2) == 'careers' || Request::segment(2) == 'career-applications' ? 'true' : 'false' }}"
+               aria-controls="opportunitiesMenu">
+                <div class="d-flex align-items-center">
+                    <span class="nav-link-icon"><i class="fas fa-briefcase"></i></span>
+                    <span class="nav-link-text ps-1">Opportunities</span>
+                </div>
+            </a>
+
+            <!-- Collapse content -->
+            <ul class="nav collapse {{ Request::segment(2) == 'careers' || Request::segment(2) == 'career-applications' ? 'show' : '' }}"
+                id="opportunitiesMenu">
+
+                {{-- Career Opportunities --}}
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::segment(2) == 'careers' ? 'active' : '' }}"
+                       href="{{ route('admin.careers.index') }}">
+                        <div class="d-flex align-items-center">
+                            <i class="fa fa-angle-double-right"></i>
+                            <span class="nav-link-text ps-1">Career Opportunities</span>
+                        </div>
+                    </a>
+                </li>
+
+                {{-- Application Reports --}}
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::segment(2) == 'career-applications' ? 'active' : '' }}"
+                       href="{{ route('admin.career-applications.index') }}">
+                        <div class="d-flex align-items-center">
+                            <i class="fa fa-angle-double-right"></i>
+                            <span class="nav-link-text ps-1">Application Reports</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </li> <!-- Corrected closing tag -->
+    </li>
+@endhasanyrole
 
 
 

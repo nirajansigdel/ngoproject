@@ -1,9 +1,22 @@
 @extends('frontend.layouts.master')
 @section('content')
-<div class="container">
-    <h1 class="text-center mt-5">Volunteer Opportunities</h1>
-    <p class="text-center mb-5">Join us in making a difference in the community. Your time and skills can help us achieve our mission.</p>
 
+
+<section class="position-relative bg-dark text-white d-flex align-items-center justify-content-center mb-5"
+    style="height: 50vh;">
+    <!-- Background Image & Overlay -->
+    <div class="position-absolute top-0 start-0 w-100 h-100 bg-image"
+        style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=80'); background-size: cover; background-position: center;">
+        <div class="w-100 h-100" style="background-color: rgba(0, 0, 0, 0.6);"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="container text-center position-relative z-1 ">
+        <h1 class="fw-bold display-5">Volunteer Opportunities</h1>
+        <p class="text-white-50 text-uppercase small mt-2">Home /Volunteer Opportunities</p>
+    </div>
+</section>
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10 col-lg-8">
             <div class="card shadow-sm border-0 mb-4">
