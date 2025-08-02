@@ -39,7 +39,9 @@ use App\Http\Controllers\{
     WhyUsController,
     EventController,
     ProjectController,
-    NotificationController
+    NotificationController,
+    CareerController,
+    CareerApplicationController
 };
 
 /*
@@ -109,6 +111,9 @@ Route::get('/career', [SingleController::class, 'render_career'])->name('career'
 Route::get('/volunteer', [SingleController::class, 'render_volunteer'])->name('volunteer');
 Route::get('/applycareer', [SingleController::class, 'render_applycareer'])->name('applycareer');
 
+// Career Applications
+Route::post('/career-applications', [CareerApplicationController::class, 'store'])->name('career-applications.store');
+
 // ========================
 // 🔐 Authentication Routes
 // ========================
@@ -150,10 +155,20 @@ Route::prefix('/admin')->name('admin.')->middleware(['web', 'auth'])->group(func
         'demands' => DemandController::class,
         'projects' => ProjectController::class,
         'notifications' => NotificationController::class,
+        'careers' => CareerController::class,
     ]);
 
     // Notifications Status Toggle
     Route::patch('/notifications/{id}/toggle-status', [NotificationController::class, 'toggleStatus'])->name('notifications.toggle-status');
+
+    // Careers Status Toggle
+    Route::patch('/careers/{id}/toggle-status', [CareerController::class, 'toggleStatus'])->name('careers.toggle-status');
+
+    // Career Applications Management
+    Route::get('/career-applications', [CareerApplicationController::class, 'index'])->name('career-applications.index');
+    Route::get('/career-applications/{application}', [CareerApplicationController::class, 'show'])->name('career-applications.show');
+    Route::patch('/career-applications/{application}/update-status', [CareerApplicationController::class, 'updateStatus'])->name('career-applications.update-status');
+    Route::delete('/career-applications/{application}', [CareerApplicationController::class, 'destroy'])->name('career-applications.destroy');
 
     // Applications Management
     Route::get('/applications', [ApplicationController::class, 'adminIndex'])->name('applications.index');

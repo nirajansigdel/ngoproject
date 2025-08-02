@@ -96,6 +96,12 @@ class RolePermissionSeeder extends Seeder
             'list_whyus',
             'edit_whyus',
             'delete_whyus',
+            
+            // Added Careers permissions
+            'create_careers',
+            'list_careers',
+            'edit_careers',
+            'delete_careers',
         ];
 
         // Create the permissions if they do not exist
@@ -188,6 +194,12 @@ class RolePermissionSeeder extends Seeder
             'list_whyus',
             'edit_whyus',
             'delete_whyus',
+            
+            // Added Careers permissions for admin role
+            'create_careers',
+            'list_careers',
+            'edit_careers',
+            'delete_careers',
         ];
 
         // Create or update roles and assign permissions
