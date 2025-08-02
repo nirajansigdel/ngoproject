@@ -19,24 +19,43 @@ class ContactController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255|regex:/^[a-zA-Z\s]+$/u', 
-            'email' => 'nullable|email|max:255|ends_with:@gmail.com', 
-            'phone_no' => 'required|string|regex:/^[0-9]+$/|digits:10', 
-            'message' => 'required|string',
-            'g-recaptcha-response' => 'required',
-        ], [
-            'name.regex' => 'Only letters and spaces are allowed in the name field.',
-            'phone_no.regex' => 'Phone number should only contain digits.',
-            'phone_no.digits' => 'Phone number should be exactly 10 digits.',
-        ]);
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|max:255|regex:/^[a-zA-Z\s]+$/u', 
+                'email' => 'nullable|email|max:255', 
+                'phone_no' => 'required|string|regex:/^[0-9]+$/|digits:10', 
+                'service' => 'nullable|string|max:255',
+                'message' => 'required|string',
+            ], [
+                'name.regex' => 'Only letters and spaces are allowed in the name field.',
+                'phone_no.regex' => 'Phone number should only contain digits.',
+                'phone_no.digits' => 'Phone number should be exactly 10 digits.',
+            ]);
 
-        $contact = new Contact;
-        $contact->name = $request->name;
-        $contact->email = $request->email;
-        $contact->phone_no = $request->phone_no;
-        $contact->message = $request->message;
-        $contact->save();
-        return response()->json(['success' => true]);
+            $contact = new Contact;
+            $contact->name = $validated['name'];
+            $contact->email = $validated['email'];
+            $contact->phone_no = $validated['phone_no'];
+            $contact->service = $validated['service'];
+            $contact->message = $validated['message'];
+            $contact->save();
+            
+            return response()->json([
+                'success' => true, 
+                'message' => 'Your appointment request has been submitted successfully!'
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Please check your input and try again.',
+                'errors' => $e->errors()
+            ], 422);
+        }
+    }
+
+    public function destroy(Contact $contact)
+    {
+        $contact->delete();
+        return redirect()->back()->with('success', 'Contact message deleted successfully!');
     }
 }

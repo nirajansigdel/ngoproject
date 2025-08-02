@@ -90,21 +90,36 @@
 
           <div class="row g-3">
             <div class="col-md-6">
-              <input type="text" name="name" class="form-control" placeholder="Name" required value="{{ old('name') }}">
+              <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="Name" required value="{{ old('name') }}">
+              @error('name')
+                <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
             </div>
             <div class="col-md-6">
-              <input type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}">
+              <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" value="{{ old('email') }}">
+              @error('email')
+                <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
             </div>
 
             <div class="col-md-6">
-              <input type="tel" name="phone_no" class="form-control" placeholder="Phone Number" id="phoneInput" required>
+              <input type="tel" name="phone_no" class="form-control @error('phone_no') is-invalid @enderror" placeholder="Phone Number" id="phoneInput" required>
+              @error('phone_no')
+                <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
             </div>
             <div class="col-md-6">
-              <input type="text" name="service" class="form-control" placeholder="Interested Service" value="{{ old('service') }}">
+              <input type="text" name="service" class="form-control @error('service') is-invalid @enderror" placeholder="Interested Service" value="{{ old('service') }}">
+              @error('service')
+                <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
             </div>
 
             <div class="col-12">
-              <textarea name="message" class="form-control" rows="4" placeholder="Message" required>{{ old('message') }}</textarea>
+              <textarea name="message" class="form-control @error('message') is-invalid @enderror" rows="4" placeholder="Message" required>{{ old('message') }}</textarea>
+              @error('message')
+                <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
             </div>
 
             <div class="col-12 form-check">
@@ -148,14 +163,22 @@
 
         const data = await response.json();
 
-        Swal.fire({
-          icon: data.success ? 'success' : 'error',
-          title: data.success ? 'Success' : 'Oops!',
-          text: data.message || 'Your message has been sent.',
-          confirmButtonColor: '#dc3545'
-        });
-
-        if (data.success) form.reset();
+        if (data.success) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: data.message || 'Your appointment request has been submitted successfully!',
+            confirmButtonColor: '#dc3545'
+          });
+          form.reset();
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Validation Error',
+            text: data.message || 'Please check your input and try again.',
+            confirmButtonColor: '#dc3545'
+          });
+        }
       } catch (err) {
         Swal.fire({
           icon: 'error',
