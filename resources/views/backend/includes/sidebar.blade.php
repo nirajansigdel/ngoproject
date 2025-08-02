@@ -351,11 +351,11 @@
 @hasanyrole('superadmin|admin')
 <li class="nav-item">
   <!-- Dropdown trigger -->
-  <a class="nav-link dropdown-indicator {{ in_array(Request::segment(2), ['why-us', 'event', 'faqs', 'notifications']) ? '' : 'collapsed' }}"
+  <a class="nav-link dropdown-indicator {{ in_array(Request::segment(2), ['why-us', 'event', 'faqs', 'notifications', 'careers']) ? '' : 'collapsed' }}"
      href="#updateDropdown"
      role="button"
      data-bs-toggle="collapse"
-     aria-expanded="{{ in_array(Request::segment(2), ['why-us', 'event', 'faqs', 'notifications']) ? 'true' : 'false' }}"
+     aria-expanded="{{ in_array(Request::segment(2), ['why-us', 'event', 'faqs', 'notifications', 'careers']) ? 'true' : 'false' }}"
      aria-controls="updateDropdown">
     <div class="d-flex align-items-center">
       <span class="nav-link-icon"><i class="fas fa-edit"></i></span>
@@ -364,7 +364,7 @@
   </a>
 
   <!-- Dropdown contents -->
-  <ul class="nav collapse {{ in_array(Request::segment(2), ['why-us', 'event', 'blogs', 'notifications']) ? 'show' : '' }}"
+  <ul class="nav collapse {{ in_array(Request::segment(2), ['why-us', 'event', 'blogs', 'notifications', 'careers']) ? 'show' : '' }}"
       id="updateDropdown">
 
     <!-- Why Us -->
@@ -400,6 +400,28 @@
         <div class="d-flex align-items-center">
           <i class="fa fa-bell"></i>
           <span class="nav-link-text ps-1">Notifications</span>
+        </div>
+      </a>
+    </li>
+
+    <!-- Career Opportunities -->
+    <li class="nav-item">
+      <a class="nav-link {{ Request::segment(2) == 'careers' ? 'active' : '' }}"
+         href="{{ route('admin.careers.index') }}">
+        <div class="d-flex align-items-center">
+          <i class="fa fa-briefcase"></i>
+          <span class="nav-link-text ps-1">Career Opportunities</span>
+        </div>
+      </a>
+    </li>
+
+    <!-- Career Applications -->
+    <li class="nav-item">
+      <a class="nav-link {{ Request::segment(2) == 'career-applications' ? 'active' : '' }}"
+         href="{{ route('admin.career-applications.index') }}">
+        <div class="d-flex align-items-center">
+          <i class="fa fa-file-alt"></i>
+          <span class="nav-link-text ps-1">Application Reports</span>
         </div>
       </a>
     </li>

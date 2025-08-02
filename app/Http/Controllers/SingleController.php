@@ -315,10 +315,10 @@ class SingleController extends Controller
 
  public function render_career()
     {
-        $faqs = Faq::where('type', 'procurement')->latest()->get();
+        $careers = \App\Models\Career::where('status', true)->latest()->get();
         $demands = Demand::latest()->get();
 
-        return view('frontend.career', compact('faqs', 'demands'));
+        return view('frontend.career', compact('careers', 'demands'));
     }
      public function render_volunteer()
     {
@@ -330,10 +330,15 @@ class SingleController extends Controller
 
      public function render_applycareer()
     {
-        $faqs = Faq::where('type', 'procurement')->latest()->get();
+        // Get the first active career for the application form
+        $career = \App\Models\Career::where('status', true)->first();
         $demands = Demand::latest()->get();
 
-        return view('frontend.careerapply', compact('faqs', 'demands'));
+        if (!$career) {
+            return redirect()->route('career')->with('error', 'No career opportunities available at the moment.');
+        }
+
+        return view('frontend.apply-career', compact('career', 'demands'));
     }
 
 }

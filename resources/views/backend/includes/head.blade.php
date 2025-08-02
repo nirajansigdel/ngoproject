@@ -108,4 +108,5 @@
 
 
     <link rel="stylesheet" href="{{ asset('adminasset/css/custom.css') }}" asp-append-version="true" />
+    <link rel="stylesheet" href="{{ asset('adminassets/css/admin-crud.css') }}" />
 

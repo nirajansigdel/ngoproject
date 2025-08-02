@@ -1,106 +1,147 @@
 @extends('backend.layouts.master')
 
 @section('content')
-    <!-- Content Wrapper. Contains page content -->
-
-    @if (Session::has('success'))
-        <div class="alert alert-success">
-            {{ Session::get('success') }}
-        </div>
-    @endif
-
-    @if (Session::has('error'))
-        <div class="alert alert-danger">
-            {{ Session::get('error') }}
-        </div>
-    @endif
-
-    <div class="row mb-2">
-        <div class="col-sm-6">
-            <h1 class="m-0">{{ $page_title }}</h1>
-            <a href="{{ url('admin') }}">
-                <button class="btn btn-primary btn-sm">
-                    <i class="fa fa-arrow-left"></i> Back
-                </button>
+<div class="admin-container">
+    <div class="admin-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">{{ $page_title }}</h1>
+            <a href="{{ url('admin') }}" class="back-button">
+                <i class="fa fa-arrow-left"></i> Back
             </a>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
+        </div>
+
+        <!-- Alert Messages -->
+        @if (Session::has('success'))
+            <div class="alert alert-success">
+                {{ Session::get('success') }}
+            </div>
+        @endif
+
+        @if (Session::has('error'))
+            <div class="alert alert-danger">
+                {{ Session::get('error') }}
+            </div>
+        @endif
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('admin') }}">Home</a></li>
-                <li class="breadcrumb-item active">Dashboard v1</li>
+                <li class="breadcrumb-item active">{{ $page_title }}</li>
             </ol>
+        </nav>
+
+        <!-- Form -->
+        <div class="form-container">
+            <form method="POST" action="{{ route('admin.about-us.update', $about->id) }}" enctype="multipart/form-data" id="crudForm">
+                @csrf
+                @method('PUT')
+                
+                <div class="card">
+                    <div class="card-header">
+                        Edit About Information
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="form-label">
+                                Title <span class="required">*</span>
+                            </label>
+                            <input type="text" 
+                                   name="title" 
+                                   class="form-control @error('title') is-invalid @enderror" 
+                                   placeholder="Enter title" 
+                                   value="{{ old('title', $about->title) }}"
+                                   required>
+                            @error('title')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Subtitle</label>
+                            <input type="text" 
+                                   name="subtitle" 
+                                   class="form-control @error('subtitle') is-invalid @enderror" 
+                                   placeholder="Enter subtitle" 
+                                   value="{{ old('subtitle', $about->subtitle) }}">
+                            @error('subtitle')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Image</label>
+                            <input type="file" 
+                                   name="image" 
+                                   class="form-control @error('image') is-invalid @enderror"
+                                   onchange="previewImage(event, 'preview')">
+                            @error('image')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                            <img id="preview" 
+                                 src="{{ asset('uploads/about/' . $about->image) }}" 
+                                 class="image-preview">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                Description <span class="required">*</span>
+                            </label>
+                            <textarea name="description" 
+                                      class="form-control @error('description') is-invalid @enderror"
+                                      rows="4"
+                                      placeholder="Enter description">{{ old('description', $about->description) }}</textarea>
+                            @error('description')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                Content <span class="required">*</span>
+                            </label>
+                            <textarea name="content" 
+                                      id="summernote"
+                                      class="form-control @error('content') is-invalid @enderror">{{ old('content', $about->content) }}</textarea>
+                            @error('content')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save"></i> Update
+                        </button>
+                        <a href="{{ url('admin') }}" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> Cancel
+                        </a>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
-    <form id="quickForm" method="POST" action="{{ route('admin.about-us.update', $about->id) }}" enctype="multipart/form-data">
-        @csrf
-        @method('PUT')
-        <div class="card-body">
-            <div class="form-group">
-                <label for="exampleInputEmail1">Title</label>
-                <span style="color:red; font-size:large"> *</span>
-                <input type="text" name="title" class="form-control" placeholder="Title" value="{{ $about->title }}" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="exampleInputEmail1">Subtitle</label>
-                <input type="text" name="subtitle" class="form-control" placeholder="Subtitle" value="{{ $about->subtitle }}">
-            </div>
+<script>
+    // Image preview function
+    function previewImage(event, previewId) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            const preview = document.getElementById(previewId);
+            preview.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
 
-            <div class="form-group">
-                <label for="exampleInputEmail1">Image</label>
-                <input type="file" name="image" class="form-control" onchange="previewImage(event)" placeholder="Image">
-                <img id="preview" src="{{ asset('storage/' . $about->image) }}" style="max-width: 500px; max-height: 500px;" />
-            </div>
-
-            <div class="form-group">
-                <label for="description">Description</label>
-                <span style="color:red; font-size:large"> *</span>
-                <textarea style="width: 100%; min-height: 150px;" type="text" class="form-control" name="description" id="description" placeholder="Add Description">{{ $about->description }}</textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="summernote">Content </label>
-                <span style="color:red; font-size:large"> *</span>
-                <textarea style="width: 100%; min-height: 200px;" id="summernote" name="content">{{ $about->content }}</textarea>
-            </div>
-
-            {{-- <div class="form-group">
-                <label for="scope">Scope </label>
-                <textarea style="width: 100%; min-height: 150px;" type="text" class="form-control" name="scope" id="scope" placeholder="Add Scope">{{ $about->scope }}</textarea>
-            </div> --}}
-
-        </div>
-        <!-- /.card-body -->
-        <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Update</button>
-        </div>
-    </form>
-
-    <!-- Main row -->
-    <script>
-        $(document).ready(function() {
-            $('#summernote').summernote({
-                height: 300, // set editor height
-                minHeight: null, // set minimum height of editor
-                maxHeight: null, // set maximum height of editor
-                focus: true // set focus to editable area after initializing summernote
-            });
-            $('#summernote_ne').summernote({
-                height: 300, // set editor height
-                minHeight: null, // set minimum height of editor
-                maxHeight: null, // set maximum height of editor
-                focus: true // set focus to editable area after initializing summernote
-            });
+    // Initialize Summernote editor
+    $(document).ready(function() {
+        $('#summernote').summernote({
+            height: 300,
+            minHeight: null,
+            maxHeight: null,
+            focus: true
         });
-
-        function previewImage(event) {
-            var reader = new FileReader();
-            reader.onload = function(){
-                var output = document.getElementById('preview');
-                output.src = reader.result;
-            };
-            reader.readAsDataURL(event.target.files[0]);
-        }
-    </script>
-@stop
+    });
+</script>
+@endsection

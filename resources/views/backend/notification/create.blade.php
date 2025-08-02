@@ -68,10 +68,18 @@
                             @enderror
                         </div>
 
-                        {{-- Status --}}
-                        <div class="mb-3 form-check form-switch">
-                            <input class="form-check-input" type="checkbox" name="status" id="status" value="1" checked>
-                            <label class="form-check-label" for="status">Active (On/Off)</label>
+                        {{-- Status Dropdown --}}
+                        <div class="mb-3">
+                            <label for="status" class="form-label">
+                                <i class="fas fa-toggle-on me-2"></i>Status <span class="text-danger">*</span>
+                            </label>
+                            <select name="status" id="status" class="form-control @error('status') is-invalid @enderror" required>
+                                <option value="1" {{ old('status', '1') == '1' ? 'selected' : '' }}>Active</option>
+                                <option value="0" {{ old('status') == '0' ? 'selected' : '' }}>Inactive</option>
+                            </select>
+                            @error('status')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         {{-- Image Preview --}}

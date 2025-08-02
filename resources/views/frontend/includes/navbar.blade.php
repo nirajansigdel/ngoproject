@@ -140,7 +140,6 @@
         font-weight: 600;
         padding: 0;
         border: 2px solid white;
-        box-shadow: 0 0 0 1px var(--bs-danger);
     }
 </style>
 
